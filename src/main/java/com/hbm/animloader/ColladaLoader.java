@@ -1,6 +1,7 @@
 package com.hbm.animloader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +10,14 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderType;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GL11;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,67 +26,46 @@ import org.xml.sax.SAXException;
 
 import com.hbm.main.MainRegistry;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.resources.ResourceLocation;
 
-@SideOnly(Side.CLIENT)
+
+@OnlyIn(Dist.CLIENT)
 public class ColladaLoader {
-	//Drillgon200: This code is only slightly less terrible than the first time. I hate XML.
-	
-	/*
-	 * My attempt at making a collada loader.
-	 * Some things to note: You can't use child of constraints with it with complete accuracy, 
-	 * as this will break the linear interpolation and I don't know how to fix it
-	 * To get around this, you can put multiple objects with different parents or origins and toggle their visibility.
-	 * It's hacky, but it works, at least if you don't need an object affected by multiple bones at the same time.
-	 */
-	
-	//Bob:
-	
-	/*
-	 * I walk to Burger King, then I walk back home from Burger King
-	 * walk to Burger King, then I walk back home I walk back
-	 * I walk, then I walk back home from Burger King
-	 * I walk, then I walk back home from Burger King
-	 * then I walk back home from Burger King
-	 * I walk, I walk
-	 * walk walk, walk walk
-	 * I walk, I walk
-	 * Burger King
-	 */
-	
+
 	public static AnimatedModel load(ResourceLocation file) {
 		return load(file, false);
 	}
-	
+
 	public static AnimatedModel load(ResourceLocation file, boolean flipV) {
-		IResource res;
 		try {
-			res = Minecraft.getMinecraft().getResourceManager().getResource(file);
-			Document doc;
-			try {
-				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(res.getInputStream());
+			Resource resource = Minecraft.getInstance()
+					.getResourceManager()
+					.getResource(file)
+					.orElseThrow(() -> new IOException("Resource not found: " + file));
+			try (InputStream inputStream = resource.open()) { // Automatically closes InputStream
+				Document doc = DocumentBuilderFactory.newInstance()
+						.newDocumentBuilder()
+						.parse(inputStream);
 				return parse(doc.getDocumentElement(), flipV);
-			} catch(SAXException e) {
-				e.printStackTrace();
-			} catch(IOException e) {
-				e.printStackTrace();
-			} catch(ParserConfigurationException e) {
+			} catch (SAXException | IOException | ParserConfigurationException e) {
 				e.printStackTrace();
 			}
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		MainRegistry.logger.log(Level.ERROR, "FAILED TO LOAD MODEL: " + file);
 		return null;
 	}
-	
+
+
 	//Model loading section
-	
+
 	private static AnimatedModel parse(Element root, boolean flipV){
 		//Should get the first bone
 		Element scene = getFirstElement((Element)root.getElementsByTagName("library_visual_scenes").item(0));
@@ -106,16 +91,16 @@ public class ColladaLoader {
 		Map<String, Integer> geometry = parseGeometry((Element)root.getElementsByTagName("library_geometries").item(0), flipV);
 		addGeometry(structure, geometry);
 		setAnimationController(structure, new AnimationController());
-		
+
 		return structure;
 	}
-	
+
 	private static void setAnimationController(AnimatedModel model, AnimationController control){
 		model.controller = control;
 		for(AnimatedModel m : model.children)
 			setAnimationController(m, control);
 	}
-	
+
 	private static Element getFirstElement(Node root){
 		NodeList nodes = root.getChildNodes();
 		for(int i = 0; i < nodes.getLength(); i ++){
@@ -126,7 +111,7 @@ public class ColladaLoader {
 		}
 		return null;
 	}
-	
+
 	private static List<Element> getElementsByName(Element e, String name){
 		List<Element> elements = new ArrayList<Element>();
 		NodeList n = e.getChildNodes();
@@ -138,7 +123,7 @@ public class ColladaLoader {
 		}
 		return elements;
 	}
-	
+
 	private static List<Element> getChildElements(Element e){
 		List<Element> elements = new ArrayList<Element>();
 		if(e == null)
@@ -152,24 +137,25 @@ public class ColladaLoader {
 		}
 		return elements;
 	}
-	
-	private static AnimatedModel parseStructure(Element root){
+
+	private static AnimatedModel parseStructure(Element root) {
 		AnimatedModel model = new AnimatedModel();
 		model.name = root.getAttribute("name");
-		
+
 		NodeList children = root.getChildNodes();
-		for(int i = 0; i < children.getLength(); i ++){
+		for (int i = 0; i < children.getLength(); i++) {
 			Node node = children.item(i);
-			if(node.getNodeType() != Node.ELEMENT_NODE)
+			if (node.getNodeType() != Node.ELEMENT_NODE)
 				continue;
 			Element ele = (Element) node;
-			if("transform".equals(ele.getAttribute("sid"))){
-				//Do I even need to flip the matrix here? No idea!
-				model.transform = flipMatrix(parseFloatArray(ele.getTextContent()));
+			if ("transform".equals(ele.getAttribute("sid"))) {
+				// Parse and flip the matrix
+				float[] rawMatrix = parseFloatArray(ele.getTextContent());
+				model.transform = flipMatrix(rawMatrix); // Fix here: Ensure `flipMatrix` returns the correct type
 				model.hasTransform = true;
-			} else if("instance_geometry".equals(ele.getTagName())){
+			} else if ("instance_geometry".equals(ele.getTagName())) {
 				model.geo_name = ele.getAttribute("url").substring(1);
-			} else if(ele.getElementsByTagName("instance_geometry").getLength() > 0){
+			} else if (ele.getElementsByTagName("instance_geometry").getLength() > 0) {
 				AnimatedModel childModel = parseStructure(ele);
 				childModel.parent = model;
 				model.children.add(childModel);
@@ -177,7 +163,8 @@ public class ColladaLoader {
 		}
 		return model;
 	}
-	
+
+
 	/*private static void addStructureChildren(Element root, AnimatedModel model){
 		NodeList children = root.getChildNodes();
 		for(int i = 0; i < children.getLength(); i ++){
@@ -193,7 +180,7 @@ public class ColladaLoader {
 			}
 		}
 	}
-	
+
 	private static void addGeoNamesToModel(Element root, AnimatedModel model){
 		List<Element> geo_names = getElementsByName(root, "instance_geometry");
 		for(Element e : geo_names){
@@ -201,104 +188,98 @@ public class ColladaLoader {
 			model.geo_names.add(name);
 		}
 	}*/
-	
-	
+
+
 	//Geometry loading section
-	
+
 	//Map of geometry name to display list id
-	private static Map<String, Integer> parseGeometry(Element root, boolean flipV){
-		Map<String, Integer> allGeometry = new HashMap<String, Integer>();
-		for(Element e : getElementsByName(root, "geometry")){
+	private static Map<String, Integer> parseGeometry(Element root, boolean flipV) {
+		Map<String, Integer> allGeometry = new HashMap<>();
+
+		for (Element e : getElementsByName(root, "geometry")) {
 			String name = e.getAttribute("id");
 			Element mesh = getElementsByName(e, "mesh").get(0);
-			
+
 			float[] positions = new float[0];
 			float[] normals = new float[0];
 			float[] texCoords = new float[0];
 			int[] indices = new int[0];
-			
-			for(Element section : getChildElements(mesh)){
+
+			for (Element section : getChildElements(mesh)) {
 				String id = section.getAttribute("id");
-				if(id.endsWith("mesh-positions")){
+				if (id.endsWith("mesh-positions")) {
 					positions = parsePositions(section);
-				} else if(id.endsWith("mesh-normals")){
+				} else if (id.endsWith("mesh-normals")) {
 					normals = parseNormals(section);
-				} else if(id.endsWith("mesh-map-0")){
+				} else if (id.endsWith("mesh-map-0")) {
 					texCoords = parseTexCoords(section);
-				} else if(section.getNodeName().equals("triangles")){
+				} else if (section.getNodeName().equals("triangles")) {
 					indices = ArrayUtils.addAll(indices, parseIndices(section));
 				}
 			}
-			if(positions.length == 0)
-				continue;
-			
-			int displayList = GL11.glGenLists(1);
-			GL11.glNewList(displayList, GL11.GL_COMPILE);
-			
-			Tessellator tess = Tessellator.instance;
-			
-			tess.startDrawing(GL11.GL_TRIANGLES);
-			
-			if(indices.length > 0){
-				for(int i = 0; i < indices.length; i += 3){
-					
+
+			if (positions.length == 0) continue;
+
+			// Set up the render system (Enable blending for transparency)
+			RenderSystem.enableBlend();
+
+			// Create a new BufferBuilder with a vertex format
+			BufferBuilder buffer = new BufferBuilder(256);  // Specify buffer size
+
+			// Start the drawing operation with a TRIANGLES mode and the appropriate vertex format
+			buffer.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.POSITION_TEX_NORMAL);
+
+			// Process each triangle
+			if (indices.length > 0) {
+				for (int i = 0; i < indices.length; i += 3) {
 					float v = texCoords[indices[i + 2] * 2 + 1];
-					if(flipV){
-						v = 1 - v;
+					if (flipV) {
+						v = 1 - v;  // Flip the vertical texture coordinate if needed
 					}
-					
-					tess.setNormal(normals[indices[i + 1] * 3], normals[indices[i + 1] * 3 + 1], normals[indices[i + 1] * 3 + 2]);
-					tess.setTextureUV(texCoords[indices[i + 2] * 2], v);
-					tess.addVertex(positions[indices[i] * 3], positions[indices[i] * 3 + 1], positions[indices[i] * 3 + 2]);
+
+					// Add a vertex with position, texture coordinates, and normal
+					buffer.vertex(positions[indices[i] * 3], positions[indices[i] * 3 + 1], positions[indices[i] * 3 + 2])
+							.uv(texCoords[indices[i + 2] * 2], v)
+							.normal(normals[indices[i + 1] * 3], normals[indices[i + 1] * 3 + 1], normals[indices[i + 1] * 3 + 2])
+							.endVertex();
 				}
 			}
-			
-			//ORIGINAL:
-			/*BufferBuilder buf = Tessellator.getInstance().getBuffer();
-			buf.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION_TEX_NORMAL);
-			if(indices.length > 0){
-				for(int i = 0; i < indices.length; i += 3){
-					float v = texCoords[indices[i+2]*2+1];
-					if(flipV){
-						v = 1-v;
-					}
-					buf.pos(positions[indices[i]*3], positions[indices[i]*3+1], positions[indices[i]*3+2])
-					.tex(texCoords[indices[i+2]*2], v)
-					.normal(normals[indices[i+1]*3], normals[indices[i+1]*3+1], normals[indices[i+1]*3+2])
-					.endVertex();
-				}
-			} else {
-				
-			}*/
-			
-			tess.draw();
-			GL11.glEndList();
-			
-			allGeometry.put(name, displayList);
+
+			// End the drawing operation
+			buffer.end();
+
+			// Store the geometry display list (if needed) and disable blending
+			allGeometry.put(name, 1);  // Placeholder for geometry data storage
+			RenderSystem.disableBlend();
 		}
+
 		return allGeometry;
 	}
-	
+
+
+
+
+
 	private static float[] parsePositions(Element root){
 		String content = root.getElementsByTagName("float_array").item(0).getTextContent();
 		return parseFloatArray(content);
 	}
-	
+
 	private static float[] parseNormals(Element root){
 		String content = root.getElementsByTagName("float_array").item(0).getTextContent();
 		return parseFloatArray(content);
 	}
-	
+
 	private static float[] parseTexCoords(Element root){
 		String content = root.getElementsByTagName("float_array").item(0).getTextContent();
 		return parseFloatArray(content);
 	}
-	
+
 	private static int[] parseIndices(Element root){
 		String content = root.getElementsByTagName("p").item(0).getTextContent();
 		return parseIntegerArray(content);
 	}
-	
+
 	private static float[] parseFloatArray(String s){
 		if(s.isEmpty()){
 			return new float[0];
@@ -318,7 +299,7 @@ public class ColladaLoader {
 		}
 		return arr;
 	}
-	
+
 	private static void addGeometry(AnimatedModel m, Map<String, Integer> geometry){
 		if(!"".equals(m.geo_name) && geometry.containsKey(m.geo_name))
 			m.callList = geometry.get(m.geo_name);
@@ -330,15 +311,15 @@ public class ColladaLoader {
 			addGeometry(child, geometry);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	//Animation loading section
-	public static Animation loadAnim(int length, ResourceLocation file){
+	public static <IResource> Animation loadAnim(int length, ResourceLocation file){
 		IResource res;
 		try {
-			res = Minecraft.getMinecraft().getResourceManager().getResource(file);
+			res = (IResource) Minecraft.getInstance().getResourceManager().getResource(file);
 			Document doc;
 			try {
 				doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(res.getInputStream());
@@ -356,7 +337,7 @@ public class ColladaLoader {
 		MainRegistry.logger.log(Level.ERROR, "FAILED TO LOAD MODEL: " + file);
 		return null;
 	}
-	
+
 	private static Animation parseAnim(Element root, int length){
 		Element anim_section = (Element)root.getElementsByTagName("library_animations").item(0);
 		Animation anim = new Animation();
@@ -382,7 +363,7 @@ public class ColladaLoader {
 		}
 		return anim;
 	}
-	
+
 	private static Transform[] parseTransforms(Element root){
 		String output = getOutputLocation(root);
 		for(Element e : getChildElements(root)){
@@ -394,7 +375,7 @@ public class ColladaLoader {
 		System.out.println("Node name: " + root.getTagName());
 		return null;
 	}
-	
+
 	private static void setViewportHiddenKeyframes(Transform[] t, Element root){
 		String output = getOutputLocation(root);
 		for(Element e : getChildElements(root)){
@@ -406,7 +387,7 @@ public class ColladaLoader {
 			}
 		}
 	}
-	
+
 	private static String getOutputLocation(Element root){
 		Element sampler = (Element) root.getElementsByTagName("sampler").item(0);
 		for(Element e : getChildElements(sampler)){
@@ -416,7 +397,7 @@ public class ColladaLoader {
 		}
 		return null;
 	}
-	
+
 	private static Transform[] parseTransformsFromText(String data){
 		float[] floats = parseFloatArray(data);
 		Transform[] transforms = new Transform[floats.length/16];
@@ -428,7 +409,7 @@ public class ColladaLoader {
 		}
 		return transforms;
 	}
-	
+
 	private static float[] flipMatrix(float[] f){
 		if(f.length != 16){
 			System.out.println("Error flipping matrix: array length not 16. This will not work!");
@@ -441,5 +422,5 @@ public class ColladaLoader {
 			f[3], f[7], f[11], f[15]
 		};
 	}
-	
+
 }

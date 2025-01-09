@@ -42,7 +42,7 @@ public class TileEntityConverterHeRf extends TileEntityLoadedBase implements IEn
 				this.trySubscribe(worldObj, xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ, dir);
 				
 				Location loc = new Location(worldObj, xCoord, yCoord, zCoord).add(dir);
-				TileEntity entity = loc.getTileEntity();
+				TileEntity entity = loc.getBlockEntity();
 			
 				if (entity != null && entity instanceof IEnergyReceiver) {
 					IEnergyReceiver receiver = (IEnergyReceiver) entity;

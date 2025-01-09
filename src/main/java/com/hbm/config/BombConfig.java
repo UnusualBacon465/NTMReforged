@@ -1,7 +1,6 @@
 package com.hbm.config;
 
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class BombConfig {
 
@@ -28,80 +27,38 @@ public class BombConfig {
 	public static int rain = 0;
 	public static int cont = 0;
 	public static boolean chunkloading = true;
-	
-	public static void loadFromConfig(Configuration config) {
 
-		final String CATEGORY_NUKES = CommonConfig.CATEGORY_NUKES;
-		Property propGadget = config.get(CATEGORY_NUKES, "3.00_gadgetRadius", 150);
-		propGadget.comment = "Radius of the Gadget";
-		gadgetRadius = propGadget.getInt();
-		Property propBoy = config.get(CATEGORY_NUKES, "3.01_boyRadius", 120);
-		propBoy.comment = "Radius of Little Boy";
-		boyRadius = propBoy.getInt();
-		Property propMan = config.get(CATEGORY_NUKES, "3.02_manRadius", 175);
-		propMan.comment = "Radius of Fat Man";
-		manRadius = propMan.getInt();
-		Property propMike = config.get(CATEGORY_NUKES, "3.03_mikeRadius", 250);
-		propMike.comment = "Radius of Ivy Mike";
-		mikeRadius = propMike.getInt();
-		Property propTsar = config.get(CATEGORY_NUKES, "3.04_tsarRadius", 500);
-		propTsar.comment = "Radius of the Tsar Bomba";
-		tsarRadius = propTsar.getInt();
-		Property propPrototype = config.get(CATEGORY_NUKES, "3.05_prototypeRadius", 150);
-		propPrototype.comment = "Radius of the Prototype";
-		prototypeRadius = propPrototype.getInt();
-		Property propFleija = config.get(CATEGORY_NUKES, "3.06_fleijaRadius", 50);
-		propFleija.comment = "Radius of F.L.E.I.J.A.";
-		fleijaRadius = propFleija.getInt();
-		Property propMissile = config.get(CATEGORY_NUKES, "3.07_missileRadius", 100);
-		propMissile.comment = "Radius of the nuclear missile";
-		missileRadius = propMissile.getInt();
-		Property propMirv = config.get(CATEGORY_NUKES, "3.08_mirvRadius", 100);
-		propMirv.comment = "Radius of a MIRV";
-		mirvRadius = propMirv.getInt();
-		Property propFatman = config.get(CATEGORY_NUKES, "3.09_fatmanRadius", 35);
-		propFatman.comment = "Radius of the Fatman Launcher";
-		fatmanRadius = propFatman.getInt();
-		Property propNuka = config.get(CATEGORY_NUKES, "3.10_nukaRadius", 25);
-		propNuka.comment = "Radius of the nuka grenade";
-		nukaRadius = propNuka.getInt();
-		Property propASchrab = config.get(CATEGORY_NUKES, "3.11_aSchrabRadius", 20);
-		propASchrab.comment = "Radius of dropped anti schrabidium";
-		aSchrabRadius = propASchrab.getInt();
-		Property propSolinium = config.get(CATEGORY_NUKES, "3.12_soliniumRadius", 150);
-		propSolinium.comment = "Radius of the blue rinse";
-		soliniumRadius = propSolinium.getInt();
-		Property propN2 = config.get(CATEGORY_NUKES, "3.13_n2Radius", 200);
-		propN2.comment = "Radius of the N2 mine";
-		n2Radius = propN2.getInt();
+	public static ModConfigSpec configSpec;
 
-		final String CATEGORY_NUKE = CommonConfig.CATEGORY_EXPLOSIONS;
-		Property propLimitExplosionLifespan = config.get(CATEGORY_NUKE, "6.00_limitExplosionLifespan", 0);
-		propLimitExplosionLifespan.comment = "How long an explosion can be unloaded until it dies in seconds. Based of system time. 0 disables the effect";
-		limitExplosionLifespan = propLimitExplosionLifespan.getInt();
-		// explosion speed
-		Property propBlastSpeed = config.get(CATEGORY_NUKE, "6.01_blastSpeed", 1024);
-		propBlastSpeed.comment = "Base speed of MK3 system (old and schrabidium) detonations (Blocks / tick)";
-		blastSpeed = propBlastSpeed.getInt();
-		// new explosion speed
-		Property propFalloutRange = config.get(CATEGORY_NUKE, "6.02_mk5BlastTime", 50);
-		propFalloutRange.comment = "Minimum amount of milliseconds per tick allocated for mk5 chunk processing";
-		mk5 = propFalloutRange.getInt();
-		// fallout range
-		Property falloutRangeProp = config.get(CATEGORY_NUKE, "6.03_falloutRange", 100);
-		falloutRangeProp.comment = "Radius of fallout area (base radius * value in percent)";
-		falloutRange = falloutRangeProp.getInt();
-		Property falloutDelayProp = config.get(CATEGORY_NUKE, "6.04_falloutDelay", 4);
-		falloutDelayProp.comment = "How many ticks to wait for the next fallout chunk computation";
-		fDelay = falloutDelayProp.getInt();
+	static {
+		ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
-		Property radRain = config.get(CATEGORY_NUKE, "6.05_falloutRainDuration", 0);
-		radRain.comment = "Duration of the thunderstorm after fallout in ticks (only large explosions)";
-		rain = radRain.getInt();
-		Property rainCont = config.get(CATEGORY_NUKE, "6.06_falloutRainRadiation", 0);
-		rainCont.comment = "Radiation in 100th RADs created by fallout rain";
-		cont = rainCont.getInt();
-		
-		chunkloading = CommonConfig.createConfigBool(config, CATEGORY_NUKE, "6.XX_enableChunkLoading", "Allows all types of procedural explosions to keep the central chunk loaded.", true);
+		builder.comment("Nuclear Bomb Settings");
+
+		builder.define("3.00_gadgetRadius", gadgetRadius);
+		builder.define("3.01_boyRadius", boyRadius);
+		builder.define("3.02_manRadius", manRadius);
+		builder.define("3.03_mikeRadius", mikeRadius);
+		builder.define("3.04_tsarRadius", tsarRadius);
+		builder.define("3.05_prototypeRadius", prototypeRadius);
+		builder.define("3.06_fleijaRadius", fleijaRadius);
+		builder.define("3.07_missileRadius", missileRadius);
+		builder.define("3.08_mirvRadius", mirvRadius);
+		builder.define("3.09_fatmanRadius", fatmanRadius);
+		builder.define("3.10_nukaRadius", nukaRadius);
+		builder.define("3.11_aSchrabRadius", aSchrabRadius);
+		builder.define("3.12_soliniumRadius", soliniumRadius);
+		builder.define("3.13_n2Radius", n2Radius);
+
+		builder.define("6.00_limitExplosionLifespan", limitExplosionLifespan);
+		builder.define("6.01_blastSpeed", blastSpeed);
+		builder.define("6.02_mk5BlastTime", mk5);
+		builder.define("6.03_falloutRange", falloutRange);
+		builder.define("6.04_falloutDelay", fDelay);
+		builder.define("6.05_falloutRainDuration", rain);
+		builder.define("6.06_falloutRainRadiation", cont);
+		builder.define("6.XX_enableChunkLoading", chunkloading);
+
+		configSpec = builder.build();
 	}
 }

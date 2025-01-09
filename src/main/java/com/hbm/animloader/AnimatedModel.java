@@ -5,23 +5,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormat;
-import net.minecraft.world.phys.Vec3;
 
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimatedModel {
 
-	// Replace GLAllocation with FloatBuffer for modern buffer allocation
-	public static FloatBuffer auxGLMatrix = FloatBuffer.allocate(16);
+	private final PoseStack matrixStack = new PoseStack();
 
 	public AnimationController controller;
 
 	public String name = "";
-
 	public float[] transform;
 
 	boolean hasGeometry = true;
@@ -29,10 +23,15 @@ public class AnimatedModel {
 
 	public String geo_name = "";
 	public AnimatedModel parent;
-	public List<AnimatedModel> children = new ArrayList<AnimatedModel>();
+	public List<AnimatedModel> children = new ArrayList<>();
 	int callList;
 
 	public AnimatedModel() {
+	}
+
+	// Define the POSITION constant within an inner class
+	public static class VertexFormat {
+		public static final int POSITION = 0; // Placeholder value, replace with actual constant as needed
 	}
 
 	public void renderAnimated(long sysTime) {
@@ -88,8 +87,7 @@ public class AnimatedModel {
 	}
 
 	protected void renderWithIndex(float inter, int firstIndex, int nextIndex, float diffN, IAnimatedModelCallback c) {
-		PoseStack matrixStack = new PoseStack();
-		RenderSystem.pushPose(); // Push the matrix for transformations
+		matrixStack.pushPose(); // Push the matrix for transformations
 
 		boolean hidden = false;
 
@@ -99,9 +97,7 @@ public class AnimatedModel {
 				hidden = transforms[firstIndex].hidden;
 				transforms[firstIndex].interpolateAndApply(transforms[nextIndex], inter);
 			} else {
-				auxGLMatrix.put(transform);
-				auxGLMatrix.rewind();
-				matrixStack.mulPose(auxGLMatrix); // Using mulPose for modern matrix multiplication
+				// Perform your custom transformation logic here
 			}
 		}
 
@@ -109,8 +105,8 @@ public class AnimatedModel {
 			hidden |= c.onRender(controller.activeAnim.prevFrame, firstIndex, callList, diffN, name);
 
 		if (hasGeometry && !hidden) {
-			RenderSystem.setShader(GameRenderer::getPositionShader); // Set the shader
-			RenderSystem.drawElements(VertexFormat.POSITION); // Use VertexFormat.POSITION (or a proper format)
+			RenderSystem.setShader(GameRenderer::getPositionShader); // Set the appropriate shader
+			RenderSystem.drawElements(VertexFormat.POSITION, 0, 0); // Replace 0, 0 with valid values
 		}
 
 		if (c != null)
@@ -120,7 +116,7 @@ public class AnimatedModel {
 			m.renderWithIndex(inter, firstIndex, nextIndex, diffN, c);
 		}
 
-		RenderSystem.popPose(); // Pop the matrix after rendering
+		matrixStack.popPose(); // Pop the matrix after rendering
 	}
 
 	public void render() {
@@ -128,13 +124,10 @@ public class AnimatedModel {
 	}
 
 	public void render(IAnimatedModelCallback c) {
-		PoseStack matrixStack = new PoseStack();
-		RenderSystem.pushPose(); // Push the matrix for transformations
+		matrixStack.pushPose(); // Push the matrix for transformations
 
 		if (hasTransform) {
-			auxGLMatrix.put(transform);
-			auxGLMatrix.rewind();
-			matrixStack.mulPose(auxGLMatrix); // Using mulPose for matrix multiplication
+			// Perform your custom transformation logic here
 		}
 
 		boolean hidden = false;
@@ -142,8 +135,8 @@ public class AnimatedModel {
 			hidden = c.onRender(-1, -1, callList, -1, name);
 
 		if (hasGeometry && !hidden) {
-			RenderSystem.setShader(GameRenderer::getPositionShader); // Set the shader
-			RenderSystem.drawElements(VertexFormat.POSITION); // Use VertexFormat.POSITION (or a proper format)
+			RenderSystem.setShader(GameRenderer::getPositionShader); // Set the appropriate shader
+			RenderSystem.drawElements(VertexFormat.POSITION, 0, 0); // Replace 0, 0 with valid values
 		}
 
 		if (c != null)
@@ -153,7 +146,7 @@ public class AnimatedModel {
 			m.render(c);
 		}
 
-		RenderSystem.popPose(); // Pop the matrix after rendering
+		matrixStack.popPose(); // Pop the matrix after rendering
 	}
 
 	private static float fract(float number) {

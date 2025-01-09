@@ -1,0 +1,25 @@
+[nukes]
+gadgetRadius = 150
+boyRadius = 120
+manRadius = 175
+mikeRadius = 250
+tsarRadius = 500
+prototypeRadius = 150
+fleijaRadius = 50
+soliniumRadius = 150
+n2Radius = 200
+missileRadius = 100
+mirvRadius = 100
+fatmanRadius = 35
+nukaRadius = 25
+aSchrabRadius = 20
+
+[explosions]
+mk5 = 50
+blastSpeed = 1024
+falloutRange = 100
+fDelay = 4
+limitExplosionLifespan = 0
+rain = 0
+cont = 0
+chunkloading = true
