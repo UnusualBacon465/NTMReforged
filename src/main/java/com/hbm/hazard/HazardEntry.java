@@ -6,8 +6,8 @@ import java.util.List;
 import com.hbm.hazard.modifier.HazardModifier;
 import com.hbm.hazard.type.HazardTypeBase;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 public class HazardEntry {
 
@@ -33,7 +33,7 @@ public class HazardEntry {
 		return this;
 	}
 	
-	public void applyHazard(ItemStack stack, EntityLivingBase entity) {
+	public void applyHazard(ItemStack stack, LivingEntity entity) {
 		type.onUpdate(entity, HazardModifier.evalAllModifiers(stack, entity, baseLevel, mods), stack);
 	}
 	

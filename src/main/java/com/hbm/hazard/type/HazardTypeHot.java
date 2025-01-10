@@ -13,11 +13,12 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.entity.LivingEntity;
 
 public class HazardTypeHot extends HazardTypeBase {
 
 	@Override
-	public void onUpdate(EntityLivingBase target, float level, ItemStack stack) {
+	public void onUpdate(LivingEntity target, float level, ItemStack stack) {
 		
 		if(RadiationConfig.disableHot)
 			return;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hbm.hazard.HazardEntry;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class HazardTransformerBase {
 

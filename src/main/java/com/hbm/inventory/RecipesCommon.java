@@ -136,7 +136,8 @@ public class RecipesCommon {
             super();
         }
 
-		public ComparableStack makeSingular() {
+
+        public ComparableStack makeSingular() {
 			stacksize = 1;
 			return this;
 		}

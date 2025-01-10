@@ -15,11 +15,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.entity.LivingEntity;
 
 public class HazardTypeBlinding extends HazardTypeBase {
 
 	@Override
-	public void onUpdate(EntityLivingBase target, float level, ItemStack stack) {
+	public void onUpdate(LivingEntity target, float level, ItemStack stack) {
 		
 		if(RadiationConfig.disableBlinding)
 			return;

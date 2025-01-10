@@ -1,247 +1,208 @@
 package com.hbm.hazard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
 import com.hbm.hazard.modifier.HazardModifier;
 import com.hbm.hazard.transformer.HazardTransformerBase;
-import com.hbm.hazard.type.HazardTypeBase;
-import com.hbm.interfaces.Untested;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import java.util.*;
 
-@Untested
+/**
+ * HazardSystem: Manages hazard-related behavior for items, entities, and more.
+ */
 public class HazardSystem {
 
-	/*
-	 * Map for OreDict entries, always evaluated first. Avoid registering HazardData with 'doesOverride', as internal order is based on the item's ore dict keys.
-	 */
-	public static final HashMap<String, HazardData> oreMap = new HashMap();
-	/*
-	 * Map for items, either with wildcard meta or stuff that's expected to have a variety of damage values, like tools.
-	 */
-	public static final HashMap<Item, HazardData> itemMap = new HashMap();
-	/*
-	 * Very specific stacks with item and meta matching. ComparableStack does not support NBT matching, to scale hazards with NBT please use HazardModifiers.
-	 */
-	public static final HashMap<ComparableStack, HazardData> stackMap = new HashMap();
-	/*
-	 * For items that should, for whichever reason, be completely exempt from the hazard system.
-	 */
-	public static final HashSet<ComparableStack> stackBlacklist = new HashSet();
-	public static final HashSet<String> dictBlacklist = new HashSet();
-	/*
-	 * List of hazard transformers, called in order before and after unrolling all the HazardEntries.
-	 */
-	public static final List<HazardTransformerBase> trafos = new ArrayList();
-	
-	/**
-	 * Automatically casts the first parameter and registers it to the HazSys
-	 * @param o
-	 * @param data
-	 */
-	public static void register(Object o, HazardData data) {
+	// Tag-based hazard data map
+	private static final Map<ResourceLocation, HazardData> TAG_MAP = new HashMap<>();
 
-		if(o instanceof String)
-			oreMap.put((String)o, data);
-		if(o instanceof Item)
-			itemMap.put((Item)o, data);
-		if(o instanceof Block)
-			itemMap.put(Item.getItemFromBlock((Block)o), data);
-		if(o instanceof ItemStack)
-			stackMap.put(new ComparableStack((ItemStack)o), data);
-		if(o instanceof ComparableStack)
-			stackMap.put((ComparableStack)o, data);
-	}
-	
+	// Item map for general items
+	private static final Map<Item, HazardData> ITEM_MAP = new HashMap<>();
+
+	// Specific stacks (including metadata, but no NBT)
+	private static final Map<ComparableStack, HazardData> STACK_MAP = new HashMap<>();
+
+	// Blacklist for items completely exempt from hazard checks
+	private static final Set<ComparableStack> STACK_BLACKLIST = new HashSet<>();
+	private static final Set<ResourceLocation> TAG_BLACKLIST = new HashSet<>();
+
+	// List of hazard transformers
+	private static final List<HazardTransformerBase> TRANSFORMERS = new ArrayList<>();
+
 	/**
-	 * Prevents the stack from returning any HazardData
-	 * @param stack
+	 * Registers a new hazard association to the system.
+	 * Automatically determines where to store the hazard data based on the object type.
+	 *
+	 * @param object The object to associate the hazard with (String, Item, etc.).
+	 * @param data   The hazard data to associate.
 	 */
-	public static void blacklist(Object o) {
-		
-		if(o instanceof ItemStack) {
-			stackBlacklist.add(new ComparableStack((ItemStack) o).makeSingular());
-		} else if(o instanceof String) {
-			dictBlacklist.add((String) o);
+	public static void register(Object object, HazardData data) {
+		if (object instanceof ResourceLocation tag) {
+			TAG_MAP.put(tag, data);
+		} else if (object instanceof Item item) {
+			ITEM_MAP.put(item, data);
+		} else if (object instanceof ComparableStack stack) {
+			STACK_MAP.put(stack, data);
+		} else if (object instanceof ItemStack stack) {
+			STACK_MAP.put(new ComparableStack(stack.getItem()), data);
 		}
 	}
-	
+
+	/**
+	 * Blacklists an object from hazard checks.
+	 *
+	 * @param object The object to blacklist.
+	 */
+	public static void blacklist(Object object) {
+		if (object instanceof ResourceLocation tag) {
+			TAG_BLACKLIST.add(tag);
+		} else if (object instanceof ItemStack stack) {
+			STACK_BLACKLIST.add(new ComparableStack(stack.getItem()).makeSingular());
+		}
+	}
+
+	/**
+	 * Checks if a given ItemStack is blacklisted.
+	 *
+	 * @param stack The ItemStack to check.
+	 * @return True if blacklisted, otherwise false.
+	 */
 	public static boolean isItemBlacklisted(ItemStack stack) {
-		
-		if(stackBlacklist.contains(new ComparableStack(stack).makeSingular()))
+		if (STACK_BLACKLIST.contains(new ComparableStack(stack.getItem()).makeSingular())) {
 			return true;
-
-		int[] ids = OreDictionary.getOreIDs(stack);
-		for(int id : ids) {
-			String name = OreDictionary.getOreName(id);
-			
-			if(dictBlacklist.contains(name))
-				return true;
 		}
-		
+
+		for (ResourceLocation tag : TAG_BLACKLIST) {
+			if (stack.is(ItemTags.create(tag))) {
+				return true;
+			}
+		}
+
 		return false;
 	}
-	
+
 	/**
-	 * Will return a full list of applicable HazardEntries for this stack.
-	 * <br><br>ORDER:
-	 * <ol>
-	 * <li>ore dict (if multiple keys, in order of the ore dict keys for this stack)
-	 * <li>item
-	 * <li>item stack
-	 * </ol>
-	 * 
-	 * "Applicable" means that entries that are overridden or excluded via mutex are not in this list.
-	 * Entries that are marked as "overriding" will delete all fetched entries that came before it.
-	 * Entries that use mutex will prevent subsequent entries from being considered, shall they collide. The mutex system already assumes that
-	 * two keys are the same in priority, so the flipped order doesn't matter.
-	 * @param stack
-	 * @return
+	 * Fetches all applicable hazard entries for a given ItemStack.
+	 *
+	 * @param stack The ItemStack to check.
+	 * @return A list of applicable HazardEntry objects.
 	 */
 	public static List<HazardEntry> getHazardsFromStack(ItemStack stack) {
-		
-		if(isItemBlacklisted(stack)) {
-			return new ArrayList();
+		if (isItemBlacklisted(stack)) {
+			return Collections.emptyList();
 		}
-		
-		List<HazardData> chronological = new ArrayList();
-		
-		/// ORE DICT ///
-		int[] ids = OreDictionary.getOreIDs(stack);
-		for(int id : ids) {
-			String name = OreDictionary.getOreName(id);
-			
-			if(oreMap.containsKey(name))
-				chronological.add(oreMap.get(name));
-		}
-		
-		/// ITEM ///
-		if(itemMap.containsKey(stack.getItem()))
-			chronological.add(itemMap.get(stack.getItem()));
-		
-		/// STACK ///
-		ComparableStack comp = new ComparableStack(stack).makeSingular();
-		if(stackMap.containsKey(comp))
-			chronological.add(stackMap.get(comp));
-		
-		List<HazardEntry> entries = new ArrayList();
-		
-		for(HazardTransformerBase trafo : trafos) {
-			trafo.transformPre(stack, entries);
-		}
-		
-		int mutex = 0;
-		
-		for(HazardData data : chronological) {
-			//if the current data is marked as an override, purge all previous data
-			if(data.doesOverride)
-				entries.clear();
-			
-			if((data.getMutex() & mutex) == 0) {
-				entries.addAll(data.entries);
-				mutex = mutex | data.getMutex();
+
+		List<HazardData> chronologicalData = new ArrayList<>();
+		addTagHazards(stack, chronologicalData);
+		addItemHazards(stack, chronologicalData);
+		addStackHazards(stack, chronologicalData);
+
+		return resolveHazardEntries(stack, chronologicalData);
+	}
+
+	private static void addTagHazards(ItemStack stack, List<HazardData> hazards) {
+		for (ResourceLocation tag : TAG_MAP.keySet()) {
+			if (stack.is(ItemTags.create(tag))) {
+				hazards.add(TAG_MAP.get(tag));
 			}
 		}
-		
-		for(HazardTransformerBase trafo : trafos) {
-			trafo.transformPost(stack, entries);
+	}
+
+	private static void addItemHazards(ItemStack stack, List<HazardData> hazards) {
+		HazardData data = ITEM_MAP.get(stack.getItem());
+		if (data != null) {
+			hazards.add(data);
 		}
-		
+	}
+
+	private static void addStackHazards(ItemStack stack, List<HazardData> hazards) {
+		ComparableStack comparableStack = new ComparableStack(stack.getItem()).makeSingular();
+		HazardData data = STACK_MAP.get(comparableStack);
+		if (data != null) {
+			hazards.add(data);
+		}
+	}
+
+	private static List<HazardEntry> resolveHazardEntries(ItemStack stack, List<HazardData> data) {
+		List<HazardEntry> entries = new ArrayList<>();
+		for (HazardTransformerBase transformer : TRANSFORMERS) {
+			transformer.transformPre(stack, entries);
+		}
+
+		int mutex = 0;
+		for (HazardData hazard : data) {
+			if (hazard.doesOverride) {
+				entries.clear();
+			}
+
+			if ((hazard.getMutex() & mutex) == 0) {
+				entries.addAll(hazard.entries);
+				mutex |= hazard.getMutex();
+			}
+		}
+
+		for (HazardTransformerBase transformer : TRANSFORMERS) {
+			transformer.transformPost(stack, entries);
+		}
+
 		return entries;
 	}
-	
-	public static float getHazardLevelFromStack(ItemStack stack, HazardTypeBase hazard) {
-		List<HazardEntry> entries = getHazardsFromStack(stack);
-		
-		for(HazardEntry entry : entries) {
-			if(entry.type == hazard) {
-				return HazardModifier.evalAllModifiers(stack, null, entry.baseLevel, entry.mods);
-			}
-		}
-		
-		return 0F;
-	}
-	
-	/**
-	 * Will grab and iterate through all assigned hazards of the given stack and apply their effects to the holder.
-	 * @param stack
-	 * @param entity
-	 */
-	public static void applyHazards(ItemStack stack, EntityLivingBase entity) {
-		List<HazardEntry> hazards = getHazardsFromStack(stack);
-		
-		for(HazardEntry hazard : hazards) {
-			hazard.applyHazard(stack, entity);
-		}
-	}
-	
-	/**
-	 * Will apply the effects of all carried items, including the armor inventory.
-	 * @param player
-	 */
-	public static void updatePlayerInventory(EntityPlayer player) {
 
-		for(int i = 0; i < player.inventory.mainInventory.length; i++) {
-			
-			ItemStack stack = player.inventory.mainInventory[i];
-			if(stack != null) {
-				applyHazards(stack, player);
-				
-				if(stack.stackSize == 0) {
-					player.inventory.mainInventory[i] = null;
-				}
-			}
+	/**
+	 * Applies hazards from a stack to an entity.
+	 *
+	 * @param stack  The ItemStack to check.
+	 * @param entity The entity to apply hazards to.
+	 */
+	public static void applyHazards(ItemStack stack, LivingEntity entity) {
+		for (HazardEntry entry : getHazardsFromStack(stack)) {
+			entry.applyHazard(stack, entity);
 		}
-		
-		for(ItemStack stack : player.inventory.armorInventory) {
-			if(stack != null) {
+	}
+
+	/**
+	 * Updates the inventory of a player, applying hazards for all items.
+	 *
+	 * @param player The player to update.
+	 */
+	public static void updatePlayerInventory(Player player) {
+		player.getInventory().items.forEach(stack -> {
+			if (!stack.isEmpty()) {
 				applyHazards(stack, player);
 			}
-		}
-	}
+		});
 
-	public static void updateLivingInventory(EntityLivingBase entity) {
-		
-		for(int i = 0; i < 5; i++) {
-			ItemStack stack = entity.getEquipmentInSlot(i);
-
-			if(stack != null) {
-				applyHazards(stack, entity);
+		player.getInventory().armor.forEach(stack -> {
+			if (!stack.isEmpty()) {
+				applyHazards(stack, player);
 			}
-		}
+		});
 	}
 
-	public static void updateDroppedItem(EntityItem entity) {
-		
-		ItemStack stack = entity.getEntityItem();
-		
-		if(entity.isDead || stack == null || stack.getItem() == null || stack.stackSize <= 0) return;
-		
-		List<HazardEntry> hazards = getHazardsFromStack(stack);
-		for(HazardEntry entry : hazards) {
-			entry.type.updateEntity(entity, HazardModifier.evalAllModifiers(stack, null, entry.baseLevel, entry.mods));
+	/**
+	 * Updates hazards for a dropped item.
+	 *
+	 * @param entity The dropped item entity.
+	 */
+	public static void updateDroppedItem(Entity entity) {
+		if (!(entity instanceof ItemEntity itemEntity)) {
+			return;
 		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public static void addFullTooltip(ItemStack stack, EntityPlayer player, List list) {
-		
-		List<HazardEntry> hazards = getHazardsFromStack(stack);
-		
-		for(HazardEntry hazard : hazards) {
-			hazard.type.addHazardInformation(player, list, hazard.baseLevel, stack, hazard.mods);
+
+		ItemStack stack = itemEntity.getItem();
+		if (stack.isEmpty() || !itemEntity.isAlive()) {
+			return;
+		}
+
+		for (HazardEntry entry : getHazardsFromStack(stack)) {
+			entry.type.updateEntity(itemEntity, HazardModifier.evalAllModifiers(stack, null, entry.baseLevel, entry.mods));
 		}
 	}
 }

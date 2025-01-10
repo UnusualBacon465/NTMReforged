@@ -293,7 +293,7 @@ public class ModBlocks {
 	public static Block lamp_tritium_blue_off;
 	public static Block lamp_tritium_blue_on;
 
-	public static Block lamp_demon;
+	public static Object lamp_demon;
 
 	public static Block lantern;
 	public static Block lantern_behemoth;

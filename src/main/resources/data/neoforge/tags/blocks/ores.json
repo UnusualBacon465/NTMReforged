@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "ntmreforged:uranium_ore",
+    "ntmreforged:plutonium_ore",
+    "ntmreforged:titanium_ore"
+  ]
+}
