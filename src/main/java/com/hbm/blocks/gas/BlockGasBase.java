@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class BlockGasBase extends Block {
@@ -95,8 +96,7 @@ public abstract class BlockGasBase extends Block {
 		}
 	}
 
-	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
+	public void updateTick(Level world, int x, int y, int z, Random rand) {
 
 		if(!world.isRemote) {
 			

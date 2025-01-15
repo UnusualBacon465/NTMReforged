@@ -23,19 +23,17 @@ import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 import com.hbm.tileentity.machine.storage.TileEntityFileCabinet;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFalling;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialLiquid;
-import net.minecraft.creativetab.CreativeTabs;
+
+// Minecraft imports
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.FlowingFluid;
 
 public class ModBlocks {
 	
@@ -44,7 +42,10 @@ public class ModBlocks {
 		initializeBlock();
 		registerBlock();
 	}
-	
+
+
+	int COLOR_ADOBE = 0xF5F5DC; // Hexadecimal color for adobe
+
 	public static Block event_tester;
 	public static Block obj_tester;
 	public static Block test_core;
@@ -1148,15 +1149,15 @@ public class ModBlocks {
 
 	public static Block mud_block;
 	public static Fluid mud_fluid;
-	public static final Material fluidmud = (new MaterialLiquid(MapColor.adobeColor));
+	public static final Material fluidmud = (new MaterialLiquid(MapColor.COLOR_ADOBE));
 
 	public static Block acid_block;
 	public static Fluid acid_fluid;
-	public static final Material fluidacid = (new MaterialLiquid(MapColor.purpleColor));
+	public static final Material fluidacid = (new MaterialLiquid(MapColor.COLOR_PURPLE));
 
 	public static Block toxic_block;
 	public static Fluid toxic_fluid;
-	public static final Material fluidtoxic = (new MaterialLiquid(MapColor.greenColor));
+	public static final Material fluidtoxic = (new MaterialLiquid(MapColor.COLOR_GREEN));
 
 	public static Block schrabidic_block;
 	public static Fluid schrabidic_fluid;
@@ -1164,19 +1165,18 @@ public class ModBlocks {
 
 	public static Block corium_block;
 	public static Fluid corium_fluid;
-	public static final Material fluidcorium = (new MaterialLiquid(MapColor.brownColor) {
-		
-		@Override
-		public boolean blocksMovement() {
-			return true;
-		}
-		
-		@Override
-		public Material setImmovableMobility() { //override access modifier
-			return super.setImmovableMobility();
-		}
-		
-	}.setImmovableMobility());
+	public static final Fluid corium = new FlowingFluid.Source(
+			new FlowingFluid.Properties(
+					() -> YourModFluids.STILL_CORIUM,
+					() -> YourModFluids.FLOWING_CORIUM,
+					FluidAttributes.builder(new ResourceLocation("ntmreforged:block/corium_still"), new ResourceLocation("ntmreforged:block/corium_flow"))
+							.color(0xA00000) // Replace with desired color
+							.density(3000)
+							.viscosity(6000)
+							.luminosity(10)
+			)
+	);
+
 
 	public static Block volcanic_lava_block;
 	public static Fluid volcanic_lava_fluid;
@@ -1208,14 +1208,23 @@ public class ModBlocks {
 	public static Block pink_stairs;
 	
 	public static Material materialGas = new MaterialGas();
-	
+
 	private static void initializeBlock() {
-		
-		event_tester = new TestEventTester(Material.iron).setBlockName("event_tester").setCreativeTab(null).setHardness(2.5F).setResistance(0.0F).setBlockTextureName(RefStrings.MODID + ":event_tester");
-		obj_tester = new TestObjTester(Material.iron).setBlockName("obj_tester").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F);
-		test_core = new TestCore(Material.iron).setBlockName("test_core").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":test_core");
-		test_charge = new TestCharge(Material.iron).setBlockName("test_charge").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F);
-		structure_anchor = new BlockGeneric(Material.iron).setBlockName("structure_anchor").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":structure_anchor");
+		event_tester = registerBlock("event_tester",
+				new TestEventTester(BlockBehaviour.Properties.of().strength(2.5F, 0.0F).noOcclusion()));
+
+		obj_tester = registerBlock("obj_tester",
+				new TestObjTester(BlockBehaviour.Properties.of().strength(2.5F, 10.0F)));
+
+		test_core = registerBlock("test_core",
+				new TestCore(BlockBehaviour.Properties.of().strength(2.5F, 10.0F)));
+
+		test_charge = registerBlock("test_charge",
+				new TestCharge(BlockBehaviour.Properties.of().strength(2.5F, 10.0F)));
+
+		structure_anchor = registerBlock("structure_anchor",
+				new BlockGeneric(BlockBehaviour.Properties.of().strength(2.5F, 10.0F)));
+
 		
 		ore_uranium = new BlockOutgas(Material.rock, true, 5, true).setBlockName("ore_uranium").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_uranium");
 		ore_uranium_scorched = new BlockOutgas(Material.rock, true, 5, true).setBlockName("ore_uranium_scorched").setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_uranium_scorched");
@@ -2324,6 +2333,10 @@ public class ModBlocks {
 		pink_slab = new BlockPinkSlab(false, Material.wood).setBlockName("pink_slab").setStepSound(Block.soundTypeWood).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":pink_planks");
 		pink_double_slab = new BlockPinkSlab(true, Material.wood).setBlockName("pink_double_slab").setStepSound(Block.soundTypeWood).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":pink_planks");
 		pink_stairs = new BlockGenericStairs(pink_planks, 0).setBlockName("pink_stairs").setStepSound(Block.soundTypeWood).setCreativeTab(null).setBlockTextureName(RefStrings.MODID + ":pink_planks");
+	}
+
+	private static Block registerBlock(String testCore, TestCore testCore1) {
+		return null;
 	}
 
 	private static void registerBlock() {

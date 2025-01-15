@@ -12,8 +12,8 @@ import com.hbm.util.ContaminationUtil.HazardType;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.world.level.Level;
+import net.minecraft.core.Direction;
 
 public class BlockGasRadon extends BlockGasBase {
 
@@ -22,7 +22,7 @@ public class BlockGasRadon extends BlockGasBase {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity entity) {
+	public void onEntityCollidedWithBlock(Level level, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity entity) {
 		
 		if(!(entity instanceof EntityLivingBase))
 			return;
@@ -38,27 +38,27 @@ public class BlockGasRadon extends BlockGasBase {
 	}
 
 	@Override
-	public ForgeDirection getFirstDirection(World world, int x, int y, int z) {
+	public Direction getFirstDirection(Level level, int x, int y, int z) {
 		
-		if(world.rand.nextInt(5) == 0)
-			return ForgeDirection.UP;
+		if(level.random.nextInt(5) == 0)
+			return Direction.UP;
 		
-		return ForgeDirection.DOWN;
+		return Direction.DOWN;
 	}
 
 	@Override
-	public ForgeDirection getSecondDirection(World world, int x, int y, int z) {
+	public Direction getSecondDirection(Level level, int x, int y, int z) {
 		return this.randomHorizontal(world);
 	}
 
 	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
+	public void updateTick(Level level, int x, int y, int z, Random rand) {
 
-		if(!world.isRemote && rand.nextInt(50) == 0) {
-			world.setBlockToAir(x, y, z);
+		if(!level.isClientSide && rand.nextInt(50) == 0) {
+			level.setBlockToAir(x, y, z);
 			return;
 		}
 		
-		super.updateTick(world, x, y, z, rand);
+		super.updateTick(level, x, y, z, rand);
 	}
 }

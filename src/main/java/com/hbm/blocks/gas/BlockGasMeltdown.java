@@ -20,6 +20,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockGasMeltdown extends BlockGasBase {
@@ -68,7 +69,7 @@ public class BlockGasMeltdown extends BlockGasBase {
 	}
 
 	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
+	public void updateTick(Level world, int x, int y, int z, Random rand) {
 
 		if(!world.isRemote) {
 

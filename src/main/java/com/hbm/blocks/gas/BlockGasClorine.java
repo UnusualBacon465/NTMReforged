@@ -14,6 +14,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockGasClorine extends BlockGasBase {
@@ -53,7 +54,7 @@ public class BlockGasClorine extends BlockGasBase {
 	}
 
 	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
+	public void updateTick(Level world, int x, int y, int z, Random rand) {
 
 		if(!world.isRemote && rand.nextInt(10) == 0) {
 			world.setBlockToAir(x, y, z);

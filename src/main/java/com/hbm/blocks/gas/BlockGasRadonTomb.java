@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockGasRadonTomb extends BlockGasBase {
@@ -78,7 +79,7 @@ public class BlockGasRadonTomb extends BlockGasBase {
 	}
 
 	@Override
-	public void updateTick(World world, int x, int y, int z, Random rand) {
+	public void updateTick(Level world, int x, int y, int z, Random rand) {
 		
 		if(!world.isRemote) {
 	
