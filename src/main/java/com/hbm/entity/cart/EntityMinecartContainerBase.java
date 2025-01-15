@@ -90,7 +90,7 @@ public abstract class EntityMinecartContainerBase extends EntityMinecartNTM impl
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return this.isDead ? false : player.getDistanceSqToEntity(this) <= 64.0D;
+		return !this.isDead && player.getDistanceSqToEntity(this) <= 64.0D;
 	}
 
 	@Override

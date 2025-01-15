@@ -128,7 +128,7 @@ public class RenderChemplant extends TileEntitySpecialRenderer {
 				HmfController.setMod(50000D, -50000D);
 
 			color = chem.tanks[0].getTankType().getColor();
-			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF) >> 0));
+			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF)));
 			GL11.glTranslated(-0.625, 0, 0.625);
 
 			int count = chem.tanks[0].getFill() * 16 / 24000;
@@ -152,7 +152,7 @@ public class RenderChemplant extends TileEntitySpecialRenderer {
 				HmfController.setMod(50000D, 50000D);
 
 			color = chem.tanks[1].getTankType().getColor();
-			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF) >> 0));
+			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF)));
 			GL11.glTranslated(0.625, 0, 0.625);
 
 			int count = chem.tanks[1].getFill() * 16 / 24000;

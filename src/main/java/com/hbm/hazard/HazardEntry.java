@@ -41,8 +41,9 @@ public class HazardEntry {
 		return this.type;
 	}
 	
-	public HazardEntry clone() {
-		return clone(1F);
+	public HazardEntry clone() throws CloneNotSupportedException {
+        HazardEntry hazardEntry = (HazardEntry) super.clone();
+        return clone(1F);
 	}
 	
 	public HazardEntry clone(float mult) {

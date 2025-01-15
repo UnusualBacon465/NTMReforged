@@ -87,7 +87,7 @@ public class RenderCore extends TileEntitySpecialRenderer {
 
         float r = ((color & 0xFF0000) >> 16) / 256F;
         float g = ((color & 0x00FF00) >> 8) / 256F;
-        float b = ((color & 0x0000FF) >> 0) / 256F;
+        float b = ((color & 0x0000FF)) / 256F;
         float mod = 0.4F;
 		GL11.glColor3f(r * mod, g * mod, b * mod);
 		
@@ -140,7 +140,7 @@ public class RenderCore extends TileEntitySpecialRenderer {
 		int color = core.color;
 		float r = ((color & 0xFF0000) >> 16) / 255F;
 		float g = ((color & 0x00FF00) >> 8) / 255F;
-		float b = ((color & 0x0000FF) >> 0) / 255F;
+		float b = ((color & 0x0000FF)) / 255F;
 		
 		Tessellator tessellator = Tessellator.instance;
 		RenderHelper.disableStandardItemLighting();

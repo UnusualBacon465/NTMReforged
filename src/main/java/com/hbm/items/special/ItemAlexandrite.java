@@ -28,7 +28,7 @@ public class ItemAlexandrite extends Item {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public class TextureAlexandrite extends TextureAtlasSprite {
+	public static class TextureAlexandrite extends TextureAtlasSprite {
 
 		protected TextureAlexandrite(String texture) {
 			super(texture);

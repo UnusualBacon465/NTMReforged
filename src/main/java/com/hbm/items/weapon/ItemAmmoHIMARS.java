@@ -129,7 +129,7 @@ public class ItemAmmoHIMARS extends Item {
 		return "item.ammo_himars_" + itemTypes[Math.abs(stack.getItemDamage()) % itemTypes.length].name;
 	}
 	
-	public abstract class HIMARSRocket {
+	public abstract static class HIMARSRocket {
 		
 		public final String name;
 		public final ResourceLocation texture;

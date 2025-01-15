@@ -35,7 +35,7 @@ public class AlloyFurnaceRecipeHandler extends TemplateRecipeHandler implements 
 		return "alloysmelting";
 	}
 
-	public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input1;
 		PositionedStack input2;
 		PositionedStack result;

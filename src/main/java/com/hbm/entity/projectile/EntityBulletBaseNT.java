@@ -358,7 +358,7 @@ public class EntityBulletBaseNT extends EntityThrowableInterp implements IBullet
 				EntityLivingBase living = (EntityLivingBase) victim;
 				double head = living.height - living.getEyeHeight();
 				
-				if(!!living.isEntityAlive() && mop.hitVec != null && mop.hitVec.yCoord > (living.posY + living.height - head * 2)) {
+				if(living.isEntityAlive() && mop.hitVec != null && mop.hitVec.yCoord > (living.posY + living.height - head * 2)) {
 					damage *= this.config.headshotMult;
 					headshot = true;
 				}

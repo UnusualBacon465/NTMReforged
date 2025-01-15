@@ -124,7 +124,7 @@ public class RenderFallout extends Render {
 					if(rainHeight < playerHeight) layerY = playerHeight;
 
 					if(minHeight != maxHeight) {
-						this.random.setSeed(layerX * layerX * 3121 + layerX * 45238971 ^ layerZ * layerZ * 418711 + layerZ * 13761);
+						this.random.setSeed((long) layerX * layerX * 3121 + layerX * 45238971L ^ (long) layerZ * layerZ * 418711 + layerZ * 13761L);
 
 						if(layer != 1) {
 							if(layer >= 0) {

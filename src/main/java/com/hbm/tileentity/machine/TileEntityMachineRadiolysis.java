@@ -115,7 +115,7 @@ public class TileEntityMachineRadiolysis extends TileEntityMachineBase implement
 			power = Library.chargeItemsFromTE(slots, 14, power, maxPower);
 			
 			heat = RTGUtil.updateRTGs(slots, slot_rtg);
-			power += heat * 10;
+			power += heat * 10L;
 			
 			if(power > maxPower)
 				power = maxPower;

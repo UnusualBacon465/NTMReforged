@@ -37,7 +37,7 @@ public class TileEntityPylonMedium extends TileEntityPylonBase {
 
 	@Override
 	public boolean canConnect(ForgeDirection dir) {
-		return this.hasTransformer() ? ForgeDirection.getOrientation(this.getBlockMetadata() - 10).getOpposite() == dir : false;
+		return this.hasTransformer() && ForgeDirection.getOrientation(this.getBlockMetadata() - 10).getOpposite() == dir;
 	}
 
 	@Override

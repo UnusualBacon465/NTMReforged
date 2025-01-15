@@ -36,18 +36,16 @@ public class BlockGasClorine extends BlockGasBase {
 	@Override
 	public void onEntityCollidedWithBlock(World world, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity entity) {
 		
-		if(!(entity instanceof EntityLivingBase))
+		if(!(entity instanceof EntityLivingBase entityLiving))
 			return;
-		
-		EntityLivingBase entityLiving = (EntityLivingBase) entity;
-		
-		if(ArmorRegistry.hasAllProtection(entityLiving, 3, HazardClass.GAS_LUNG)) {
+
+        if(ArmorRegistry.hasAllProtection(entityLiving, 3, HazardClass.GAS_LUNG)) {
 			ArmorUtil.damageGasMaskFilter(entityLiving, 1);
 
 		} else {
 			entityLiving.addPotionEffect(new PotionEffect(Potion.blindness.getId(), 5 * 20, 0));
 			entityLiving.addPotionEffect(new PotionEffect(Potion.poison.getId(), 20 * 20, 2));
-			entityLiving.addPotionEffect(new PotionEffect(Potion.wither.getId(), 1 * 20, 1));
+			entityLiving.addPotionEffect(new PotionEffect(Potion.wither.getId(), 20, 1));
 			entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 30 * 20, 1));
 			entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.getId(), 30 * 20, 2));
 		}
@@ -67,7 +65,7 @@ public class BlockGasClorine extends BlockGasBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
-		return p_149646_5_ == 0 && this.minY > 0.0D ? true : (p_149646_5_ == 1 && this.maxY < 1.0D ? true : (p_149646_5_ == 2 && this.minZ > 0.0D ? true : (p_149646_5_ == 3 && this.maxZ < 1.0D ? true : (p_149646_5_ == 4 && this.minX > 0.0D ? true : (p_149646_5_ == 5 && this.maxX < 1.0D ? true : !p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_).isOpaqueCube())))));
+		return p_149646_5_ == 0 && this.minY > 0.0D || (p_149646_5_ == 1 && this.maxY < 1.0D || (p_149646_5_ == 2 && this.minZ > 0.0D || (p_149646_5_ == 3 && this.maxZ < 1.0D || (p_149646_5_ == 4 && this.minX > 0.0D || (p_149646_5_ == 5 && this.maxX < 1.0D || !p_149646_1_.getBlock(p_149646_2_, p_149646_3_, p_149646_4_).isOpaqueCube())))));
 	}
 
 	@Override

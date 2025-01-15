@@ -140,7 +140,7 @@ public class TileEntityICF extends TileEntityMachineBase implements IGUIProvider
 				
 				tanks[0].setFill(tanks[0].getFill() - step.amountReq * cycles);
 				tanks[1].setFill(tanks[1].getFill() + step.amountProduced * cycles);
-				this.heat -= step.heatReq * cycles;
+				this.heat -= (long) step.heatReq * cycles;
 
 				this.consumption = step.amountReq * cycles;
 				this.output = step.amountProduced * cycles;

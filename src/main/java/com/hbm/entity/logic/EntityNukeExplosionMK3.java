@@ -58,7 +58,7 @@ public class EntityNukeExplosionMK3 extends EntityExplosionChunkloading {
 		
 		long time = nbt.getLong("milliTime");
 		
-		if(BombConfig.limitExplosionLifespan > 0 && System.currentTimeMillis() - time > BombConfig.limitExplosionLifespan * 1000) {
+		if(BombConfig.limitExplosionLifespan > 0 && System.currentTimeMillis() - time > BombConfig.limitExplosionLifespan * 1000L) {
 			this.clearChunkLoader();
 			this.setDead();
 		}

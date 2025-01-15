@@ -43,7 +43,7 @@ public class RenderCombustionEngine extends TileEntitySpecialRenderer implements
 			int color = canister.color;
 			float r = ((color & 0xff0000) >> 16) / 256F;
 			float g = ((color & 0x00ff00) >> 8) / 256F;
-			float b = ((color & 0x0000ff) >> 0) / 256F;
+			float b = ((color & 0x0000ff)) / 256F;
 			GL11.glColor4f(r, g, b, 1F);
 		}
 		ResourceManager.combustion_engine.renderPart("Canister");

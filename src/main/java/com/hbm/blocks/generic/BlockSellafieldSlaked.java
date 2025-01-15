@@ -25,7 +25,7 @@ public class BlockSellafieldSlaked extends Block {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-		long l = (long) (x * 3129871) ^ (long)y * 116129781L ^ (long)z;
+		long l = (long) (x * 3129871L) ^ (long)y * 116129781L ^ (long)z;
 		l = l * l * 42317861L + l * 11L;
 		int i = (int)(l >> 16 & 3L);
 		return icons[(int)(Math.abs(i) % icons.length)];

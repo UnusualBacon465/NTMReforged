@@ -226,7 +226,7 @@ public class BulletConfig implements Cloneable {
 				EntityLivingBase living = (EntityLivingBase) entity;
 				double head = living.height - living.getEyeHeight();
 				
-				if(!!living.isEntityAlive() && mop.hitVec != null && mop.hitVec.yCoord > (living.posY + living.height - head * 2)) {
+				if(living.isEntityAlive() && mop.hitVec != null && mop.hitVec.yCoord > (living.posY + living.height - head * 2)) {
 					intendedDamage *= bullet.config.headshotMult;
 				}
 			}

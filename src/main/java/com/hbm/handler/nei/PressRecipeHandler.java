@@ -45,7 +45,7 @@ public class PressRecipeHandler extends TemplateRecipeHandler implements ICompat
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-	public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input;
 		PositionedStack result;
 		PositionedStack stamp;

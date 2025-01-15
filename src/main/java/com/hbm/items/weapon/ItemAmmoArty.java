@@ -186,7 +186,7 @@ public class ItemAmmoArty extends Item {
 	
 	protected static SpentCasing SIXTEEN_INCH_CASE = new SpentCasing(CasingType.STRAIGHT).setScale(15F, 15F, 10F).setupSmoke(1F, 1D, 200, 60).setMaxAge(300);
 	
-	public abstract class ArtilleryShell {
+	public abstract static class ArtilleryShell {
 		
 		String name;
 		public SpentCasing casing;

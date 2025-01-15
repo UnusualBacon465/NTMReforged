@@ -216,7 +216,7 @@ public class Floodlight extends BlockContainer implements IToolable {
 		private void destroyLight(int index) {
 			BlockPos pos = lightPos[index];
 			if(pos != null) {
-				if(pos != null && worldObj.getBlock(pos.getX(), pos.getY(), pos.getZ()) == ModBlocks.floodlight_beam) {
+				if(worldObj.getBlock(pos.getX(), pos.getY(), pos.getZ()) == ModBlocks.floodlight_beam) {
 					worldObj.setBlock(pos.getX(), pos.getY(), pos.getZ(), Blocks.air, 0, 2);
 				}
 			}

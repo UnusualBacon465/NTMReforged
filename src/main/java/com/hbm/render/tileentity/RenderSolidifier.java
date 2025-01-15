@@ -38,7 +38,7 @@ public class RenderSolidifier extends TileEntitySpecialRenderer {
 		
 		if(liq.tank.getFill() > 0) {
 			int color = liq.tank.getTankType().getColor();
-			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF) >> 0));
+			GL11.glColor3ub((byte) ((color & 0xFF0000) >> 16), (byte) ((color & 0x00FF00) >> 8), (byte) ((color & 0x0000FF)));
 			
 			double height = (double)liq.tank.getFill() / (double)liq.tank.getMaxFill();
 			GL11.glPushMatrix();

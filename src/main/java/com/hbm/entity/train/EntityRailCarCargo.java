@@ -19,7 +19,7 @@ public abstract class EntityRailCarCargo extends EntityRailCarBase implements II
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(10, new Integer(0));
+		this.dataWatcher.addObject(10, Integer.valueOf(0));
 	}
 	
 	public int countOccupiedSlots() {
@@ -96,7 +96,7 @@ public abstract class EntityRailCarCargo extends EntityRailCarBase implements II
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return this.isDead ? false : player.getDistanceSqToEntity(this) <= 64.0D;
+		return !this.isDead && player.getDistanceSqToEntity(this) <= 64.0D;
 	}
 
 	@Override

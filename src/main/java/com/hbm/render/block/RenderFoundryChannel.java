@@ -199,7 +199,7 @@ public class RenderFoundryChannel implements ISimpleBlockRenderingHandler {
 			tile = (TileEntityFoundryChannel) te;
 		}
 		
-		boolean doRender = tile != null ? (tile.amount > 0 && tile.type != null) : false;
+		boolean doRender = tile != null && (tile.amount > 0 && tile.type != null);
 		double level = doRender ? tile.amount * 0.25D / tile.getCapacity() : 0;
 		Color color = doRender ? new Color(tile.type.moltenColor).brighter() : null;
 		

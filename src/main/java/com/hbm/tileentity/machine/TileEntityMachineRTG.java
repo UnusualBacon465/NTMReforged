@@ -217,7 +217,7 @@ public class TileEntityMachineRTG extends TileEntityLoadedBase implements ISided
 			if(heat > heatMax)
 				heat = heatMax;
 			
-			power += heat * 5;
+			power += heat * 5L;
 			if(power > powerMax)
 				power = powerMax;
 			

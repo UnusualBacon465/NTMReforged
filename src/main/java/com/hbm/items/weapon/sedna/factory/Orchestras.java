@@ -984,7 +984,7 @@ public class Orchestras {
 			if(type == AnimType.CYCLE) {
 				if(timer == 0) {
 					SpentCasing casing = ctx.config.getReceivers(stack)[0].getMagazine(stack).getCasing(stack, ctx.inventory);
-					if(casing != null) CasingCreator.composeEffect(entity.worldObj, entity, aiming ? 0.125 : 0.125, aiming ? -0.125 : -0.25, aiming ? -0.125 : -0.25D, 0, 0.18, -0.12, 0.01, casing.getName());
+					if(casing != null) CasingCreator.composeEffect(entity.worldObj, entity, 0.125, aiming ? -0.125 : -0.25, aiming ? -0.125 : -0.25D, 0, 0.18, -0.12, 0.01, casing.getName());
 				}
 				if(timer == 40) entity.worldObj.playSoundAtEntity(entity, "hbm:weapon.reload.dryFireClick", 0.25F, 1.25F);
 			}

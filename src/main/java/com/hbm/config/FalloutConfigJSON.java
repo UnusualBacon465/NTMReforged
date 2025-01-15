@@ -11,10 +11,10 @@ import com.hbm.inventory.RecipesCommon.MetaBlock;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.Compat;
 import com.hbm.util.Tuple.Triplet;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.Level;
 
 import java.io.File;
 import java.io.FileReader;
@@ -178,8 +178,9 @@ public class FalloutConfigJSON {
 		/** Whether the depth value should be decremented when this block is converted */
 		private boolean isSolid = false;
 		
-		public FalloutEntry clone() {
-			FalloutEntry entry = new FalloutEntry();
+		public FalloutEntry clone() throws CloneNotSupportedException {
+            FalloutEntry falloutEntry = (FalloutEntry) super.clone();
+            FalloutEntry entry = new FalloutEntry();
 			entry.mB(matchesBlock);
 			entry.mM(matchesMeta);
 			entry.mMa(matchesMaterial);
@@ -207,14 +208,14 @@ public class FalloutConfigJSON {
 		public FalloutEntry fo(double falloffStart) { this.falloffStart = falloffStart; return this; }
 		public FalloutEntry sol(boolean solid) { this.isSolid = solid; return this; }
 		
-		public boolean eval(World world, int x, int y, int z, Block b, int meta, double dist, Block originalBlock, int originalMeta) {
+		public boolean eval(Level level, int x, int y, int z, Block b, int meta, double dist, Block originalBlock, int originalMeta) {
 
 			if(dist > maxDist || dist < minDist) return false;
 			if(matchesBlock != null && b != matchesBlock) return false;
 			if(matchesMaterial != null && b.getMaterial() != matchesMaterial) return false;
 			if(matchesMeta != -1 && meta != matchesMeta) return false;
 			if(matchesOpaque && !b.isOpaqueCube()) return false;
-			if(dist > maxDist * falloffStart && Math.abs(world.rand.nextGaussian()) < Math.pow((dist - maxDist * falloffStart) / (maxDist - maxDist * falloffStart), 2D) * 3D) return false;
+			if(dist > maxDist * falloffStart && Math.abs(level.random.nextGaussian()) < Math.pow((dist - maxDist * falloffStart) / (maxDist - maxDist * falloffStart), 2D) * 3D) return false;
 
 			MetaBlock conversion = chooseRandomOutcome((primaryChance == 1D || rand.nextDouble() < primaryChance) ? primaryBlocks : secondaryBlocks);
 			
@@ -223,8 +224,8 @@ public class FalloutConfigJSON {
 				if(conversion.block == ModBlocks.sellafield_bedrock && originalBlock == ModBlocks.sellafield_bedrock && conversion.meta <= originalMeta) return false;
 				if(originalBlock == ModBlocks.sellafield_bedrock && conversion.block != ModBlocks.sellafield_bedrock) return false;
 				if(y == 0 && conversion.block != ModBlocks.sellafield_bedrock) return false;
-				
-				world.setBlock(x, y, z, conversion.block, conversion.meta, 3);
+
+				level.setBlock(x, y, z, conversion.block, conversion.meta, 3);
 				return true;
 			}
 			

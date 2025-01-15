@@ -77,7 +77,7 @@ public class RenderDoorGeneric extends TileEntitySpecialRenderer {
 			IModelCustomNamed model = door.getModel();
 			
 			long ms = System.currentTimeMillis()-te.animStartTime;
-			float openTicks = MathHelper.clamp_float(te.state == 2 || te.state == 0 ? door.timeToOpen()*50-ms : ms, 0, door.timeToOpen()*50)*0.02F;
+			float openTicks = MathHelper.clamp_float(te.state == 2 || te.state == 0 ? door.timeToOpen()* 50L -ms : ms, 0, door.timeToOpen()*50)*0.02F;
 
 			for(String partName : model.getPartNames()) {
 				if(!door.doesRender(partName, false))

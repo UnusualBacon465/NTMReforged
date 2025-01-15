@@ -145,7 +145,7 @@ public class ItemMold extends Item {
 	
 	public static int nextOrder = 0;
 
-	public abstract class Mold {
+	public abstract static class Mold {
 		public int order;
 		public int id;
 		public int size;

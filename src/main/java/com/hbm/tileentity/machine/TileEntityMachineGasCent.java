@@ -348,7 +348,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 		return 65536.0D;
 	}
 	
-	public class PseudoFluidTank {
+	public static class PseudoFluidTank {
 		PseudoFluidType type;
 		int fluid;
 		int maxFluid;

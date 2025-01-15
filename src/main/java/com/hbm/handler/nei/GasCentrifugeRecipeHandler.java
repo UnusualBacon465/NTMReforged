@@ -36,7 +36,7 @@ public class GasCentrifugeRecipeHandler extends TemplateRecipeHandler implements
 	}
 	public static ArrayList<Fuel> fuels;
 
-	public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input;
 		List<PositionedStack> output = new ArrayList();
 		boolean isHighSpeed;

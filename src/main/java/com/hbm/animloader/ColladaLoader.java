@@ -382,7 +382,7 @@ public class ColladaLoader {
 			if(e.getAttribute("id").equals(output)){
 				int[] hiddenFrames = parseIntegerArray(e.getElementsByTagName("float_array").item(0).getTextContent());
 				for(int i = 0; i < hiddenFrames.length; i ++){
-					t[i].hidden = hiddenFrames[i] > 0 ? true : false;
+					t[i].hidden = hiddenFrames[i] > 0;
 				}
 			}
 		}

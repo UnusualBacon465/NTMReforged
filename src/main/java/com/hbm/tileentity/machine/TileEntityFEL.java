@@ -140,7 +140,7 @@ public class TileEntityFEL extends TileEntityMachineBase implements IEnergyRecei
 						if(te instanceof TileEntitySILEX) {
 							TileEntitySILEX silex = (TileEntitySILEX) te;
 							int meta = silex.getBlockMetadata() - BlockDummyable.offset;
-							if(rotationIsValid(meta, this.getBlockMetadata() - BlockDummyable.offset) && i >= 5 && silexSpacing == false	) {
+							if(rotationIsValid(meta, this.getBlockMetadata() - BlockDummyable.offset) && i >= 5 && !silexSpacing) {
 								if(silex.mode != this.mode) {
 									silex.mode = this.mode;
 									this.missingValidSilex = false;

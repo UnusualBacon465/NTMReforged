@@ -88,7 +88,7 @@ public class RenderGlyphid extends RenderLiving {
 			double headTilt = Math.sin(this.bite * Math.PI) * 30;
 			
 			ResourceManager.glyphid.renderPart("Body");
-			if((armor & (1 << 0)) > 0) ResourceManager.glyphid.renderPart("ArmorFront");
+			if((armor & (1)) > 0) ResourceManager.glyphid.renderPart("ArmorFront");
 			if((armor & (1 << 1)) > 0) ResourceManager.glyphid.renderPart("ArmorLeft");
 			if((armor & (1 << 2)) > 0) ResourceManager.glyphid.renderPart("ArmorRight");
 

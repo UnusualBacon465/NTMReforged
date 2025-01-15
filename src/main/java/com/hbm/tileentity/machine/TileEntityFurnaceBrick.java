@@ -132,7 +132,7 @@ public class TileEntityFurnaceBrick extends TileEntityMachineBase implements IGU
 	
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack) {
-		return slot >= 2 ? false : (slot == 1 ? TileEntityFurnace.getItemBurnTime(stack) > 0 : true);
+		return slot < 2 && (slot != 1 || TileEntityFurnace.getItemBurnTime(stack) > 0);
 	}
 
 	@Override

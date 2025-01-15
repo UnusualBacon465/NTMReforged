@@ -104,7 +104,7 @@ public abstract class TileEntityOilDrillBase extends TileEntityMachineBase imple
 			
 			if(toBurn > 0) {
 				tanks[1].setFill(tanks[1].getFill() - toBurn);
-				this.power += toBurn * 5;
+				this.power += toBurn * 5L;
 				
 				if(this.power > this.getMaxPower())
 					this.power = this.getMaxPower();

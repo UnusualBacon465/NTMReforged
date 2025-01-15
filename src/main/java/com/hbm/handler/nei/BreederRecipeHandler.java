@@ -30,7 +30,7 @@ public class BreederRecipeHandler extends TemplateRecipeHandler implements IComp
 	public String getRecipeID() {
 		return "breeding";
 	}
-	public class BreedingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class BreedingSet extends TemplateRecipeHandler.CachedRecipe {
 
 		PositionedStack input;
 		PositionedStack result;

@@ -34,7 +34,7 @@ public class CyclotronRecipeHandler extends TemplateRecipeHandler implements ICo
     public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
     public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-    public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe
+    public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe
     {
     	PositionedStack input1;
 		PositionedStack input2;
@@ -74,7 +74,7 @@ public class CyclotronRecipeHandler extends TemplateRecipeHandler implements ICo
 		if ((outputId.equals("cyclotronProcessing")) && getClass() == CyclotronRecipeHandler.class) {
 			Map<Object[], Object> recipes = CyclotronRecipes.getRecipes();
 			for (Map.Entry<Object[], Object> recipe : recipes.entrySet()) {
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey()[0], (ItemStack)recipe.getKey()[1], (ItemStack)recipe.getValue()));
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey()[0], (ItemStack) recipe.getKey()[1], (ItemStack) recipe.getValue()));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -86,7 +86,7 @@ public class CyclotronRecipeHandler extends TemplateRecipeHandler implements ICo
 		Map<Object[], Object> recipes = CyclotronRecipes.getRecipes();
 		for (Map.Entry<Object[], Object> recipe : recipes.entrySet()) {
 			if (NEIServerUtils.areStacksSameType((ItemStack)recipe.getValue(), result))
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey()[0], (ItemStack)recipe.getKey()[1], (ItemStack)recipe.getValue()));
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey()[0], (ItemStack) recipe.getKey()[1], (ItemStack) recipe.getValue()));
 		}
 	}
 
@@ -104,7 +104,7 @@ public class CyclotronRecipeHandler extends TemplateRecipeHandler implements ICo
 		Map<Object[], Object> recipes = CyclotronRecipes.getRecipes();
 		for (Map.Entry<Object[], Object> recipe : recipes.entrySet()) {
 			if (NEIServerUtils.areStacksSameType(ingredient, (ItemStack)recipe.getKey()[0]) || NEIServerUtils.areStacksSameType(ingredient, (ItemStack)recipe.getKey()[1]))
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey()[0], (ItemStack)recipe.getKey()[1], (ItemStack)recipe.getValue()));				
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey()[0], (ItemStack) recipe.getKey()[1], (ItemStack) recipe.getValue()));
 		}
 	}
 

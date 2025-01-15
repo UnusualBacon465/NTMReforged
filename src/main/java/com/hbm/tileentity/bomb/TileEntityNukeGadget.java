@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class TileEntityNukeGadget extends TileEntity implements ISidedInventory, IGUIProvider {
 
-	private ItemStack slots[];
+	private ItemStack[] slots;
 	private String customName;
 	
 	public TileEntityNukeGadget() {
@@ -201,48 +201,25 @@ public class TileEntityNukeGadget extends TileEntity implements ISidedInventory,
 	}*/
 	
 	public boolean exp1() {
-		if(this.slots[1] != null && this.slots[1].getItem() == ModItems.early_explosive_lenses)
-		{
-			return true;
-		}
-		
-		return false;
-	}
+        return this.slots[1] != null && this.slots[1].getItem() == ModItems.early_explosive_lenses;
+    }
 	
 	public boolean exp2() {
-		if(this.slots[2] != null && this.slots[2].getItem() == ModItems.early_explosive_lenses)
-		{
-			return true;
-		}
-		
-		return false;
-	}
+        return this.slots[2] != null && this.slots[2].getItem() == ModItems.early_explosive_lenses;
+    }
 	
 	public boolean exp3() {
-		if(this.slots[3] != null && this.slots[3].getItem() == ModItems.early_explosive_lenses)
-		{
-			return true;
-		}
-		
-		return false;
-	}
+        return this.slots[3] != null && this.slots[3].getItem() == ModItems.early_explosive_lenses;
+    }
 	
 	public boolean exp4() {
-		if(this.slots[4] != null && this.slots[4].getItem() == ModItems.early_explosive_lenses)
-		{
-			return true;
-		}
-		
-		return false;
-	}
+        return this.slots[4] != null && this.slots[4].getItem() == ModItems.early_explosive_lenses;
+    }
 	
 	public boolean isReady() {
-		if(this.exp1() == true && this.exp2() == true && this.exp3() == true && this.exp4() == true)
+		if(this.exp1() && this.exp2() && this.exp3() && this.exp4())
 		{
-			if(this.slots[0] != null && this.slots[5] != null && this.slots[0].getItem() == ModItems.gadget_wireing && slots[5].getItem() == ModItems.gadget_core)
-			{
-				return true;
-			}
+            return this.slots[0] != null && this.slots[5] != null && this.slots[0].getItem() == ModItems.gadget_wireing && slots[5].getItem() == ModItems.gadget_core;
 		}
 		
 		return false;

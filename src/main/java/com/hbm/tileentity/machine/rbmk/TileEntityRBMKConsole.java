@@ -480,7 +480,7 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 		}
 	}
 	
-	public class RBMKScreen {
+	public static class RBMKScreen {
 		public ScreenType type = ScreenType.NONE;
 		public Integer[] columns = new Integer[0];
 		public String display = null;

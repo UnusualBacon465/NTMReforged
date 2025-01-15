@@ -36,7 +36,7 @@ public class CrucibleCastingHandler extends TemplateRecipeHandler implements ICo
 	public LinkedList<RecipeTransferRect> transferRectsRec = new LinkedList<RecipeTransferRect>();
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	
-	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
 
 		PositionedStack input;
 		PositionedStack mold;

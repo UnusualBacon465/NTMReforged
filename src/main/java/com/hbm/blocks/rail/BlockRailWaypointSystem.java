@@ -169,9 +169,8 @@ public abstract class BlockRailWaypointSystem extends BlockDummyable implements 
 		
 		if(dist < 0) return pointA;
 		if(dist > 1) return pointB;
-		if(dist < 0 || dist > 1) return null;
-		
-		return Vec3.createVectorHelper(pointA.xCoord + ab.xCoord * dist, pointA.yCoord + (pointB.yCoord - pointA.yCoord) * dist, pointA.zCoord + ab.zCoord * dist);
+
+        return Vec3.createVectorHelper(pointA.xCoord + ab.xCoord * dist, pointA.yCoord + (pointB.yCoord - pointA.yCoord) * dist, pointA.zCoord + ab.zCoord * dist);
 	}
 	
 	/** Creates the in-world position for a node based on the node itself and the core position */
@@ -185,7 +184,7 @@ public abstract class BlockRailWaypointSystem extends BlockDummyable implements 
 		return core.addVector(copy.xCoord, copy.yCoord, copy.zCoord);
 	}
 	
-	public class RailDef {
+	public static class RailDef {
 		String name;
 		public List<Vec3> nodes = new ArrayList();
 		

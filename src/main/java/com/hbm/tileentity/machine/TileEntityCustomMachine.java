@@ -137,10 +137,9 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 
 								TileEntity tile = worldObj.getTileEntity(source[0], source[1], source[2]);
 
-								if (tile instanceof TileEntityReactorResearch) {
+								if (tile instanceof TileEntityReactorResearch reactor) {
 
-									TileEntityReactorResearch reactor = (TileEntityReactorResearch) tile;
-									this.flux = reactor.totalFlux;
+                                    this.flux = reactor.totalFlux;
 								}
 							}
 						}
@@ -275,9 +274,8 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 	protected void tryPullHeat(int x, int y, int z) {
 		TileEntity con = worldObj.getTileEntity(x, y, z);
 
-		if(con instanceof IHeatSource) {
-			IHeatSource source = (IHeatSource) con;
-			int diff = source.getHeatStored() - this.heat;
+		if(con instanceof IHeatSource source) {
+            int diff = source.getHeatStored() - this.heat;
 
 			if(diff == 0) {
 				return;
@@ -300,10 +298,9 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 		for(int i = 0; i < recipe.inputItems.length; i++) {
 			if(slots[i + 4] != null && slots[i + 4].stackSize < recipe.inputItems[i].stacksize) return false;
 		}
-		if(config.fluxMode ? this.flux < recipe.flux : false) return false;
-		if(config.maxHeat>0 && recipe.heat>0 ? this.heat < recipe.heat : false) return false;
-		return true;
-	}
+		if(config.fluxMode && this.flux < recipe.flux) return false;
+        return config.maxHeat <= 0 || recipe.heat <= 0 || this.heat >= recipe.heat;
+    }
 
 	public boolean hasSpace(CustomMachineRecipe recipe) {
 
@@ -379,9 +376,8 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 			if(!comp.allowedMetas.contains(meta)) return false;
 
 			TileEntity tile = Compat.getTileStandard(worldObj, x, y, z);
-			if(tile instanceof TileEntityProxyBase) {
-				TileEntityProxyBase proxy = (TileEntityProxyBase) tile;
-				proxy.cachedPosition = new BlockPos(xCoord, yCoord, zCoord);
+			if(tile instanceof TileEntityProxyBase proxy) {
+                proxy.cachedPosition = new BlockPos(xCoord, yCoord, zCoord);
 				proxy.markDirty();
 
 				for(ForgeDirection facing : ForgeDirection.VALID_DIRECTIONS) {
@@ -529,8 +525,8 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 
 		FluidTank[] all = new FluidTank[inputTanks.length + outputTanks.length];
 
-		for(int i = 0; i < inputTanks.length; i++) all[i] = inputTanks[i];
-		for(int i = 0; i < outputTanks.length; i++) all[inputTanks.length + i] = outputTanks[i];
+        System.arraycopy(inputTanks, 0, all, 0, inputTanks.length);
+        System.arraycopy(outputTanks, 0, all, inputTanks.length + 0, outputTanks.length);
 
 		return all;
 	}
@@ -538,7 +534,7 @@ public class TileEntityCustomMachine extends TileEntityMachinePolluting implemen
 	@Override
 	public FluidTank[] getSendingTanks() {
 		FluidTank[] all = new FluidTank[outputTanks.length + this.getSmokeTanks().length];
-		for(int i = 0; i < outputTanks.length; i++) all[i] = outputTanks[i];
+        System.arraycopy(outputTanks, 0, all, 0, outputTanks.length);
 		for(int i = 0; i < this.getSmokeTanks().length; i++) all[outputTanks.length + i] = this.getSmokeTanks()[i];
 		//return outputTanks != null ? outputTanks : new FluidTank[0];
 		return all;

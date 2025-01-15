@@ -281,7 +281,7 @@ public class MK5Frame {
 		TimeAnalyzer.endCount();
 	}
 	
-	public class FloatTriplet {
+	public static class FloatTriplet {
 		public float xCoord;
 		public float yCoord;
 		public float zCoord;

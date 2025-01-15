@@ -99,7 +99,7 @@ public class RenderFoundryTank implements ISimpleBlockRenderingHandler {
 		boolean outPosZ = world.getBlock(x, y, z + 1) == ModBlocks.foundry_outlet && world.getBlockMetadata(x, y, z + 1) == Library.POS_Z.ordinal();
 		boolean outNegZ = world.getBlock(x, y, z - 1) == ModBlocks.foundry_outlet && world.getBlockMetadata(x, y, z - 1) == Library.NEG_Z.ordinal();
 		
-		boolean doRender = tile != null ? (tile.amount > 0 && tile.type != null) : false;
+		boolean doRender = tile != null && (tile.amount > 0 && tile.type != null);
 		double max = 0.75D + (conNegY ? 0.125D : 0) + (conPosY ? 0.125D : 0);
 		double level = doRender ? tile.amount * max / tile.getCapacity() : 0;
 		Color color = doRender ? new Color(tile.type.moltenColor).brighter() : null;

@@ -122,7 +122,7 @@ public class HbmPotion extends Potion {
 			}
 		}
 		if(this == radiation) {
-			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, (float)(level + 1F) * 0.05F);
+			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, (level + 1F) * 0.05F);
 		}
 		if(this == radaway) {
 			HbmLivingProps.incrementRadiation(entity, -(level + 1));
@@ -139,9 +139,8 @@ public class HbmPotion extends Potion {
 			entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "hbm:weapon.laserBang", 100.0F, 1.0F);
 			ExplosionLarge.spawnParticles(entity.worldObj, entity.posX, entity.posY, entity.posZ, 10);
 			
-			if(entity instanceof EntityCow) {
-				EntityCow cow = (EntityCow) entity;
-				int toDrop = cow.isChild() ? 10 : 3;
+			if(entity instanceof EntityCow cow) {
+                int toDrop = cow.isChild() ? 10 : 3;
 				cow.entityDropItem(new ItemStack(ModItems.cheese, toDrop), 1.0F);
 			}
 		}
@@ -169,7 +168,7 @@ public class HbmPotion extends Potion {
 		
 		if(this == lead) {
 			int k = 60;
-			return k > 0 ? par1 % k == 0 : true;
+			return k <= 0 || par1 % k == 0;
 		}
 		
 		return false;

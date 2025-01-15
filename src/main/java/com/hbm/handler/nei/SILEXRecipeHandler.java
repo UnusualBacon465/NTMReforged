@@ -42,7 +42,7 @@ public class SILEXRecipeHandler extends TemplateRecipeHandler implements ICompat
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
 
 		PositionedStack input;
 		List<PositionedStack> outputs;

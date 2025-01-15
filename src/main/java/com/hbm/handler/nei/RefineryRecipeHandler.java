@@ -34,7 +34,7 @@ public class RefineryRecipeHandler extends TemplateRecipeHandler implements ICom
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-	public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input;
 		PositionedStack result1;
 		PositionedStack result2;
@@ -98,10 +98,10 @@ public class RefineryRecipeHandler extends TemplateRecipeHandler implements ICom
 		if ((outputId.equals("refinery")) && getClass() == RefineryRecipeHandler.class) {
 			Map<Object, Object[]> recipes = RefineryRecipes.getRefineryRecipe();
 			for (Map.Entry<Object, Object[]> recipe : recipes.entrySet()) {
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey(), 
-						(ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1], 
-						(ItemStack)recipe.getValue()[2], (ItemStack)recipe.getValue()[3], 
-						(ItemStack)recipe.getValue()[4]));
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey(),
+                        (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1],
+                        (ItemStack) recipe.getValue()[2], (ItemStack) recipe.getValue()[3],
+                        (ItemStack) recipe.getValue()[4]));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -117,10 +117,10 @@ public class RefineryRecipeHandler extends TemplateRecipeHandler implements ICom
 					compareFluidStacks((ItemStack)recipe.getValue()[2], result) || 
 					compareFluidStacks((ItemStack)recipe.getValue()[3], result) || 
 					compareFluidStacks((ItemStack)recipe.getValue()[4], result))
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey(), 
-						(ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1], 
-						(ItemStack)recipe.getValue()[2], (ItemStack)recipe.getValue()[3], 
-						(ItemStack)recipe.getValue()[4]));
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey(),
+                        (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1],
+                        (ItemStack) recipe.getValue()[2], (ItemStack) recipe.getValue()[3],
+                        (ItemStack) recipe.getValue()[4]));
 		}
 	}
 
@@ -138,10 +138,10 @@ public class RefineryRecipeHandler extends TemplateRecipeHandler implements ICom
 		Map<Object, Object[]> recipes = RefineryRecipes.getRefineryRecipe();
 		for (Map.Entry<Object, Object[]> recipe : recipes.entrySet()) {
 			if (compareFluidStacks(ingredient, (ItemStack)recipe.getKey()))
-				this.arecipes.add(new SmeltingSet((ItemStack)recipe.getKey(), 
-						(ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1], 
-						(ItemStack)recipe.getValue()[2], (ItemStack)recipe.getValue()[3], 
-						(ItemStack)recipe.getValue()[4]));				
+				this.arecipes.add(new SmeltingSet((ItemStack) recipe.getKey(),
+                        (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1],
+                        (ItemStack) recipe.getValue()[2], (ItemStack) recipe.getValue()[3],
+                        (ItemStack) recipe.getValue()[4]));
 		}
 	}
 	

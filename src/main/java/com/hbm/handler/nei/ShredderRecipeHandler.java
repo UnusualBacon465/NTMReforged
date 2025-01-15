@@ -39,7 +39,7 @@ public class ShredderRecipeHandler extends TemplateRecipeHandler implements ICom
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-	public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input;
 		PositionedStack result;
 

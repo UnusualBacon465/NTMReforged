@@ -88,12 +88,12 @@ public class TileEntityCondenserPowered extends TileEntityCondenser implements I
 	
 	@Override
 	public boolean extraCondition(int convert) {
-		return power >= convert * 10;
+		return power >= convert * 10L;
 	}
 
 	@Override
 	public void postConvert(int convert) {
-		this.power -= convert * powerConsumption;
+		this.power -= (long) convert * powerConsumption;
 		if(this.power < 0) this.power = 0;
 	}
 

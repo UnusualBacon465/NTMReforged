@@ -35,7 +35,7 @@ public class RadiolysisRecipeHandler extends TemplateRecipeHandler implements IC
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 		
-	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
 		PositionedStack input;
 		PositionedStack output1;
 		PositionedStack output2;
@@ -82,7 +82,7 @@ public class RadiolysisRecipeHandler extends TemplateRecipeHandler implements IC
 			HashMap<Object, Object[]> recipes = (HashMap<Object, Object[]>) RadiolysisRecipes.getRecipesForNEI();
 			
 			for(Entry<Object, Object[]> recipe : recipes.entrySet()) {
-				this.arecipes.add(new RecipeSet((ItemStack)recipe.getKey(), (ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1]));
+				this.arecipes.add(new RecipeSet((ItemStack) recipe.getKey(), (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1]));
 			}
 		} else {
 			super.loadCraftingRecipes(outputId, results);
@@ -95,7 +95,7 @@ public class RadiolysisRecipeHandler extends TemplateRecipeHandler implements IC
 		
 		for(Entry<Object, Object[]> recipe : recipes.entrySet()) {
 			if(compareFluidStacks((ItemStack)recipe.getValue()[0], result) || compareFluidStacks((ItemStack)recipe.getValue()[1], result))
-				this.arecipes.add(new RecipeSet((ItemStack)recipe.getKey(), (ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1]));
+				this.arecipes.add(new RecipeSet((ItemStack) recipe.getKey(), (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1]));
 		}
 	}
 	
@@ -115,7 +115,7 @@ public class RadiolysisRecipeHandler extends TemplateRecipeHandler implements IC
 		
 		for(Entry<Object, Object[]> recipe : recipes.entrySet()) {
 			if(compareFluidStacks((ItemStack)recipe.getKey(), ingredient))
-				this.arecipes.add(new RecipeSet((ItemStack)recipe.getKey(), (ItemStack)recipe.getValue()[0], (ItemStack)recipe.getValue()[1]));
+				this.arecipes.add(new RecipeSet((ItemStack) recipe.getKey(), (ItemStack) recipe.getValue()[0], (ItemStack) recipe.getValue()[1]));
 		}
 	}
 

@@ -250,7 +250,7 @@ public class ExplosionNukeRayBatched {
 		world.setBlock(x, y, z, Blocks.air, 0, 3);
 	}
 	
-	public class FloatTriplet {
+	public static class FloatTriplet {
 		public float xCoord;
 		public float yCoord;
 		public float zCoord;

@@ -36,7 +36,7 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 	
 	/* once i have to start debugging this, even my nightmares will start shitting themselves */
 	
-	private static HashMap<World, WorldRadiationData> worldMap = new HashMap();
+	private static final HashMap<World, WorldRadiationData> worldMap = new HashMap();
 
 	@Override
 	public void clearSystem(World world) {
@@ -124,11 +124,8 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 			return false;
 		}
 		SubChunkRadiationStorage sc = st.getForYLevel(y);
-		if(sc == null){
-			return false;
-		}
-		return true;
-	}
+        return sc != null;
+    }
 	
 	public static SubChunkRadiationStorage getSubChunkStorage(World world, int x, int y, int z){
 		ChunkRadiationStorage st = getChunkStorage(world, x, y, z);
@@ -432,7 +429,7 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 		}
 	}
 	
-	private static Queue<BlockPos> stack = new ArrayDeque(1024);
+	private static final Queue<BlockPos> stack = new ArrayDeque(1024);
 	
 	private static RadPocket buildPocket(SubChunkRadiationStorage subChunk, World world, BlockPos start, BlockPos subChunkWorldPos, ExtendedBlockStorage chunk, RadPocket[] pocketsByBlock, int index){
 		RadPocket pocket = new RadPocket(subChunk, index);
@@ -584,11 +581,11 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 	}
 	
 	public static class ChunkRadiationStorage {
-		private static ByteBuffer buf = ByteBuffer.allocate(524288);
+		private static final ByteBuffer buf = ByteBuffer.allocate(524288);
 		
 		public WorldRadiationData parent;
-		private Chunk chunk;
-		private SubChunkRadiationStorage[] chunks = new SubChunkRadiationStorage[16];
+		private final Chunk chunk;
+		private final SubChunkRadiationStorage[] chunks = new SubChunkRadiationStorage[16];
 		
 		public ChunkRadiationStorage(WorldRadiationData parent, Chunk chunk) {
 			this.parent = parent;
@@ -682,7 +679,7 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 		public void readFromNBT(NBTTagCompound tag){
 			ByteBuffer data = ByteBuffer.wrap(tag.getByteArray("chunkRadData"));
 			for(int i = 0; i < chunks.length; i ++){
-				boolean subChunkExists = data.get() == 1 ? true : false;
+				boolean subChunkExists = data.get() == 1;
 				if(subChunkExists){
 					int yLevel = data.getShort();
 					SubChunkRadiationStorage st = new SubChunkRadiationStorage(this, yLevel, null, null);
@@ -694,7 +691,7 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 							parent.activePockets.add(st.pockets[j]);
 						}
 					}
-					boolean perBlockDataExists = data.get() == 1 ? true : false;
+					boolean perBlockDataExists = data.get() == 1;
 					if(perBlockDataExists){
 						st.pocketsByBlock = new RadPocket[16*16*16];
 						for(int j = 0; j < 16*16*16; j ++){
@@ -727,8 +724,8 @@ public class ChunkRadiationHandlerNT extends ChunkRadiationHandler {
 	
 	public static class WorldRadiationData {
 		public World world;
-		private Set<BlockPos> dirtyChunks = new HashSet();
-		private Set<BlockPos> dirtyChunks2 = new HashSet();
+		private final Set<BlockPos> dirtyChunks = new HashSet();
+		private final Set<BlockPos> dirtyChunks2 = new HashSet();
 		private boolean iteratingDirty = false;
 		
 		public Set<RadPocket> activePockets = new HashSet();

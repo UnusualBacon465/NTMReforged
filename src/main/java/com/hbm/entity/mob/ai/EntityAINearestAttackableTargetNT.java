@@ -31,7 +31,7 @@ public class EntityAINearestAttackableTargetNT extends EntityAITarget {
 
 			@Override
 			public boolean isEntityApplicable(Entity entity) {
-				return selector != null && !selector.isEntityApplicable(entity) ? false : !(entity instanceof EntityLivingBase) ? false : EntityAINearestAttackableTargetNT.this.isSuitableTarget((EntityLivingBase) entity, false);
+				return (selector == null || selector.isEntityApplicable(entity)) && (!(entity instanceof EntityLivingBase) ? false : EntityAINearestAttackableTargetNT.this.isSuitableTarget((EntityLivingBase) entity, false));
 			}
 		};
 	}

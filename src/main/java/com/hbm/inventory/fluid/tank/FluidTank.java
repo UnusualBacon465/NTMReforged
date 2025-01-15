@@ -196,7 +196,7 @@ public class FluidTank {
 		int color = type.getTint();
 		double r = ((color & 0xff0000) >> 16) / 255D;
 		double g = ((color & 0x00ff00) >> 8) / 255D;
-		double b = ((color & 0x0000ff) >> 0) / 255D;
+		double b = ((color & 0x0000ff)) / 255D;
 		GL11.glColor3d(r, g, b);
 
 		y -= height;

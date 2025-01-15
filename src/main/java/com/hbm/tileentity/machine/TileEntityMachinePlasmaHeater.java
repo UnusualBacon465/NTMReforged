@@ -79,7 +79,7 @@ public class TileEntityMachinePlasmaHeater extends TileEntityMachineBase impleme
 				tanks[1].setFill(tanks[1].getFill() - convert);
 				
 				plasma.setFill(plasma.getFill() + convert * 2);
-				power -= convert * powerReq;
+				power -= (long) convert * powerReq;
 				
 				this.markDirty();
 			}

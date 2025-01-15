@@ -45,7 +45,7 @@ public class TileEntityLanternBehemoth extends TileEntity implements INBTPacketR
 			if(comTimer == 0) {
 				List<EntityPlayer> players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox(xCoord - 10, yCoord - 10, zCoord - 10, xCoord + 11, yCoord + 11, zCoord + 11));
 				EntityPlayer first = players.isEmpty() ? null : players.get(0);
-				boolean bonus = first == null ? false : (HbmPlayerProps.getData(first).reputation >= 10);
+				boolean bonus = first != null && (HbmPlayerProps.getData(first).reputation >= 10);
 				EntityBobmazon shuttle = new EntityBobmazon(worldObj);
 				shuttle.posX = xCoord + 0.5 + worldObj.rand.nextGaussian() * 10;
 				shuttle.posY = 300;

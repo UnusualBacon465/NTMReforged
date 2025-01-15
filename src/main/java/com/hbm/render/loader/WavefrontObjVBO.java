@@ -12,7 +12,7 @@ import net.minecraftforge.client.model.obj.Vertex;
 
 public class WavefrontObjVBO implements IModelCustomNamed {
 
-	class VBOBufferData {
+	static class VBOBufferData {
 
 		String name;
 		int vertices = 0;

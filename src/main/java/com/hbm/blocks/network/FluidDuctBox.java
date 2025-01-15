@@ -108,10 +108,10 @@ public class FluidDuctBox extends FluidDuctBase implements IBlockMulti, ILookOve
 			if(pY && pX) return side == 3 ? iconCurveTR[m] : iconCurveTL[m];
 			if(pY && nX) return side == 2 ? iconCurveTR[m] : iconCurveTL[m];
 
-			if(pX && nZ) return side == 0 ? iconCurveTR[m] : iconCurveTR[m];
-			if(pX && pZ) return side == 0 ? iconCurveBR[m] : iconCurveBR[m];
-			if(nX && nZ) return side == 0 ? iconCurveTL[m] : iconCurveTL[m];
-			if(nX && pZ) return side == 0 ? iconCurveBL[m] : iconCurveBL[m];
+			if(pX && nZ) return iconCurveTR[m];
+			if(pX && pZ) return iconCurveBR[m];
+			if(nX && nZ) return iconCurveTL[m];
+			if(nX && pZ) return iconCurveBL[m];
 			
 			return iconJunction[m][meta / 3];
 		}

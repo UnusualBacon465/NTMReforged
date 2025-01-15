@@ -59,7 +59,7 @@ public class BlockLayering extends Block {
 		if(block instanceof RBMKDebris || block instanceof ZirnoxDestroyed)
 			return true;
 		
-		return block != Blocks.ice && block != Blocks.packed_ice ? (block.isLeaves(world, x, y - 1, z) ? true : (block == this && (world.getBlockMetadata(x, y - 1, z) & 7) == 7 ? true : block.isOpaqueCube() && block.getMaterial().blocksMovement())) : false;
+		return block != Blocks.ice && block != Blocks.packed_ice && (block.isLeaves(world, x, y - 1, z) || (block == this && (world.getBlockMetadata(x, y - 1, z) & 7) == 7 || block.isOpaqueCube() && block.getMaterial().blocksMovement()));
 	}
 
 	public void onNeighborBlockChange(World p_149695_1_, int p_149695_2_, int p_149695_3_, int p_149695_4_, Block p_149695_5_) {

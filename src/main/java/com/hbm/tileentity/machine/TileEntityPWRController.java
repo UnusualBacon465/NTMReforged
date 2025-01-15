@@ -377,7 +377,7 @@ public class TileEntityPWRController extends TileEntityMachineBase implements IG
 		int heatCycles = heatToUse / step.heatReq;
 		int cycles = Math.min(coolCycles, Math.min(hotCycles, heatCycles));
 		
-		this.hullHeat -= step.heatReq * cycles;
+		this.hullHeat -= (long) step.heatReq * cycles;
 		this.tanks[0].setFill(tanks[0].getFill() - step.amountReq * cycles);
 		this.tanks[1].setFill(tanks[1].getFill() + step.amountProduced * cycles);
 	}

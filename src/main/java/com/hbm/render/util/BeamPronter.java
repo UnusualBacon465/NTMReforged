@@ -93,15 +93,15 @@ public class BeamPronter {
 
 					int r1 = ((outerColor & 0xFF0000) >> 16);
 					int g1 = ((outerColor & 0x00FF00) >> 8);
-					int b1 = ((outerColor & 0x0000FF) >> 0);
+					int b1 = ((outerColor & 0x0000FF));
 					
 					int r2 = ((innerColor & 0xFF0000) >> 16);
 					int g2 = ((innerColor & 0x00FF00) >> 8);
-					int b2 = ((innerColor & 0x0000FF) >> 0);
+					int b2 = ((innerColor & 0x0000FF));
 
 					int r = ((int)(r1 + (r2 - r1) * inter)) << 16;
 					int g = ((int)(g1 + (g2 - g1) * inter)) << 8;
-					int b = ((int)(b1 + (b2 - b1) * inter)) << 0;
+					int b = ((int) (b1 + (b2 - b1) * inter));
 					
 					int color = r | g | b;
 

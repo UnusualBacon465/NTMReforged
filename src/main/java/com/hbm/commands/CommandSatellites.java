@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static com.hbm.util.GameRuleHelper.parseInt;
+
 public class CommandSatellites extends CommandBase {
 	@Override
 	public String getCommandName() {

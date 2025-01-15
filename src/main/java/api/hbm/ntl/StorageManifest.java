@@ -84,7 +84,7 @@ public class StorageManifest {
 		public HashMap<Integer, NBTNode> metaNBT = new HashMap();
 	}
 
-	public class NBTNode {
+	public static class NBTNode {
 
 		public HashMap<CompoundTag, Long> nbtAmount = new HashMap();
 	}
