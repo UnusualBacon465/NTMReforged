@@ -122,8 +122,8 @@ public class ModuleRichTooltip {
 					} else {
 						ItemStack stack = (ItemStack) o;
 						GL11.glColor3f(1F, 1F, 1F);
-						gui.getItemRenderer().renderItemAndEffectIntoGUI(gui.getFontRenderer(), gui.mc.getTextureManager(), stack, minX + indent, minY);
-						gui.getItemRenderer().renderItemOverlayIntoGUI(gui.getFontRenderer(), gui.mc.getTextureManager(), stack, minX + indent, minY, stack.stackSize == 0 ? (EnumChatFormatting.RED + "_ _") : null);
+						gui.getItemRenderer().renderItemAndEffectIntoGUI(gui.getFontRenderer(), gui.mc.getTextureManager(), null, minX + indent, minY);
+						gui.getItemRenderer().renderItemOverlayIntoGUI(gui.getFontRenderer(), gui.mc.getTextureManager(), null, minX + indent, minY, stack.stackSize == 0 ? (EnumChatFormatting.RED + "_ _") : null);
 						RenderHelper.disableStandardItemLighting();
 						GL11.glDisable(GL11.GL_DEPTH_TEST);
 						indent += 18;

@@ -288,7 +288,7 @@ public class ItemMold extends Item {
 			if(out != null)
 				return out.copy();
 			
-			return out;
+			return null;
 		}
 
 		@Override

@@ -63,7 +63,7 @@ public class CompatExternal {
 		}
 		
 		//otherwise, return the tile at that position whihc could be null
-		return tile;
+		return null;
 	}
 	
 	/**

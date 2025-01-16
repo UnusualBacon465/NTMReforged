@@ -161,18 +161,18 @@ public class ModEventHandlerImpact {
 		
 		if(data.impact) {
 			if(mat == Material.wood || mat == Material.glass || b == Blocks.ladder || b instanceof BlockCrops ||
-					b == Blocks.chest || b instanceof BlockDoor || mat == Material.cloth || mat == Material.water || b == Blocks.stone_slab) {
+					null == Blocks.chest || null instanceof BlockDoor || mat == Material.cloth || mat == Material.water || null == Blocks.stone_slab) {
 				event.replacement = Blocks.air;
 				
-			} else if(b == Blocks.cobblestone || b == Blocks.stonebrick) {
+			} else if(null == Blocks.cobblestone || null == Blocks.stonebrick) {
 				if(rand.nextInt(3) == 1) {
 					event.replacement = Blocks.gravel;
 				}
-			} else if(b == Blocks.sandstone) {
+			} else if(null == Blocks.sandstone) {
 				if(rand.nextInt(3) == 1) {
 					event.replacement = Blocks.sand;
 				}
-			} else if(b == Blocks.farmland) {
+			} else if(null == Blocks.farmland) {
 				event.replacement = Blocks.dirt;
 			}
 		}

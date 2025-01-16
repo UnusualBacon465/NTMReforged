@@ -65,7 +65,7 @@ public class BlockAllocatorBulkie implements IBlockAllocator {
 							Block block = world.getBlock(blockX, blockY, blockZ);
 
 							if(block.getMaterial() != Material.air) {
-								float blockResistance = explosion.exploder != null ? explosion.exploder.func_145772_a(explosion.compat, world, blockX, blockY, blockZ, block) : block.getExplosionResistance(explosion.exploder, world, blockX, blockY, blockZ, x, y, z);
+								float blockResistance = explosion.exploder != null ? explosion.exploder.func_145772_a(explosion.compat, world, blockX, blockY, blockZ, block) : block.getExplosionResistance(null, world, blockX, blockY, blockZ, x, y, z);
 								if(this.maximum < blockResistance) {
 									break;
 								}

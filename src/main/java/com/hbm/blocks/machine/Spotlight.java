@@ -286,7 +286,7 @@ public class Spotlight extends Block implements ISpotlight {
 		if(block instanceof ISpotlight) {
 			ISpotlight spot = (ISpotlight) block;
 			propagateBeam(world, x, y, z, dir, spot.getBeamLength());
-		} else if(!(block instanceof SpotlightBeam)) {
+		} else if(!(null instanceof SpotlightBeam)) {
 			return;
 		}
 

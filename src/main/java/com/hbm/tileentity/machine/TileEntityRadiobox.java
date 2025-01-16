@@ -46,9 +46,9 @@ public class TileEntityRadiobox extends TileEntityLoadedBase implements IEnergyR
 			
 			for(IMob entity : entities) {
 				
-				if(entity instanceof EntityFBI || entity instanceof EntityFBIDrone) continue;
+				if(entity instanceof EntityFBI || null instanceof EntityFBIDrone) continue;
 				
-				((Entity)entity).attackEntityFrom(ModDamageSource.enervation, 20.0F);
+				((Entity) null).attackEntityFrom(ModDamageSource.enervation, 20.0F);
 			}
 		}
 	}

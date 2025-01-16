@@ -48,7 +48,7 @@ public class RenderGrenade extends Render {
         if(grenade instanceof EntityGrenadeMk2) {
     		return ResourceManager.grenade_mk2;
         }
-        if(grenade instanceof EntityGrenadeASchrab) {
+        if(null instanceof EntityGrenadeASchrab) {
     		return ResourceManager.grenade_aschrab_tex;
         }
         

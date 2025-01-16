@@ -229,8 +229,8 @@ public class TileEntityTurretSentry extends TileEntityTurretBaseNT implements IG
 	@Override
 	protected NBTTagCompound writePacket() {
 		NBTTagCompound data = super.writePacket();
-		if(didJustShootLeft) data.setBoolean("justShotLeft", didJustShootLeft);
-		if(didJustShootRight) data.setBoolean("justShotRight", didJustShootRight);
+		if(didJustShootLeft) data.setBoolean("justShotLeft", true);
+		if(didJustShootRight) data.setBoolean("justShotRight", true);
 		didJustShootLeft = false;
 		didJustShootRight = false;
 		return data;

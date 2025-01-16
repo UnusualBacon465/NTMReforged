@@ -130,7 +130,7 @@ public class RenderConveyorChute implements ISimpleBlockRenderingHandler {
 		
 		if(y > 0) {
 			Block below = world.getBlock(x, y - 1, z);
-			if(!(below instanceof IConveyorBelt || below instanceof IEnterableBlock)) {
+			if(!(below instanceof IConveyorBelt || null instanceof IEnterableBlock)) {
 				
 				if(meta == 2) {
 					renderer.uvRotateTop = 3;

@@ -165,7 +165,7 @@ public class TileEntityBarrel extends TileEntityMachineBase implements SimpleCom
 				}
 				
 			//if it's just a consumer, buffer it as a subscriber
-			} else if(te instanceof IFluidConnector) {
+			} else if(null instanceof IFluidConnector) {
 				consumers.add((IFluidConnector) te);
 			}
 		}

@@ -190,7 +190,7 @@ public class ItemGunBase extends Item implements IHoldableWeapon, IItemHUD, IEqu
 		}
 		
 		if(main && getDelay(stack) == 0 && !getIsReloading(stack) && getItemWear(stack) < mainConfig.durability) {
-			return hasAmmo(stack, player, main);
+			return hasAmmo(stack, player, true);
 		}
 		
 		if(!main && altConfig != null && getDelay(stack) == 0 && !getIsReloading(stack) && getItemWear(stack) < mainConfig.durability) {
@@ -310,7 +310,7 @@ public class ItemGunBase extends Item implements IHoldableWeapon, IItemHUD, IEqu
 
 		boolean validConfig = mainConfig.firingMode == GunConfiguration.FIRE_MANUAL || mainConfig.firingMode == GunConfiguration.FIRE_BURST;
 
-		if(validConfig && main && tryShoot(stack, world, player, main)) {
+		if(validConfig && main && tryShoot(stack, world, player, true)) {
 
 			if(mainConfig.firingMode == GunConfiguration.FIRE_BURST){
 				if(getBurstDuration(stack) <= 0)
@@ -321,7 +321,7 @@ public class ItemGunBase extends Item implements IHoldableWeapon, IItemHUD, IEqu
 			}
 		}
 		
-		if(!main && altConfig != null && tryShoot(stack, world, player, main)) {
+		if(!main && altConfig != null && tryShoot(stack, world, player, false)) {
 
 			if(altConfig.firingMode == GunConfiguration.FIRE_BURST && getBurstDuration(stack) <= 0){
 				setBurstDuration(stack,altConfig.firingDuration * altConfig.roundsPerBurst);

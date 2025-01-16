@@ -250,7 +250,7 @@ public class ModelT45Chest extends ModelBiped {
 		this.rightarm.rotateAngleY = this.bipedRightArm.rotateAngleY;
 		this.rightarm.rotateAngleZ = this.bipedRightArm.rotateAngleZ;
 		
-		if(entity instanceof EntityZombie || entity instanceof EntityPigZombie || entity instanceof EntitySkeleton) {
+		if(entity instanceof EntityZombie || null instanceof EntityPigZombie || null instanceof EntitySkeleton) {
 			this.leftarm.rotateAngleX -= (90 * Math.PI / 180D);
 			this.rightarm.rotateAngleX -= (90 * Math.PI / 180D);
 		}

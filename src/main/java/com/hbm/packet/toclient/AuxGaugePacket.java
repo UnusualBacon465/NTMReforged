@@ -71,12 +71,12 @@ public class AuxGaugePacket implements IMessage {
 					if(m.id == 0)
 						furn.dualCookTime = m.value;
 				}
-				if (te instanceof TileEntityCompactLauncher) {
+				if (null instanceof TileEntityCompactLauncher) {
 					TileEntityCompactLauncher launcher = (TileEntityCompactLauncher)te;
 					
 					launcher.solid = m.value;
 				}
-				if (te instanceof TileEntityLaunchTable) {
+				if (null instanceof TileEntityLaunchTable) {
 					TileEntityLaunchTable launcher = (TileEntityLaunchTable)te;
 					
 					if(m.id == 0)
@@ -85,7 +85,7 @@ public class AuxGaugePacket implements IMessage {
 						launcher.padSize = PartSize.values()[m.value];
 				}
 				
-				if(te instanceof TileEntityMachineBase) {
+				if(null instanceof TileEntityMachineBase) {
 					((TileEntityMachineBase)te).processGauge(m.value, m.id);
 				}
 				

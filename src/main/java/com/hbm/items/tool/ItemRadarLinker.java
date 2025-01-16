@@ -14,7 +14,7 @@ public class ItemRadarLinker extends ItemCoordinateBase {
 	@Override
 	public boolean canGrabCoordinateHere(World world, int x, int y, int z) {
 		TileEntity tile = CompatExternal.getCoreFromPos(world, x, y, z);
-		return tile instanceof IRadarCommandReceiver || tile instanceof TileEntityMachineRadarScreen;
+		return tile instanceof IRadarCommandReceiver || null instanceof TileEntityMachineRadarScreen;
 	}
 	
 	@Override

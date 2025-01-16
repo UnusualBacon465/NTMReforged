@@ -86,7 +86,7 @@ public class EntityHunterChopper extends EntityFlying implements IMob, IBossDisp
 					worldObj.spawnParticle("fireworksSpark", this.posX, this.posY, this.posZ, d0 * i * 0.25, d1 * i * 0.25, d2 * i * 0.25);
 		}
 
-		return super.attackEntityFrom(source, amount);
+		return super.attackEntityFrom(null, amount);
 	}
 
 	@Override

@@ -168,7 +168,7 @@ public abstract class DoorDecl {
 			} else if(y == 0) {
 				return AxisAlignedBB.getBoundingBox(0, 0, 0, 1, 0.1, 1);
 			} else {
-				return super.getBlockBound(x, y, z, open);
+				return super.getBlockBound(x, y, z, true);
 			}
 		}
 
@@ -441,7 +441,7 @@ public abstract class DoorDecl {
 			} else if(y == 4) {
 				return AxisAlignedBB.getBoundingBox(0, 0.5, 0.15, 1, 1, 0.85);
 			} else {
-				return super.getBlockBound(x, y, z, open);
+				return super.getBlockBound(x, y, z, true);
 			}
 		}
 
@@ -506,7 +506,7 @@ public abstract class DoorDecl {
 		@Override
 		public AxisAlignedBB getBlockBound(int x, int y, int z, boolean open) {
 			if(!open)
-				return super.getBlockBound(x, y, z, open);
+				return super.getBlockBound(x, y, z, false);
 			if(z == 1) {
 				return AxisAlignedBB.getBoundingBox(0.4, 0, 0, 1, 1, 1);
 			} else if(z == -2) {
@@ -516,7 +516,7 @@ public abstract class DoorDecl {
 			} else if(y == 0) {
 				return AxisAlignedBB.getBoundingBox(0, 0, 0, 1, 0.0625, 1);
 			}
-			return super.getBlockBound(x, y, z, open);
+			return super.getBlockBound(x, y, z, true);
 		};
 
 		@Override
@@ -698,7 +698,7 @@ public abstract class DoorDecl {
 				return AxisAlignedBB.getBoundingBox(0, 0.5, 0.5, 1, 1, 1);
 			else if(y == 0)
 				return AxisAlignedBB.getBoundingBox(0, 0, 0.5, 1, 0.1, 1);
-			return super.getBlockBound(x, y, z, open);
+			return super.getBlockBound(x, y, z, true);
 		};
 
 		@Override
@@ -822,7 +822,7 @@ public abstract class DoorDecl {
 			} else if(y == 0) {
 				return AxisAlignedBB.getBoundingBox(0, 0, 0.75, 1, 0.15, 1);
 			}
-			return super.getBlockBound(x, y, z, open);
+			return super.getBlockBound(x, y, z, true);
 		};
 
 		@Override
@@ -1020,13 +1020,13 @@ public abstract class DoorDecl {
 		@Override
 		public AxisAlignedBB getBlockBound(int x, int y, int z, boolean open) {
 			if(!open)
-				return super.getBlockBound(x, y, z, open);
+				return super.getBlockBound(x, y, z, false);
 			if(z == 3) {
 				return AxisAlignedBB.getBoundingBox(0.4, 0, 0, 1, 1, 1);
 			} else if(z == -3) {
 				return AxisAlignedBB.getBoundingBox(0, 0, 0, 0.6, 1, 1);
 			}
-			return super.getBlockBound(x, y, z, open);
+			return super.getBlockBound(x, y, z, true);
 		};
 
 		@Override

@@ -126,7 +126,7 @@ public class ItemChopper extends Item {
 			world.spawnEntityInWorld(entity);
 		}
 
-		return entity;
+		return null;
 	}
 
 	@Override

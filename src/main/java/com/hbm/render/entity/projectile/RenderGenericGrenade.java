@@ -38,7 +38,7 @@ public class RenderGenericGrenade extends Render {
 				}
 				
 			} else {
-				IGenericGrenade grenade = (IGenericGrenade) entity;
+				IGenericGrenade grenade = (IGenericGrenade) null;
 				iicon = grenade.getGrenade().getIconFromDamage(i);
 			}
 	

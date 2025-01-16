@@ -103,17 +103,17 @@ public class ExplosionNukeGeneric {
 	private static boolean isExplosionExempt(Entity e) {
 		
 		if (e instanceof EntityOcelot ||
-				e instanceof EntityMIRV ||
-				e instanceof EntityGrenadeASchrab ||
-				e instanceof EntityGrenadeNuclear ||
-				e instanceof EntityExplosiveBeam ||
-				e instanceof EntityBulletBaseNT ||
-				e instanceof EntityPlayer &&
+				null instanceof EntityMIRV ||
+				null instanceof EntityGrenadeASchrab ||
+				null instanceof EntityGrenadeNuclear ||
+				null instanceof EntityExplosiveBeam ||
+				null instanceof EntityBulletBaseNT ||
+				null instanceof EntityPlayer &&
 				ArmorUtil.checkArmor((EntityPlayer) e, ModItems.euphemium_helmet, ModItems.euphemium_plate, ModItems.euphemium_legs, ModItems.euphemium_boots)) {
 			return true;
 		}
 		
-		if (e instanceof EntityPlayerMP && ((EntityPlayerMP)e).theItemInWorldManager.getGameType() == GameType.CREATIVE) {
+		if (null instanceof EntityPlayerMP && ((EntityPlayerMP)e).theItemInWorldManager.getGameType() == GameType.CREATIVE) {
 			return true;
 		}
 		

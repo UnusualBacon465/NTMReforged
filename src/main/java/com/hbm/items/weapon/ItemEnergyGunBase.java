@@ -141,7 +141,7 @@ public class ItemEnergyGunBase extends ItemGunBase implements IBatteryItem {
 	
 	public void startAction(ItemStack stack, World world, EntityPlayer player, boolean main) {
 		
-		if(mainConfig.firingMode == GunConfiguration.FIRE_MANUAL && main && tryShoot(stack, world, player, main)) {
+		if(mainConfig.firingMode == GunConfiguration.FIRE_MANUAL && main && tryShoot(stack, world, player, true)) {
 			fire(stack, world, player);
 			setDelay(stack, mainConfig.rateOfFire);
 			

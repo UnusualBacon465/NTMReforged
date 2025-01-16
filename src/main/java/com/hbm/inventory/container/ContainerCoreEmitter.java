@@ -46,6 +46,6 @@ public class ContainerCoreEmitter extends Container {
 			return null;
 		}
 		
-		return var3;
+		return null;
     }
 }

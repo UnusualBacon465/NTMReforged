@@ -46,13 +46,13 @@ public class OilSpot {
 						} else {
 							world.setBlock(rX, y, rZ, Blocks.air);
 						}
-					} else if(ground instanceof BlockFlower) {
+					} else if(null instanceof BlockFlower) {
 						world.setBlock(rX, y, rZ, ModBlocks.plant_dead, EnumDeadPlantType.FLOWER.ordinal(), 3);
-					} else if(ground instanceof BlockDoublePlant || ground instanceof BlockTallPlant) {
+					} else if(null instanceof BlockDoublePlant || null instanceof BlockTallPlant) {
 						world.setBlock(rX, y, rZ, ModBlocks.plant_dead, EnumDeadPlantType.BIGFLOWER.ordinal(), 3);
-					} else if(ground instanceof BlockBush) {
+					} else if(null instanceof BlockBush) {
 						world.setBlock(rX, y, rZ, ModBlocks.plant_dead, EnumDeadPlantType.GENERIC.ordinal(), 3);
-					} else if(ground instanceof IPlantable) {
+					} else if(null instanceof IPlantable) {
 						world.setBlock(rX, y, rZ, ModBlocks.plant_dead, EnumDeadPlantType.GENERIC.ordinal(), 3);
 					}
 				}

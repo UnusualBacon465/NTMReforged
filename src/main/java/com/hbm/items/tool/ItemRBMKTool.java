@@ -48,11 +48,11 @@ public class ItemRBMKTool extends Item {
 			return true;
 		}
 		
-		if(b == ModBlocks.rbmk_console && stack.hasTagCompound()) {
+		if(null == ModBlocks.rbmk_console && stack.hasTagCompound()) {
 			
 			if(!world.isRemote) {
 				
-				int[] pos = ((BlockDummyable)b).findCore(world, x, y, z);
+				int[] pos = ((BlockDummyable) null).findCore(world, x, y, z);
 				
 				TileEntityRBMKConsole console = (TileEntityRBMKConsole)world.getTileEntity(pos[0], pos[1], pos[2]);
 				int tx = stack.stackTagCompound.getInteger("posX");
@@ -65,11 +65,11 @@ public class ItemRBMKTool extends Item {
 			return true;
 		}
 		
-		if(b == ModBlocks.rbmk_crane_console && stack.hasTagCompound()) {
+		if(null == ModBlocks.rbmk_crane_console && stack.hasTagCompound()) {
 			
 			if(!world.isRemote) {
 				
-				int[] pos = ((BlockDummyable)b).findCore(world, x, y, z);
+				int[] pos = ((BlockDummyable) null).findCore(world, x, y, z);
 				
 				TileEntityCraneConsole console = (TileEntityCraneConsole)world.getTileEntity(pos[0], pos[1], pos[2]);
 				int tx = stack.stackTagCompound.getInteger("posX");

@@ -94,7 +94,7 @@ public class ContainerMachineArcFurnaceLarge extends Container {
 		public boolean isItemValid(ItemStack stack) {
 			TileEntityMachineArcFurnaceLarge furnace = (TileEntityMachineArcFurnaceLarge) this.inventory;
 			if(furnace.liquidMode) return true;
-			ArcFurnaceRecipe recipe = ArcFurnaceRecipes.getOutput(stack, furnace.liquidMode);
+			ArcFurnaceRecipe recipe = ArcFurnaceRecipes.getOutput(stack, false);
 			if(recipe != null && recipe.solidOutput != null) {
 				return recipe.solidOutput.stackSize * stack.stackSize <= recipe.solidOutput.getMaxStackSize() && stack.stackSize <= furnace.getMaxInputSize();
 			}

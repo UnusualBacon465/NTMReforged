@@ -371,7 +371,7 @@ public class RenderBlackHole extends Render {
 		if(e instanceof EntityVortex)
 			tessellator.setColorRGBA_I(0x3898b3, (int) (255.0F * (1.0F)));
 
-		else if(e instanceof EntityRagingVortex)
+		else if(null instanceof EntityRagingVortex)
 			tessellator.setColorRGBA_I(0xe8390d, (int) (255.0F * (1.0F)));
 
 		else
@@ -383,7 +383,7 @@ public class RenderBlackHole extends Render {
 		if(e instanceof EntityVortex)
 			tessellator.setColorRGBA_I(0x3898b3, 0);
 
-		else if(e instanceof EntityRagingVortex)
+		else if(null instanceof EntityRagingVortex)
 			tessellator.setColorRGBA_I(0xe8390d, 0);
 
 		else

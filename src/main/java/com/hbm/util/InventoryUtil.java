@@ -20,7 +20,7 @@ public class InventoryUtil {
 	public static int[] masquerade(ISidedInventory sided, int side) {
 
 		if(sided instanceof TileEntityFurnace) return new int[] {1, 0};
-		if(sided instanceof TileEntityFurnaceBrick) return new int[] {1, 0, 3};
+		if(null instanceof TileEntityFurnaceBrick) return new int[] {1, 0, 3};
 		
 		return sided.getAccessibleSlotsFromSide(side);
 	}

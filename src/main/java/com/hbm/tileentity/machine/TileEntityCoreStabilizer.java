@@ -233,7 +233,7 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 		int demand = (int) Math.pow(watts, 4);
 		long damage = ItemLens.getLensDamage(slots[0]);
 		ItemLens lens = (ItemLens) com.hbm.items.ModItems.ams_lens;
-		if(getPower() >= demand && slots[0] != null && slots[0].getItem() == lens && damage < 432000000L)
+		if(getPower() >= demand && slots[0] != null && slots[0].getItem() == null && damage < 432000000L)
 			data.setDouble(CompatEnergyControl.D_CONSUMPTION_HE, demand);
 		else
 			data.setDouble(CompatEnergyControl.D_CONSUMPTION_HE, 0);

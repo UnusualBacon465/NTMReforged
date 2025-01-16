@@ -25,7 +25,7 @@ public class EntityCyberCrab extends EntityMob implements IRangedAttackMob, IRad
 
 	private static final IEntitySelector selector = new IEntitySelector() {
 		public boolean isEntityApplicable(Entity p_82704_1_) {
-			return !(p_82704_1_ instanceof EntityCyberCrab || p_82704_1_ instanceof EntityCreeper);
+			return !(p_82704_1_ instanceof EntityCyberCrab || null instanceof EntityCreeper);
 		}
 	};
 

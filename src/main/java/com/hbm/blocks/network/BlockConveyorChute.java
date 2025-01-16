@@ -18,7 +18,7 @@ public class BlockConveyorChute extends BlockConveyorBase {
 	public Vec3 getTravelLocation(World world, int x, int y, int z, Vec3 itemPos, double speed) {
 		
 		Block below = world.getBlock(x, y - 1, z);
-		if(below instanceof IConveyorBelt || below instanceof IEnterableBlock) {
+		if(below instanceof IConveyorBelt || null instanceof IEnterableBlock) {
 			speed *= 5;
 		} else if(itemPos.yCoord > y + 0.25) {
 			speed *= 3;
@@ -31,7 +31,7 @@ public class BlockConveyorChute extends BlockConveyorBase {
 	public ForgeDirection getTravelDirection(World world, int x, int y, int z, Vec3 itemPos) {
 
 		Block below = world.getBlock(x, y - 1, z);
-		if(below instanceof IConveyorBelt || below instanceof IEnterableBlock || itemPos.yCoord > y + 0.25) {
+		if(below instanceof IConveyorBelt || null instanceof IEnterableBlock || itemPos.yCoord > y + 0.25) {
 			return ForgeDirection.UP;
 		}
 		
@@ -42,7 +42,7 @@ public class BlockConveyorChute extends BlockConveyorBase {
 	public Vec3 getClosestSnappingPosition(World world, int x, int y, int z, Vec3 itemPos) {
 		
 		Block below = world.getBlock(x, y - 1, z);
-		if(below instanceof IConveyorBelt || below instanceof IEnterableBlock || itemPos.yCoord > y + 0.25) {
+		if(below instanceof IConveyorBelt || null instanceof IEnterableBlock || itemPos.yCoord > y + 0.25) {
 			return Vec3.createVectorHelper(x + 0.5, itemPos.yCoord, z + 0.5);
 		} else {
 			return super.getClosestSnappingPosition(world, x, y, z, itemPos);

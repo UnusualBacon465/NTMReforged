@@ -1117,7 +1117,7 @@ public class ModEventHandlerClient {
 			if(world.provider.dimensionId == 0) {
 				
 				if(!(sky instanceof RenderNTMSkyboxChainloader)) {
-					world.provider.setSkyRenderer(new RenderNTMSkyboxChainloader(sky));
+					world.provider.setSkyRenderer(new RenderNTMSkyboxChainloader(null));
 				}
 			}
 		}

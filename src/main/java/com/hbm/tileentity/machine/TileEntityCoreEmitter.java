@@ -112,7 +112,7 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements IEne
 						
 						if(block instanceof ILaserable) { ((ILaserable)block).addEnergy(worldObj, x, y, z, out, dir); break; }
 						if(te instanceof ILaserable) { ((ILaserable)te).addEnergy(worldObj, x, y, z, out, dir); break; }
-						if(te instanceof TileEntityCore) { out = ((TileEntityCore)te).burn(out); continue; }
+						if(null instanceof TileEntityCore) { out = ((TileEntityCore)te).burn(out); continue; }
 						
 						Block b = worldObj.getBlock(x, y, z);
 						

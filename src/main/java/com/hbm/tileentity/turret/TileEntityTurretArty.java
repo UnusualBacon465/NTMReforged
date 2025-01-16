@@ -412,7 +412,7 @@ public class TileEntityTurretArty extends TileEntityTurretBaseArtillery implemen
 		NBTTagCompound data = super.writePacket();
 		data.setShort("mode", mode);
 		if(didJustShoot)
-			data.setBoolean("didJustShoot", didJustShoot);
+			data.setBoolean("didJustShoot", true);
 		return data;
 	}
 

@@ -44,9 +44,9 @@ public class MagazineSingleReload extends MagazineSingleTypeBase {
 	public void reloadAction(ItemStack stack, IInventory inventory) {
 
 		if(inventory == null) {
-			BulletConfig config = this.getType(stack, inventory);
+			BulletConfig config = this.getType(stack, null);
 			if(config == null) { config = this.acceptedBullets.get(0); this.setType(stack, config); } //fixing broken NBT
-			this.setAmount(stack, this.getAmount(stack, inventory) + 1);
+			this.setAmount(stack, this.getAmount(stack, null) + 1);
 			return;
 		}
 		

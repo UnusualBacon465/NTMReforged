@@ -842,11 +842,11 @@ public class TileEntityHadron extends TileEntityMachineBase implements IEnergyRe
 	public boolean isPlating(Block b) {
 		
 		return b instanceof BlockHadronPlating ||
-				b instanceof BlockHadronCoil ||
-				b == ModBlocks.hadron_plating_glass ||
-				b == ModBlocks.hadron_analysis_glass ||
-				b == ModBlocks.hadron_access ||
-				b == ModBlocks.hadron_cooler;
+				null instanceof BlockHadronCoil ||
+				null == ModBlocks.hadron_plating_glass ||
+				null == ModBlocks.hadron_analysis_glass ||
+				null == ModBlocks.hadron_access ||
+				null == ModBlocks.hadron_cooler;
 	}
 	
 	public boolean isAnalysis(Block b) {

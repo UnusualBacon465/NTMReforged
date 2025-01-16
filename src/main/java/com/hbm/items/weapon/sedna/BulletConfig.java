@@ -219,7 +219,7 @@ public class BulletConfig implements Cloneable {
 			float intendedDamage = bullet.damage;
 			
 			if(!(entity instanceof EntityLivingBase)) {
-				EntityDamageUtil.attackEntityFromIgnoreIFrame(entity, source, bullet.damage);
+				EntityDamageUtil.attackEntityFromIgnoreIFrame(null, source, bullet.damage);
 				return;
 			} else if(bullet.config.headshotMult > 1F) {
 				
@@ -258,7 +258,7 @@ public class BulletConfig implements Cloneable {
 			DamageSource source = bullet.config.getDamage(bullet, bullet.getThrower(), bullet.config.dmgClass);
 			
 			if(!(entity instanceof EntityLivingBase)) {
-				EntityDamageUtil.attackEntityFromIgnoreIFrame(entity, source, bullet.damage);
+				EntityDamageUtil.attackEntityFromIgnoreIFrame(null, source, bullet.damage);
 				return;
 			}
 			
@@ -278,7 +278,7 @@ public class BulletConfig implements Cloneable {
 			DamageSource source = beam.config.getDamage(beam, beam.thrower, beam.config.dmgClass);
 			
 			if(!(entity instanceof EntityLivingBase)) {
-				EntityDamageUtil.attackEntityFromIgnoreIFrame(entity, source, beam.damage);
+				EntityDamageUtil.attackEntityFromIgnoreIFrame(null, source, beam.damage);
 				return;
 			}
 			

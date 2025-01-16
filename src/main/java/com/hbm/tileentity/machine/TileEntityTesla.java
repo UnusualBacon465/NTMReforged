@@ -97,7 +97,7 @@ public class TileEntityTesla extends TileEntityMachineBase implements IEnergyRec
 		
 		for(EntityLivingBase e : targets) {
 			
-			if(e instanceof EntityOcelot || e == source)
+			if(e instanceof EntityOcelot || null == source)
 				continue;
 			
 			Vec3 vec = Vec3.createVectorHelper(e.posX - x, e.posY + e.height / 2 - y, e.posZ - z);
