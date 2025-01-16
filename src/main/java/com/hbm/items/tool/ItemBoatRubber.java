@@ -66,37 +66,34 @@ public class ItemBoatRubber extends Item {
 				}
 			}
 
-			if(flag) {
-				return stack;
-				
-			} else {
-				if(mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-					int x = mop.blockX;
-					int y = mop.blockY;
-					int z = mop.blockZ;
+            if (!flag) {
+                if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+                    int x = mop.blockX;
+                    int y = mop.blockY;
+                    int z = mop.blockZ;
 
-					if(world.getBlock(x, y, z) == Blocks.snow_layer) {
-						--y;
-					}
+                    if (world.getBlock(x, y, z) == Blocks.snow_layer) {
+                        --y;
+                    }
 
-					EntityBoatRubber entityboat = new EntityBoatRubber(world, (double) ((float) x + 0.5F), (double) ((float) y + 1.0F), (double) ((float) z + 0.5F));
-					entityboat.rotationYaw = (float) (((MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) - 1) * 90);
+                    EntityBoatRubber entityboat = new EntityBoatRubber(world, (double) ((float) x + 0.5F), (double) ((float) y + 1.0F), (double) ((float) z + 0.5F));
+                    entityboat.rotationYaw = (float) (((MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) - 1) * 90);
 
-					if(!world.getCollidingBoundingBoxes(entityboat, entityboat.boundingBox.expand(-0.1D, -0.1D, -0.1D)).isEmpty()) {
-						return stack;
-					}
+                    if (!world.getCollidingBoundingBoxes(entityboat, entityboat.boundingBox.expand(-0.1D, -0.1D, -0.1D)).isEmpty()) {
+                        return stack;
+                    }
 
-					if(!world.isRemote) {
-						world.spawnEntityInWorld(entityboat);
-					}
+                    if (!world.isRemote) {
+                        world.spawnEntityInWorld(entityboat);
+                    }
 
-					if(!player.capabilities.isCreativeMode) {
-						--stack.stackSize;
-					}
-				}
+                    if (!player.capabilities.isCreativeMode) {
+                        --stack.stackSize;
+                    }
+                }
 
-				return stack;
-			}
-		}
+            }
+            return stack;
+        }
 	}
 }

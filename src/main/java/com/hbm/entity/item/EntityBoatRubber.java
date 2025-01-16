@@ -423,16 +423,14 @@ public class EntityBoatRubber extends Entity {
 	
 	@Override
 	public boolean interactFirst(EntityPlayer player) {
-		if(this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != player) {
-			return true;
-		} else {
-			if(!this.worldObj.isRemote) {
-				player.mountEntity(this);
-			}
+        if (this.riddenByEntity == null || !(this.riddenByEntity instanceof EntityPlayer) || this.riddenByEntity == player) {
+            if (!this.worldObj.isRemote) {
+                player.mountEntity(this);
+            }
 
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 	
 	@Override
 	protected void updateFallState(double fall, boolean onGround) {

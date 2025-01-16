@@ -60,27 +60,25 @@ public class TileEntityDiFurnace extends TileEntityMachinePolluting implements I
 
 	//TODO: replace this terribleness
 	private static int getItemPower(ItemStack stack) {
-		if(stack == null) {
-			return 0;
-		} else {
-			Item item = stack.getItem();
+        if (stack != null) {
+            Item item = stack.getItem();
 
-			if(item == Items.coal) return 200;
-			if(item == Item.getItemFromBlock(Blocks.coal_block)) return 2000;
-			if(item == Item.getItemFromBlock(ModBlocks.block_coke)) return 4000;
-			if(item == Items.lava_bucket) return 12800;
-			if(item == Items.blaze_rod) return 1000;
-			if(item == Items.blaze_powder) return 300;
-			if(item == ModItems.lignite) return 150;
-			if(item == ModItems.powder_lignite) return 150;
-			if(item == ModItems.powder_coal) return 200;
-			if(item == ModItems.briquette) return 200;
-			if(item == ModItems.coke) return 400;
-			if(item == ModItems.solid_fuel) return 400;
+            if (item == Items.coal) return 200;
+            if (item == Item.getItemFromBlock(Blocks.coal_block)) return 2000;
+            if (item == Item.getItemFromBlock(ModBlocks.block_coke)) return 4000;
+            if (item == Items.lava_bucket) return 12800;
+            if (item == Items.blaze_rod) return 1000;
+            if (item == Items.blaze_powder) return 300;
+            if (item == ModItems.lignite) return 150;
+            if (item == ModItems.powder_lignite) return 150;
+            if (item == ModItems.powder_coal) return 200;
+            if (item == ModItems.briquette) return 200;
+            if (item == ModItems.coke) return 400;
+            if (item == ModItems.solid_fuel) return 400;
 
-			return 0;
-		}
-	}
+        }
+        return 0;
+    }
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {

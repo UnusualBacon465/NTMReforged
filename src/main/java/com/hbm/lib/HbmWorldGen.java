@@ -385,7 +385,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					world.setBlock(x, y, z, ModBlocks.broadcaster_pc, rand.nextInt(4) + 2, 2);
 					
 					if(GeneralConfig.enableDebugMode)
-						MainRegistry.logger.info("[Debug] Successfully spawned corrupted broadcaster at " + x + " " + (y) +" " + z);
+                        MainRegistry.logger.info("[Debug] Successfully spawned corrupted broadcaster at {} {} {}", x, y, z);
 				}
 			}
 
@@ -400,7 +400,8 @@ public class HbmWorldGen implements IWorldGenerator {
 						world.setBlock(x, g, z, ModBlocks.mine_ap);
 						TileEntityLandmine landmine = (TileEntityLandmine) world.getTileEntity(x, g, z);
 						landmine.waitingForPlayer = true;
-						if(GeneralConfig.enableDebugMode) MainRegistry.logger.info("[Debug] Successfully spawned landmine at " + x + " " + g + " " + z);
+						if(GeneralConfig.enableDebugMode)
+                            MainRegistry.logger.info("[Debug] Successfully spawned landmine at {} {} {}", x, g, z);
 						break;
 					}
 				}
@@ -425,7 +426,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					}
 
 					if(GeneralConfig.enableDebugMode)
-						MainRegistry.logger.info("[Debug] Successfully spawned lantern at " + x + " " + (y) + " " + z);
+                        MainRegistry.logger.info("[Debug] Successfully spawned lantern at {} {} {}", x, y, z);
 				}
 			}
 
@@ -454,7 +455,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					new Sellafield().generate(world, x, z, r, r * 0.35D);
 
 					if(GeneralConfig.enableDebugMode)
-						MainRegistry.logger.info("[Debug] Successfully spawned raditation hotspot at " + x + " " + z);
+                        MainRegistry.logger.info("[Debug] Successfully spawned raditation hotspot at {} {}", x, z);
 				}
 			}
 
@@ -492,7 +493,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					}
 	
 					if(GeneralConfig.enableDebugMode)
-						MainRegistry.logger.info("[Debug] Successfully spawned capsule at " + x + " " + z);
+                        MainRegistry.logger.info("[Debug] Successfully spawned capsule at {} {}", x, z);
 				}
 			}
 
@@ -521,7 +522,7 @@ public class HbmWorldGen implements IWorldGenerator {
 				}
 
 				if(GeneralConfig.enableDebugMode && done)
-					MainRegistry.logger.info("[Debug] Successfully spawned pink tree at " + x + " " + z);
+                    MainRegistry.logger.info("[Debug] Successfully spawned pink tree at {} {}", x, z);
 			}
 
 			if (WorldConfig.vaultfreq > 0 && GeneralConfig.enableVaults && rand.nextInt(WorldConfig.vaultfreq) == 0) {
@@ -556,7 +557,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					safe.lock();
 					
 					if(GeneralConfig.enableDebugMode)
-						MainRegistry.logger.info("[Debug] Successfully spawned safe at " + x + " " + (y + 1) +" " + z);
+                        MainRegistry.logger.info("[Debug] Successfully spawned safe at {} {} {}", x, y + 1, z);
 				}
 				
 			}
@@ -568,7 +569,7 @@ public class HbmWorldGen implements IWorldGenerator {
 				CellularDungeonFactory.meteor.generate(world, x, 10, z, rand);
 				
 				if(GeneralConfig.enableDebugMode)
-					MainRegistry.logger.info("[Debug] Successfully spawned meteor dungeon at " + x + " 10 " + z);
+                    MainRegistry.logger.info("[Debug] Successfully spawned meteor dungeon at {} 10 {}", x, z);
 				
 				int y = world.getHeightValue(x, z);
 				
@@ -602,7 +603,7 @@ public class HbmWorldGen implements IWorldGenerator {
 				CellularDungeonFactory.jungle.generate(world, x, 28, z, world.rand);
 				
 				if(GeneralConfig.enableDebugMode)
-					MainRegistry.logger.info("[Debug] Successfully spawned jungle dungeon at " + x + " 10 " + z);
+                    MainRegistry.logger.info("[Debug] Successfully spawned jungle dungeon at {} 10 {}", x, z);
 				
 				int y = world.getHeightValue(x, z);
 				

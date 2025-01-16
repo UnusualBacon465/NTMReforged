@@ -97,12 +97,11 @@ public class BlockPlushie extends BlockContainer implements IBlockMulti, IToolti
 		if(world.isRemote) {
 			TileEntityPlushie plushie = (TileEntityPlushie) world.getTileEntity(x, y, z);
 			plushie.squishTimer = 11;
-			return true;
-		} else {
+        } else {
 			world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, "hbm:block.squeakyToy", 0.25F, 1F);
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 
 	public static class TileEntityPlushie extends TileEntity {
 		

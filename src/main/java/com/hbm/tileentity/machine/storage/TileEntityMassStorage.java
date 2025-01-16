@@ -78,13 +78,12 @@ public class TileEntityMassStorage extends TileEntityCrateBase implements INBTPa
 					if(slots[2] == null) {
 						slots[2] = slots[1].copy();
 						slots[2].stackSize = amount;
-						this.stack -= amount;
-					} else {
+                    } else {
 						amount = Math.min(amount, slots[2].getMaxStackSize() - slots[2].stackSize);
 						slots[2].stackSize += amount;
-						this.stack -= amount;
-					}
-				}
+                    }
+                    this.stack -= amount;
+                }
 			}
 			
 			NBTTagCompound data = new NBTTagCompound();
@@ -179,13 +178,12 @@ public class TileEntityMassStorage extends TileEntityCrateBase implements INBTPa
 			if(slots[2] == null) {
 				slots[2] = slots[1].copy();
 				slots[2].stackSize = amount;
-				this.stack -= amount;
-			} else {
+            } else {
 				amount = Math.min(amount, slots[2].getMaxStackSize() - slots[2].stackSize);
 				slots[2].stackSize += amount;
-				this.stack -= amount;
-			}
-		}
+            }
+            this.stack -= amount;
+        }
 		
 		if(data.hasKey("toggle")) {
 			this.output = !output;

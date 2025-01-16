@@ -36,7 +36,7 @@ public class TimeAnalyzer {
 		
 		for(Pair<String, Long> delta : deltas) {
 			Long total = milliTime.get(delta.getKey());
-			if(total == null) total = new Long(0);
+			if(total == null) total = Long.valueOf(0);
 			total += delta.getValue();
 			milliTime.put(delta.getKey(), total);
 		}

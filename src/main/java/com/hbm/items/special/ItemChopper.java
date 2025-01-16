@@ -26,36 +26,34 @@ public class ItemChopper extends Item {
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		
-		if(world.isRemote) {
-			return true;
-		} else {
-			
-			Block block = world.getBlock(x, y, z);
-			
-			x += Facing.offsetsXForSide[side];
-			y += Facing.offsetsYForSide[side];
-			z += Facing.offsetsZForSide[side];
-			double offset = 0.0D;
 
-			if(side == 1 && block.getRenderType() == 11)
-				offset = 0.5D;
+        if (!world.isRemote) {
 
-			Entity entity = spawnCreature(world, stack.getItemDamage(), x + 0.5D, y + offset, z + 0.5D);
+            Block block = world.getBlock(x, y, z);
 
-			if(entity != null) {
-				if(entity instanceof EntityLivingBase && stack.hasDisplayName()) {
-					((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
-				}
+            x += Facing.offsetsXForSide[side];
+            y += Facing.offsetsYForSide[side];
+            z += Facing.offsetsZForSide[side];
+            double offset = 0.0D;
 
-				if(!player.capabilities.isCreativeMode) {
-					--stack.stackSize;
-				}
-			}
+            if (side == 1 && block.getRenderType() == 11)
+                offset = 0.5D;
 
-			return true;
-		}
-	}
+            Entity entity = spawnCreature(world, stack.getItemDamage(), x + 0.5D, y + offset, z + 0.5D);
+
+            if (entity != null) {
+                if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
+                    ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                }
+
+                if (!player.capabilities.isCreativeMode) {
+                    --stack.stackSize;
+                }
+            }
+
+        }
+        return true;
+    }
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
@@ -66,40 +64,38 @@ public class ItemChopper extends Item {
 		} else {
 			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
-			if(movingobjectposition == null) {
-				return stack;
-			} else {
-				if(movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-					int i = movingobjectposition.blockX;
-					int j = movingobjectposition.blockY;
-					int k = movingobjectposition.blockZ;
+            if (movingobjectposition != null) {
+                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+                    int i = movingobjectposition.blockX;
+                    int j = movingobjectposition.blockY;
+                    int k = movingobjectposition.blockZ;
 
-					if(!world.canMineBlock(player, i, j, k)) {
-						return stack;
-					}
+                    if (!world.canMineBlock(player, i, j, k)) {
+                        return stack;
+                    }
 
-					if(!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, stack)) {
-						return stack;
-					}
+                    if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, stack)) {
+                        return stack;
+                    }
 
-					if(world.getBlock(i, j, k) instanceof BlockLiquid) {
-						Entity entity = spawnCreature(world, stack.getItemDamage(), i, j, k);
+                    if (world.getBlock(i, j, k) instanceof BlockLiquid) {
+                        Entity entity = spawnCreature(world, stack.getItemDamage(), i, j, k);
 
-						if(entity != null) {
-							if(entity instanceof EntityLivingBase && stack.hasDisplayName()) {
-								((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
-							}
+                        if (entity != null) {
+                            if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
+                                ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                            }
 
-							if(!player.capabilities.isCreativeMode) {
-								--stack.stackSize;
-							}
-						}
-					}
-				}
+                            if (!player.capabilities.isCreativeMode) {
+                                --stack.stackSize;
+                            }
+                        }
+                    }
+                }
 
-				return stack;
-			}
-		}
+            }
+            return stack;
+        }
 	}
 
 	public Entity spawnCreature(World world, int dmg, double x, double y, double z) {

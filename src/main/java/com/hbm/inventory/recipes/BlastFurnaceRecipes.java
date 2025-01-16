@@ -70,7 +70,7 @@ public class BlastFurnaceRecipes extends SerializableRecipe {
 
 		if(!IMCBlastFurnace.buffer.isEmpty()) {
 			blastFurnaceRecipes.addAll(IMCBlastFurnace.buffer);
-			MainRegistry.logger.info("Fetched " + IMCBlastFurnace.buffer.size() + " IMC blast furnace recipes!");
+            MainRegistry.logger.info("Fetched {} IMC blast furnace recipes!", IMCBlastFurnace.buffer.size());
 			IMCBlastFurnace.buffer.clear();
 		}
 

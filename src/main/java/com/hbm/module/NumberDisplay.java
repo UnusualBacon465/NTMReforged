@@ -335,7 +335,7 @@ public class NumberDisplay {
 			formatForFloat();
 		else
 		{
-			toDisp = new Long(Math.round(numIn.doubleValue())).toString().toCharArray();
+			toDisp = Long.valueOf(Math.round(numIn.doubleValue())).toString().toCharArray();
 			toDisp = truncOrExpand();
 		}
 	}

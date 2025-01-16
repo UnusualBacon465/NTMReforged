@@ -232,7 +232,7 @@ public class CrystallizerRecipes extends SerializableRecipe {
 		
 		if(!IMCCrystallizer.buffer.isEmpty()) {
 			recipes.putAll(IMCCrystallizer.buffer);
-			MainRegistry.logger.info("Fetched " + IMCCrystallizer.buffer.size() + " IMC crystallizer recipes!");
+            MainRegistry.logger.info("Fetched {} IMC crystallizer recipes!", IMCCrystallizer.buffer.size());
 			IMCCrystallizer.buffer.clear();
 		}
 	}

@@ -22,7 +22,7 @@ public abstract class TileEntityLockableBase extends TileEntity {
 
 	public void lock() {
 		if(lock == 0) {
-			MainRegistry.logger.error("A block has been set to locked state before setting pins, this should not happen and may cause errors! " + this.toString());
+            MainRegistry.logger.error("A block has been set to locked state before setting pins, this should not happen and may cause errors! {}", this.toString());
 		}
 		isLocked = true;
 	}

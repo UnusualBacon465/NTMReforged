@@ -40,17 +40,16 @@ public abstract class EntityMinecartContainerBase extends EntityMinecartNTM impl
 			if(this.slots[slot].stackSize <= amount) {
 				itemstack = this.slots[slot];
 				this.slots[slot] = null;
-				return itemstack;
-			} else {
+            } else {
 				itemstack = this.slots[slot].splitStack(amount);
 
 				if(this.slots[slot].stackSize == 0) {
 					this.slots[slot] = null;
 				}
 
-				return itemstack;
-			}
-		} else {
+            }
+            return itemstack;
+        } else {
 			return null;
 		}
 	}

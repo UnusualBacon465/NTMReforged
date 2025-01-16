@@ -103,15 +103,15 @@ public abstract class SerializableRecipe {
 			
 			File recFile = new File(recDir.getAbsolutePath() + File.separatorChar + recipe.getFileName());
 			if(recFile.exists() && recFile.isFile()) {
-				MainRegistry.logger.info("Reading recipe file " + recFile.getName());
+                MainRegistry.logger.info("Reading recipe file {}", recFile.getName());
 				recipe.readRecipeFile(recFile);
 				recipe.modified = true;
 			} else {
-				MainRegistry.logger.info("No recipe file found, registering defaults for " + recipe.getFileName());
+                MainRegistry.logger.info("No recipe file found, registering defaults for {}", recipe.getFileName());
 				recipe.registerDefaults();
 				
 				File recTemplate = new File(recDir.getAbsolutePath() + File.separatorChar + "_" + recipe.getFileName());
-				MainRegistry.logger.info("Writing template file " + recTemplate.getName());
+                MainRegistry.logger.info("Writing template file {}", recTemplate.getName());
 				recipe.writeTemplateFile(recTemplate);
 				recipe.modified = false;
 			}
@@ -221,7 +221,7 @@ public abstract class SerializableRecipe {
 				return new OreDictStack(dict, stacksize);
 			}
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString());
+        MainRegistry.logger.error("Error reading stack array {}", array.toString());
 		return new ComparableStack(ModItems.nothing);
 	}
 	
@@ -231,7 +231,7 @@ public abstract class SerializableRecipe {
 			for(int i = 0; i < items.length; i++) { items[i] = readAStack((JsonArray) array.get(i)); }
 			return items;
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString());
+        MainRegistry.logger.error("Error reading stack array {}", array.toString());
 		return new AStack[0];
 	}
 	
@@ -262,7 +262,7 @@ public abstract class SerializableRecipe {
 			int meta = array.size() > 2 ? array.get(2).getAsInt() : 0;
 			if(item != null) return new ItemStack(item, stacksize, meta);
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString() + " - defaulting to NOTHING item!");
+        MainRegistry.logger.error("Error reading stack array {} - defaulting to NOTHING item!", array.toString());
 		return new ItemStack(ModItems.nothing);
 	}
 	
@@ -274,7 +274,7 @@ public abstract class SerializableRecipe {
 			float chance = array.get(array.size() - 1).getAsFloat();
 			if(item != null) return new Pair(new ItemStack(item, stacksize, meta), chance);
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString() + " - defaulting to NOTHING item!");
+        MainRegistry.logger.error("Error reading stack array {} - defaulting to NOTHING item!", array.toString());
 		return new Pair(new ItemStack(ModItems.nothing), 1F);
 	}
 	
@@ -284,7 +284,7 @@ public abstract class SerializableRecipe {
 			for(int i = 0; i < items.length; i++) { items[i] = readItemStack((JsonArray) array.get(i)); }
 			return items;
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString());
+        MainRegistry.logger.error("Error reading stack array {}", array.toString());
 		return new ItemStack[0];
 	}
 	
@@ -294,7 +294,7 @@ public abstract class SerializableRecipe {
 			for(int i = 0; i < items.length; i++) { items[i] = readItemStackChance((JsonArray) array.get(i)); }
 			return items;
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading stack array " + array.toString());
+        MainRegistry.logger.error("Error reading stack array {}", array.toString());
 		return new Pair[0];
 	}
 	
@@ -326,7 +326,7 @@ public abstract class SerializableRecipe {
 			int pressure = array.size() < 3 ? 0 : array.get(2).getAsInt();
 			return new FluidStack(type, fill, pressure);
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading fluid array " + array.toString());
+        MainRegistry.logger.error("Error reading fluid array {}", array.toString());
 		return new FluidStack(Fluids.NONE, 0);
 	}
 	
@@ -336,7 +336,7 @@ public abstract class SerializableRecipe {
 			for(int i = 0; i < fluids.length; i++) { fluids[i] = readFluidStack((JsonArray) array.get(i)); }
 			return fluids;
 		} catch(Exception ex) { }
-		MainRegistry.logger.error("Error reading fluid array " + array.toString());
+        MainRegistry.logger.error("Error reading fluid array {}", array.toString());
 		return new FluidStack[0];
 	}
 	

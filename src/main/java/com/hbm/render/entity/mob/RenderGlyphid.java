@@ -31,18 +31,16 @@ public class RenderGlyphid extends RenderLiving {
 
 	@Override
 	protected int shouldRenderPass(EntityLivingBase entity, int pass, float interp) {
-		if(pass != 0) {
-			return -1;
-		} else {
-			if(entity.getDataWatcher().getWatchableObjectByte(EntityGlyphid.DW_SUBTYPE) == EntityGlyphid.TYPE_INFECTED) {
-				this.bindTexture(glyphid_infested_tex);
-				GL11.glEnable(GL11.GL_BLEND);
-				GL11.glDisable(GL11.GL_ALPHA_TEST);
-				return 1;
-			}
-			return -1;
-		}
-	}
+        if (pass == 0) {
+            if (entity.getDataWatcher().getWatchableObjectByte(EntityGlyphid.DW_SUBTYPE) == EntityGlyphid.TYPE_INFECTED) {
+                this.bindTexture(glyphid_infested_tex);
+                GL11.glEnable(GL11.GL_BLEND);
+                GL11.glDisable(GL11.GL_ALPHA_TEST);
+                return 1;
+            }
+        }
+        return -1;
+    }
 	
 	public static class ModelGlyphid extends ModelBase {
 		

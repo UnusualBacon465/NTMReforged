@@ -121,12 +121,12 @@ public class ShredderRecipes extends SerializableRecipe {
 			if(in.getItem() != null) {
 				setRecipe(new ComparableStack(in), dust);
 			} else {
-				MainRegistry.logger.error("Ore dict entry '" + name + "' has a null item in its stack! How does that even happen?");
+                MainRegistry.logger.error("Ore dict entry '{}' has a null item in its stack! How does that even happen?", name);
 				Thread.currentThread().dumpStack();
 			}
 			
 		} else {
-			MainRegistry.logger.error("Ore dict entry '" + name + "' has a null stack!");
+            MainRegistry.logger.error("Ore dict entry '{}' has a null stack!", name);
 			Thread.currentThread().dumpStack();
 		}
 	}

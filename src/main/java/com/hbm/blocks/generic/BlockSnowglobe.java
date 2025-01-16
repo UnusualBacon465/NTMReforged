@@ -94,12 +94,10 @@ public class BlockSnowglobe extends BlockContainer implements IGUIProvider {
 		
 		if(world.isRemote) {
 			FMLNetworkHandler.openGui(player, MainRegistry.instance, 0, world, x, y, z);
-			return true;
-			
-		} else {
-			return true;
-		}
-	}
+
+        }
+        return true;
+    }
 
 	@Override
 	@SideOnly(Side.CLIENT)

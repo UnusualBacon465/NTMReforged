@@ -18,6 +18,6 @@ public class LoggingUtil {
 	public static final String ANSI_WHITE =		"\u001B[37m";
 	
 	public static void errorWithHighlight(String error) {
-		MainRegistry.logger.error(ANSI_RED + error + ANSI_RESET);
+        MainRegistry.logger.error(ANSI_RED + "{}" + ANSI_RESET, error);
 	}
 }

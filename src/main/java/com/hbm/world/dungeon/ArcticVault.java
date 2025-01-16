@@ -80,6 +80,6 @@ public class ArcticVault {
 		}
 		
 		if(GeneralConfig.enableDebugMode)
-			MainRegistry.logger.info("[Debug] Successfully spawned arctic code vault at " + x + " " + y + " " + z);
+            MainRegistry.logger.info("[Debug] Successfully spawned arctic code vault at {} {} {}", x, y, z);
 	}
 }

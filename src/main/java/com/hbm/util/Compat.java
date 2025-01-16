@@ -209,7 +209,7 @@ public class Compat {
 			MainRegistry.logger.info("| Successfully removed Railcraft nonsense.");
 
 		} catch(Exception x) {
-			MainRegistry.logger.error("| Tried to remove Railcraft block but failed due to " + x.getMessage());
+            MainRegistry.logger.error("| Tried to remove Railcraft block but failed due to {}", x.getMessage());
 		}
 		MainRegistry.logger.info("#######################################################");
 	}

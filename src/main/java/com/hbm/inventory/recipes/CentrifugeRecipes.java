@@ -587,7 +587,7 @@ public class CentrifugeRecipes extends SerializableRecipe {
 		
 		if(!IMCCentrifuge.buffer.isEmpty()) {
 			recipes.putAll(IMCCentrifuge.buffer);
-			MainRegistry.logger.info("Fetched " + IMCCentrifuge.buffer.size() + " IMC centrifuge recipes!");
+            MainRegistry.logger.info("Fetched {} IMC centrifuge recipes!", IMCCentrifuge.buffer.size());
 			IMCCentrifuge.buffer.clear();
 		}
 	}

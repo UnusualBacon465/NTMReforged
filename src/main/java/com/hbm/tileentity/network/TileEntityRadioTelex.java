@@ -84,13 +84,12 @@ public class TileEntityRadioTelex extends TileEntity implements INBTPacketReceiv
 							this.isSending = false;
 							RTTYSystem.broadcast(worldObj, this.txChannel, eot);
 							this.sendingLine = 0;
-							this.sendingIndex = 0;
-						} else {
+                        } else {
 							RTTYSystem.broadcast(worldObj, this.txChannel, eol);
 							this.sendingLine++;
-							this.sendingIndex = 0;
-						}
-					}
+                        }
+                        this.sendingIndex = 0;
+                    }
 				}
 			}
 			

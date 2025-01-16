@@ -35,10 +35,8 @@ public class ItemTeleLink extends Item {
 				world.playSoundAtEntity(player, "hbm:item.techBleep", 1.0F, 1.0F);
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "[TeleLink] Set teleporter exit to " + x + ", " + y + ", " + z + "."));
 				player.swingItem();
-				
-				return true;
-				
-			} else {
+
+            } else {
 				
 				if(!stack.hasTagCompound()) {
 					world.playSoundAtEntity(player, "hbm:item.techBoop", 1.0F, 1.0F);
@@ -62,9 +60,9 @@ public class ItemTeleLink extends Item {
 				world.playSoundAtEntity(player, "hbm:item.techBleep", 1.0F, 1.0F);
 				player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "[TeleLink] Teleporters destination has been set!"));
 				player.swingItem();
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 
 		return false;
 	}
