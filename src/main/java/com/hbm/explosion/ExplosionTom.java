@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class ExplosionTom {
 	public int posX;
@@ -16,7 +16,7 @@ public class ExplosionTom {
 	public int lastposZ = 0;
 	public int radius;
 	public int radius2;
-	public World worldObj;
+	public Level worldObj;
 	private int n = 1;
 	private int nlimit;
 	private int shell;
@@ -53,7 +53,7 @@ public class ExplosionTom {
 		element = nbt.getInteger(name + "element");
 	}
 
-	public ExplosionTom(int x, int y, int z, World world, int rad) {
+	public ExplosionTom(int x, int y, int z, Level world, int rad) {
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;

@@ -26,6 +26,7 @@ import com.hbm.tileentity.machine.storage.TileEntityFileCabinet;
 
 // Minecraft imports
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.item.Item;

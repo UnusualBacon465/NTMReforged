@@ -1,22 +1,41 @@
 package com.hbm.explosion;
 
-import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
+
 
 public class NukeEnvironmentalEffect {
-	
-	static Random rand = new Random();
-	
-	/**
-	 * Area of effect radiation effect. j > 0 for jagged edges of the spherical area. Args: world, x, y, z, radius, outer radius with random chance.
-	 */
-	@Deprecated //does not use scorched uranium, implementation is garbage anyway
-	public static void applyStandardAOE(World world, int x, int y, int z, int r, int j) {
+
+	private static BlockPos pos;
+	private static Object replacementBlock;
+
+	@SubscribeEvent
+	public static void onBlockPlace(net.neoforged.neoforge.event.level.ExplosionEvent.Detonate event) {
+		if (!event.isExplosion() || !(event.getExplosion().getExploder() instanceof EntityPlayerMP)) {
+			return;
+		}
+
+
+		Level level = event.getLevel();
+		BlockPos pos = event.getExplosion().getPosition();
+
+		int radius = 10; // Adjust as needed
+		int j = 5; // Adjust as needed
+
+		applyStandardAOE(level, pos.getX(), pos.getY(), pos.getZ(), radius, j);
+	}
+
+	public static void applyStandardAOE(Level level, int x, int y, int z, int r, int j) {
 
 		int r2 = r * r;
 		int r22 = r2 / 2;
@@ -30,86 +49,93 @@ public class NukeEnvironmentalEffect {
 					int Z = zz + z;
 					int ZZ = YY + zz * zz;
 					if (ZZ < r22 + rand.nextInt(j)) {
-						applyStandardEffect(world, X, Y, Z);
+						applyStandardEffect(level, X, Y, Z);
 					}
 				}
 			}
 		}
 	}
-	
-	public static void applyStandardEffect(World world, int x, int y, int z) {
+
+	public static void applyStandardEffect(Level level, int x, int y, int z) {
 		int chance = 100;
 		Block b = null;
 		int meta = 0;
-		
-		Block in = world.getBlock(x, y, z);
-		int inMeta = world.getBlockMetadata(x, y, z);
-		
-		if(in == Blocks.air)
+
+		BlockState blockState = level.getBlockState(pos);
+		Block currentBlock = blockState.getBlock();
+
+		if (currentBlock == Blocks.AIR)
 			return;
-		
-		//Task done by fallout effect entity.
-		/*if(in == Blocks.grass) {
-			b = ModBlocks.waste_earth;
-			
-		} else */
-		
-		if(in == Blocks.sand) {
-			
-			if(inMeta == 1)
-				b = ModBlocks.waste_trinitite_red;
-			else
-				b = ModBlocks.waste_trinitite;
-			
+
+		// Task done by fallout effect entity.
+        /*if (in == Blocks.grass) {
+            b = ModBlocks.waste_earth;
+        } else */
+
+		if (currentBlock == Blocks.SAND) {
+			replacementBlock = rand.nextBoolean() ? ModBlocks.waste_trinitite : ModBlocks.waste_trinitite_red;
 			chance = 20;
-			
-		} else if(in == Blocks.mycelium) {
+
+		} else if (currentBlock == Blocks.MYCELIUM) {
 			b = ModBlocks.waste_mycelium;
-			
-		} else if(in == Blocks.log || in == Blocks.log2) {
-			b = ModBlocks.waste_log;
-			
-		} else if(in == Blocks.planks) {
-			b = ModBlocks.waste_planks;
-			
-		} else if(in == Blocks.mossy_cobblestone) {
+
+			if (currentBlock == Blocks.OAK_LOG || currentBlock == Blocks.SPRUCE_LOG ||
+					currentBlock == Blocks.BIRCH_LOG || currentBlock == Blocks.JUNGLE_LOG ||
+					currentBlock == Blocks.ACACIA_LOG || currentBlock == Blocks.DARK_OAK_LOG ||
+					currentBlock == Blocks.CHERRY_LOG || currentBlock == Blocks.MANGROVE_LOG ||
+					currentBlock == Blocks.BAMBOO_BLOCK) {
+
+				replacementBlock = ModBlocks.waste_log;
+			}
+
+			if (currentBlock == Blocks.OAK_PLANKS || currentBlock == Blocks.SPRUCE_PLANKS ||
+					currentBlock == Blocks.BIRCH_PLANKS || currentBlock == Blocks.JUNGLE_PLANKS ||
+					currentBlock == Blocks.ACACIA_PLANKS || currentBlock == Blocks.DARK_OAK_PLANKS ||
+					currentBlock == Blocks.CHERRY_PLANKS || currentBlock == Blocks.MANGROVE_PLANKS ||
+					currentBlock == Blocks.BAMBOO_PLANKS) {
+
+				replacementBlock = ModBlocks.waste_planks;
+			}
+
+		} else if (currentBlock == Blocks.MOSSY_COBBLESTONE) {
 			b = ModBlocks.ore_oil;
 			chance = 50;
-			
-		} else if(in == Blocks.coal_ore) {
-			b = Blocks.diamond_ore;
+
+		} else if (currentBlock == Blocks.COAL_ORE) {
+			b = Blocks.DIAMOND_ORE;
 			chance = 10;
-		} else if(in == ModBlocks.ore_uranium) {
+
+		} else if (currentBlock == ModBlocks.ore_uranium) {
 			b = ModBlocks.ore_schrabidium;
 			chance = 10;
-			
-		} else if(in == ModBlocks.ore_nether_uranium) {
+
+		} else if (currentBlock == ModBlocks.ore_nether_uranium) {
 			b = ModBlocks.ore_nether_schrabidium;
 			chance = 10;
-			
-		} else if(in == ModBlocks.ore_nether_plutonium) {
+
+		} else if (currentBlock == ModBlocks.ore_nether_plutonium) {
 			b = ModBlocks.ore_nether_schrabidium;
 			chance = 25;
-			
-		} else if(in == Blocks.brown_mushroom_block && inMeta == 10) {
+
+		} else if (currentBlock == Blocks.BROWN_MUSHROOM_BLOCK) {
 			b = ModBlocks.waste_planks;
-			
-		} else if(in == Blocks.red_mushroom_block && inMeta == 10) {
+
+		} else if (currentBlock == Blocks.RED_MUSHROOM_BLOCK) {
 			b = ModBlocks.waste_planks;
-			
-		} else if(in == Blocks.end_stone) {
+
+		} else if (currentBlock == Blocks.END_STONE) {
 			b = ModBlocks.ore_tikite;
 			chance = 1;
-			
-		} else if(in == Blocks.clay) {
-			b = Blocks.hardened_clay;
-		} else if(in.getMaterial().getCanBurn()) {
-			b = Blocks.fire;
+
+		} else if (currentBlock == Blocks.CLAY) {
+			b = Blocks.TERRACOTTA;
+		} else if (blockState.isFlammable(level, pos, null)) {
+			replacementBlock = Blocks.FIRE;
 			chance = 100;
 		}
-		
-		if(b != null && rand.nextInt(1000) < chance)
-			world.setBlock(x, y, z, b, meta, 2);
-	}
 
+		if (replacementBlock != null && rand.nextInt(1000) < chance) {
+			level.setBlock(pos, replacementBlock.defaultBlockState(), 2);
+		}
+	}
 }
