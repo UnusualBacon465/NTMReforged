@@ -8,7 +8,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class BlockBase extends Block {
 	
@@ -61,7 +61,7 @@ public class BlockBase extends Block {
 	 * @param y
 	 * @param z
 	 */
-	public void dismantle(World world, int x, int y, int z) {
+	public void dismantle(Level world, int x, int y, int z) {
 		
 		world.setBlockToAir(x, y, z);
 

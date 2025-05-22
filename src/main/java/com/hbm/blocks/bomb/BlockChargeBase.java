@@ -29,7 +29,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class BlockChargeBase extends BlockContainerBase implements IBomb, IToolable, ITooltipProvider, IFuckingExplode {
@@ -41,7 +41,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+	public TileEntity createNewTileEntity(Level p_149915_1_, int p_149915_2_) {
 		return new TileEntityCharge();
 	}
 	
@@ -56,7 +56,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public int onBlockPlaced(World world, int x, int y, int z, int side, float fX, float fY, float fZ, int meta) {
+	public int onBlockPlaced(Level world, int x, int y, int z, int side, float fX, float fY, float fZ, int meta) {
 		return side;
 	}
 	
@@ -66,7 +66,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public boolean canPlaceBlockOnSide(World world, int x, int y, int z, int side) {
+	public boolean canPlaceBlockOnSide(Level world, int x, int y, int z, int side) {
 		ForgeDirection dir = ForgeDirection.getOrientation(side);
 		return	(dir == DOWN && world.isSideSolid(x, y + 1, z, DOWN)) ||
 				(dir == UP && world.isSideSolid(x, y - 1, z, UP)) ||
@@ -77,7 +77,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
+	public void onNeighborBlockChange(Level world, int x, int y, int z, Block block) {
 		
 		ForgeDirection dir = ForgeDirection.getOrientation(world.getBlockMetadata(x, y, z));
 		
@@ -88,7 +88,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(Level world, int x, int y, int z) {
 		return null;
 	}
 	
@@ -108,7 +108,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public boolean onScrew(World world, EntityPlayer player, int x, int y, int z, int side, float fX, float fY, float fZ, ToolType tool) {
+	public boolean onScrew(Level world, EntityPlayer player, int x, int y, int z, int side, float fX, float fY, float fZ, ToolType tool) {
 		
 		if(tool != ToolType.DEFUSER)
 			return false;
@@ -129,7 +129,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block block, int i) {
+	public void breakBlock(Level world, int x, int y, int z, Block block, int i) {
 		super.breakBlock(world, x, y, z, block, i);
 		
 		if(!safe)
@@ -137,7 +137,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+	public void onBlockDestroyedByExplosion(Level world, int x, int y, int z, Explosion explosion) {
 		if(!world.isRemote) {
 			EntityTNTPrimedBase tntPrimed = new EntityTNTPrimedBase(world, x + 0.5D, y + 0.5D, z + 0.5D, explosion != null ? explosion.getExplosivePlacedBy() : null, this);
 			tntPrimed.fuse = 0;
@@ -147,7 +147,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 
 	@Override
-	public void explodeEntity(World world, double x, double y, double z, EntityTNTPrimedBase entity) {
+	public void explodeEntity(Level world, double x, double y, double z, EntityTNTPrimedBase entity) {
 		explode(world, MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z));
 	}
 	
@@ -159,7 +159,7 @@ public abstract class BlockChargeBase extends BlockContainerBase implements IBom
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(Level world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(world.isRemote) {
 			return true;
 		} else {
