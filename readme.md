@@ -1,6 +1,7 @@
 # Hbm-NTM-1.21.1
 This is a port of hbm ntm to 1.21.1
 
+Thanks to RedstoneStick for the raw ores and blocks.
 
 This is for 1.21.1! For 1.7.10 and 1.12.2, check out these projects:
 
@@ -11,3 +12,5 @@ NTM Reloaded: [click here](https://github.com/TheOriginalGolem/Hbm-s-Nuclear-Tec
 NTM Extended Edition (Alcater): [click here](https://github.com/Alcatergit/Hbm-s-Nuclear-Tech-GIT/releasesz)
 
 For 1.18, try Martin's remake: [click here](https://codeberg.org/MartinTheDragon/Nuclear-Tech-Mod-Remake/releases)
+
+Radiated by RedstoneStick 1.21.1: [click here](https://github.com/RedstoneStick/Radiated/tree/main)
