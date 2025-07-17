@@ -22,8 +22,10 @@ import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 import com.hbm.tileentity.machine.storage.TileEntityFileCabinet;
+import com.hbm.util.BlockRegistrar;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.client.resources.model.Material;
@@ -40,16 +42,248 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.minecraft.world.level.material.Fluid;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class ModBlocks {
 
-	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, RefStrings.MODID);
+	public static final BlockRegistrar REGISTRAR = new BlockRegistrar("ntmreforged");
 
-	public static void mainRegistry() {
+	//test blocks
+
+	public static final Supplier<Block> event_tester = REGISTRAR.register(
+			"event_tester",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.OP_BLOCKS
+	);
+
+	public static final Supplier<Block> obj_tester = REGISTRAR.register(
+			"obj_tester",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.OP_BLOCKS
+	);
+
+	public static final Supplier<Block> test_core = REGISTRAR.register(
+			"test_core",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.OP_BLOCKS
+	);
+
+	public static final Supplier<Block> test_charge = REGISTRAR.register(
+			"test_charge",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.OP_BLOCKS
+	);
+
+	public static final Supplier<Block> structure_anchor = REGISTRAR.register(
+			"structure_anchor",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.OP_BLOCKS
+	);
+
+	//ore blocks
+
+	public static final Supplier<Block> ore_uranium = REGISTRAR.register(
+			"ore_uranium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_uranium_scorched = REGISTRAR.register(
+			"ore_uranium_scorched",
+			() -> new Block(BlockBehaviour.Properties.of().strength(3.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_titanium = REGISTRAR.register(
+			"ore_titanium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_sulfur = REGISTRAR.register(
+			"ore_sulfur",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_thorium = REGISTRAR.register(
+			"ore_thorium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_niter = REGISTRAR.register(
+			"ore_niter",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_copper = REGISTRAR.register(
+			"ore_copper",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_tungsten = REGISTRAR.register(
+			"ore_tungsten",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_aluminium = REGISTRAR.register(
+			"ore_aluminium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_fluorite = REGISTRAR.register(
+			"ore_fluorite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_lead = REGISTRAR.register(
+			"ore_lead",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_schrabidium = REGISTRAR.register(
+			"ore_schrabidium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_beryllium = REGISTRAR.register(
+			"ore_beryllium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_australium = REGISTRAR.register(
+			"ore_australium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_rare = REGISTRAR.register(
+			"ore_rare",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_cobalt = REGISTRAR.register(
+			"ore_cobalt",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_cinnebar = REGISTRAR.register(
+			"ore_cinnebar",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_coltan = REGISTRAR.register(
+			"ore_coltan",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_alexandrite = REGISTRAR.register(
+			"ore_alexandrite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//misc ores
+
+	public static final Supplier<Block> ore_bedrock = REGISTRAR.register(
+			"ore_bedrock",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_volcano = REGISTRAR.register(
+			"ore_volcano",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_meteor = REGISTRAR.register(
+			"ore_meteor",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//nether ores
+
+	public static final Supplier<Block> ore_nether_coal = REGISTRAR.register(
+			"ore_nether_coal",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_smoldering = REGISTRAR.register(
+			"ore_nether_smoldering",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_uranium = REGISTRAR.register(
+			"ore_nether_uranium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_uranium_scorched = REGISTRAR.register(
+			"ore_nether_uranium_scorched",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_plutonium = REGISTRAR.register(
+			"ore_nether_plutonium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_tungsten = REGISTRAR.register(
+			"ore_nether_tungsten",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_sulfur = REGISTRAR.register(
+			"ore_nether_sulfur",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_fire = REGISTRAR.register(
+			"ore_nether_fire",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_cobalt = REGISTRAR.register(
+			"ore_nether_cobalt",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_nether_schrabidium = REGISTRAR.register(
+			"ore_nether_schrabidium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	/*public static void mainRegistry() {
 		initializeBlock();
 		registerBlock();
-	}
+	}*/
 
+	/*
 	public static Block event_tester;
 	public static Block obj_tester;
 	public static Block test_core;
@@ -91,6 +325,7 @@ public class ModBlocks {
 	public static Block ore_nether_schrabidium;
 
 	public static Block ore_meteor;
+	*/
 
 	public static Block stone_gneiss;
 	public static Block ore_gneiss_iron;
