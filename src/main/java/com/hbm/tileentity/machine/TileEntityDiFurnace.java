@@ -10,7 +10,6 @@ import com.hbm.inventory.gui.GUIDiFurnace;
 import com.hbm.inventory.recipes.BlastFurnaceRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.tileentity.IGUIProvider;
-import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityMachinePolluting;
 import com.hbm.util.CompatEnergyControl;
 
@@ -18,6 +17,7 @@ import api.hbm.fluid.IFluidStandardSender;
 import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -60,25 +60,27 @@ public class TileEntityDiFurnace extends TileEntityMachinePolluting implements I
 
 	//TODO: replace this terribleness
 	private static int getItemPower(ItemStack stack) {
-        if (stack != null) {
-            Item item = stack.getItem();
+		if(stack == null) {
+			return 0;
+		} else {
+			Item item = stack.getItem();
 
-            if (item == Items.coal) return 200;
-            if (item == Item.getItemFromBlock(Blocks.coal_block)) return 2000;
-            if (item == Item.getItemFromBlock(ModBlocks.block_coke)) return 4000;
-            if (item == Items.lava_bucket) return 12800;
-            if (item == Items.blaze_rod) return 1000;
-            if (item == Items.blaze_powder) return 300;
-            if (item == ModItems.lignite) return 150;
-            if (item == ModItems.powder_lignite) return 150;
-            if (item == ModItems.powder_coal) return 200;
-            if (item == ModItems.briquette) return 200;
-            if (item == ModItems.coke) return 400;
-            if (item == ModItems.solid_fuel) return 400;
+			if(item == Items.coal) return 200;
+			if(item == Item.getItemFromBlock(Blocks.coal_block)) return 2000;
+			if(item == Item.getItemFromBlock(ModBlocks.block_coke)) return 4000;
+			if(item == Items.lava_bucket) return 12800;
+			if(item == Items.blaze_rod) return 1000;
+			if(item == Items.blaze_powder) return 300;
+			if(item == ModItems.lignite) return 150;
+			if(item == ModItems.powder_lignite) return 150;
+			if(item == ModItems.powder_coal) return 200;
+			if(item == ModItems.briquette) return 200;
+			if(item == ModItems.coke) return 400;
+			if(item == ModItems.solid_fuel) return 400;
 
-        }
-        return 0;
-    }
+			return 0;
+		}
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -227,11 +229,7 @@ public class TileEntityDiFurnace extends TileEntityMachinePolluting implements I
 				MachineDiFurnace.updateBlockState(this.progress > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
 			}
 
-			NBTTagCompound data = new NBTTagCompound();
-			data.setShort("time", (short) this.progress);
-			data.setShort("fuel", (short) this.fuel);
-			data.setByteArray("modes", new byte[] { (byte) sideFuel, (byte) sideUpper, (byte) sideLower });
-			INBTPacketReceiver.networkPack(this, data, 15);
+			networkPackNT(15);
 
 			if(markDirty) {
 				this.markDirty();
@@ -240,10 +238,21 @@ public class TileEntityDiFurnace extends TileEntityMachinePolluting implements I
 	}
 
 	@Override
-	public void networkUnpack(NBTTagCompound nbt) {
-		this.progress = nbt.getShort("time");
-		this.fuel = nbt.getShort("fuel");
-		byte[] modes = nbt.getByteArray("modes");
+	public void serialize(ByteBuf buf) {
+		buf.writeShort(this.progress);
+		buf.writeShort(this.fuel);
+		buf.writeBytes(new byte[] {
+				this.sideFuel,
+				this.sideUpper,
+				this.sideLower});
+	}
+
+	@Override
+	public void deserialize(ByteBuf buf) {
+		this.progress = buf.readShort();
+		this.fuel = buf.readShort();
+		byte[] modes = new byte[3];
+		buf.readBytes(modes);
 		this.sideFuel = modes[0];
 		this.sideUpper = modes[1];
 		this.sideLower = modes[2];

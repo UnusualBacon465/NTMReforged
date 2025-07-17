@@ -16,5 +16,5 @@ import net.minecraft.nbt.CompoundTag;
 public interface IInfoProviderEC {
 
 	/** Adds any custom data that isn't covered by the standard energy and fluid implementations. */
-	public void provideExtraInfo(CompoundTag data);
+	public void provideExtraInfo(CompoundTag tag);
 }

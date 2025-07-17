@@ -7,20 +7,19 @@ import com.hbm.extprop.HbmLivingProps;
 import com.hbm.hazard.modifier.HazardModifier;
 import com.hbm.util.ArmorRegistry;
 import com.hbm.util.ArmorUtil;
-import com.hbm.util.I18nUtil;
 import com.hbm.util.ArmorRegistry.HazardClass;
+import com.hbm.util.i18n.I18nUtil;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.entity.LivingEntity;
 
 public class HazardTypeAsbestos extends HazardTypeBase {
 
 	@Override
-	public void onUpdate(LivingEntity target, float level, ItemStack stack) {
+	public void onUpdate(EntityLivingBase target, float level, ItemStack stack) {
 		
 		if(RadiationConfig.disableAsbestos)
 			return;

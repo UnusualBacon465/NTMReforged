@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
-import com.hbm.items.weapon.ItemMissile;
 import com.hbm.items.weapon.ItemMissile.MissileFormFactor;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.item.ItemRenderBase;
@@ -42,7 +41,7 @@ public class RenderLaunchPadLarge extends TileEntitySpecialRenderer implements I
 		bindTexture(ResourceManager.missile_erector_tex);
 		ResourceManager.missile_erector.renderPart("Pad");
 		
-		if(pad.formFactor >= 0 && pad.formFactor < ItemMissile.MissileFormFactor.values().length) {
+		if(pad.formFactor >= 0 && pad.formFactor < MissileFormFactor.values().length) {
 			
 			MissileFormFactor formFactor = MissileFormFactor.values()[pad.formFactor];
 			String[] parts = null;

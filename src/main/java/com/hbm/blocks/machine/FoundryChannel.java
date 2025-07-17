@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.inventory.material.Mats.MaterialStack;
 import com.hbm.items.machine.ItemScraps;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
@@ -176,6 +175,7 @@ public class FoundryChannel extends BlockContainer implements ICrucibleAcceptor 
 				}
 				cast.amount = 0;
 				cast.type = null;
+				cast.propagateMaterial(null);
 				cast.markDirty();
 				world.markBlockForUpdate(x, y, z);
 			}

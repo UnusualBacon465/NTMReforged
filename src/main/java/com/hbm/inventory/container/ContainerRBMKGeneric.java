@@ -30,7 +30,7 @@ public class ContainerRBMKGeneric extends Container {
 			return null;
 		}
 
-		return null;
+		return var3;
 	}
 
 	@Override

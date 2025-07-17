@@ -4,19 +4,18 @@ import java.util.List;
 
 import com.hbm.hazard.modifier.HazardModifier;
 import com.hbm.util.ContaminationUtil;
-import com.hbm.util.I18nUtil;
+import com.hbm.util.i18n.I18nUtil;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.entity.LivingEntity;
 
 public class HazardTypeDigamma extends HazardTypeBase {
 
 	@Override
-	public void onUpdate(LivingEntity target, float level, ItemStack stack) {
+	public void onUpdate(EntityLivingBase target, float level, ItemStack stack) {
 		ContaminationUtil.applyDigammaData(target, level / 20F);
 	}
 

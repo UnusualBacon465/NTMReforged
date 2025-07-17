@@ -21,6 +21,7 @@ import api.hbm.energymk2.IEnergyReceiverMK2;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.core.Direction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -143,6 +144,7 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ISided
 
 	public void setCustomName(String name) {
 		this.customName = name;
+		markDirty();
 	}
 
 	@Override
@@ -224,6 +226,8 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ISided
 				slots[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
+
+		customName = nbt.getString("name");
 	}
 
 	@Override
@@ -250,6 +254,10 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ISided
 			}
 		}
 		nbt.setTag("items", list);
+		
+		if (customName != null) {
+			nbt.setString("name", customName);
+		}
 	}
 
 	@Override
@@ -499,7 +507,7 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ISided
 	}
 
 	@Override
-	public boolean canConnect(ForgeDirection dir) {
+	public boolean canConnect(Direction dir) {
 		return dir != ForgeDirection.UP && dir != ForgeDirection.UNKNOWN;
 	}
 

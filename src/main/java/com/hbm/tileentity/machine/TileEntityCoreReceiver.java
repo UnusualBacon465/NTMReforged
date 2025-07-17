@@ -16,10 +16,12 @@ import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.core.Direction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
@@ -68,19 +70,26 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements IEn
 				}
 			}
 
-			NBTTagCompound data = new NBTTagCompound();
-			data.setLong("joules", joules);
-			tank.writeToNBT(data, "t");
-			this.networkPack(data, 50);
+			this.networkPackNT(50);
 			
 			joules = 0;
 		}
 	}
-	
-	public void networkUnpack(NBTTagCompound data) {
-		super.networkUnpack(data);
-		joules = data.getLong("joules");
-		tank.readFromNBT(data, "t");
+
+	@Override
+	public void serialize(ByteBuf buf) {
+		super.serialize(buf);
+
+		buf.writeLong(joules);
+		tank.serialize(buf);
+	}
+
+	@Override
+	public void deserialize(ByteBuf buf) {
+		super.deserialize(buf);
+
+		joules = buf.readLong();
+		tank.deserialize(buf);
 	}
 
 	@Override
@@ -94,7 +103,7 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements IEn
 	}
 
 	@Override
-	public boolean canConnect(ForgeDirection dir) {
+	public boolean canConnect(Direction dir) {
 		return dir != ForgeDirection.UNKNOWN;
 	}
 

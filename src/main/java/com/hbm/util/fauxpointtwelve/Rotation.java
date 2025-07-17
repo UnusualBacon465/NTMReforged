@@ -1,8 +1,7 @@
 package com.hbm.util.fauxpointtwelve;
 
 import com.hbm.interfaces.Spaghetti;
-
-import net.minecraft.core.Direction;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public enum Rotation {
 
@@ -43,13 +42,13 @@ public enum Rotation {
 		default: return this;
 		}
 	}
-	
+
 	/**
 	 * Adjusted code from NTM 1.12 (com.hbm.lib.ForgeDirection)
 	 * @param dir
 	 * @return
 	 */
-	public static Rotation getBlockRotation(Direction dir){
+	public static Rotation getBlockRotation(ForgeDirection dir){
 		switch(dir) {
 		case NORTH: return Rotation.NONE;
 		case SOUTH: return Rotation.CLOCKWISE_180;

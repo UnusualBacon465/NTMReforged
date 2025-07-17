@@ -1,6 +1,6 @@
 package api.hbm.entity;
 
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.util.DamageSource;
 
 /**
  * Allows custom entities to specify threshold and resistance values based on incoming damage, type and piercing values, along with whatever other internal stats

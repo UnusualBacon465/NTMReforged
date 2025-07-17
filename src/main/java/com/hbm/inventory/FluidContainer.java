@@ -2,7 +2,7 @@ package com.hbm.inventory;
 
 import com.hbm.inventory.fluid.FluidType;
 
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.ItemStack;
 
 public class FluidContainer {
 	
@@ -21,4 +21,5 @@ public class FluidContainer {
 		this.type = type;
 		content = amount;
 	}
+
 }

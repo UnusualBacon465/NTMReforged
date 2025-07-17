@@ -1,6 +1,5 @@
 package com.hbm.blocks.machine;
 
-import com.hbm.inventory.material.Mats.MaterialStack;
 import com.hbm.items.machine.ItemScraps;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityFoundryTank;

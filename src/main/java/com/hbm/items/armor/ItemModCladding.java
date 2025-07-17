@@ -3,7 +3,6 @@ package com.hbm.items.armor;
 import java.util.List;
 
 import com.hbm.handler.ArmorModHandler;
-import com.hbm.items.armor.ItemArmorMod;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,6 +26,6 @@ public class ItemModCladding extends ItemArmorMod {
 
 	@Override
 	public void addDesc(List list, ItemStack stack, ItemStack armor) {
-		list.add(EnumChatFormatting.YELLOW + "  " + stack.getDisplayName() + " (+" + rad + " radiation resistence)");
+		list.add(EnumChatFormatting.YELLOW + "  " + stack.getDisplayName() + " (+" + rad + " radiation resistance)");
 	}
 }

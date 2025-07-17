@@ -1,8 +1,8 @@
 package com.hbm.util.fauxpointtwelve;
 
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.Mth;
-import net.minecraft.core.Direction;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Adjusted code from MC 1.12 (com.minecraft.util.math.BlockPos)
@@ -19,12 +19,12 @@ public class BlockPos implements Cloneable {
 		this.z = z;
 	}
 
-	public BlockPos(BlockEntity te) {
-		this(te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ());
+	public BlockPos(TileEntity te) {
+		this(te.xCoord, te.yCoord, te.zCoord);
 	}
 	
 	public BlockPos(double x, double y, double z) {
-		this((int)Mth.floor(x), (int)Mth.floor(y), (int)Mth.floor(z));
+		this((int)MathHelper.floor_double(x), (int)MathHelper.floor_double(y), (int)MathHelper.floor_double(z));
 	}
 	
 	/** Basically a setter for the coords. Violates the "muh unmutability" horseshit I don't care about and
@@ -34,6 +34,10 @@ public class BlockPos implements Cloneable {
 		this.y = y;
 		this.z = z;
 		return this;
+	}
+	
+	public boolean compare(int x, int y, int z) {
+		return this.x == x && this.y == y && this.z == z;
 	}
 	
 	public BlockPos add(int x, int y, int z) {
@@ -58,12 +62,12 @@ public class BlockPos implements Cloneable {
 		}
 	}
 
-	public BlockPos offset(Direction dir) {
+	public BlockPos offset(ForgeDirection dir) {
 		return this.offset(dir, 1);
 	}
 
-	public BlockPos offset(Direction dir, int distance) {
-		return new BlockPos(x + dir.getStepX() * distance, y + dir.getStepY() * distance, z + dir.getStepZ() * distance);
+	public BlockPos offset(ForgeDirection dir, int distance) {
+		return new BlockPos(x + dir.offsetX * distance, y + dir.offsetY * distance, z + dir.offsetZ * distance);
 	}
 	
 	public int getX() {
@@ -81,7 +85,11 @@ public class BlockPos implements Cloneable {
 	/** modified 1.12 vanilla implementation */
 	@Override
 	public int hashCode() {
-		return (this.getY() + this.getZ() * 27644437) * 27644437 + this.getX();
+		return getIdentity(this.getX(), this.getY(), this.getZ());
+	}
+	
+	public static int getIdentity(int x, int y, int z) {
+		return (y + z * 27644437) * 27644437 + x;
 	}
 
 	@Override

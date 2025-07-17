@@ -3,10 +3,6 @@ package api.hbm.entity;
 @Deprecated //Use IRadarDetectableNT instead, old interface will still work though
 public interface IRadarDetectable {
 
-	String getUnlocalizedName();
-
-	int getBlipLevel();
-
 	public static enum RadarTargetType {
 		MISSILE_TIER0("Micro Missile"),				//tier 0 missile (micro missile assemblies)
 		MISSILE_TIER1("Tier 1 Missile"),			//tier 1 missiles

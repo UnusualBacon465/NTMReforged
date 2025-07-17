@@ -38,7 +38,7 @@ public class ContainerAnvil extends Container {
 					return;
 				}
 				
-				for(com.hbm.inventory.recipes.anvil.AnvilSmithingRecipe rec : AnvilRecipes.getSmithing()) {
+				for(AnvilSmithingRecipe rec : AnvilRecipes.getSmithing()) {
 					
 					int i = rec.matchesInt(left, right);
 					

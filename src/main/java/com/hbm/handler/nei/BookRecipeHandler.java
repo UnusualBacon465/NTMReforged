@@ -30,7 +30,7 @@ public class BookRecipeHandler extends TemplateRecipeHandler implements ICompatN
 	public String getRecipeID() {
 		return "book_of_boxcars";
 	}
-	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
     	
     	List<PositionedStack> input;
         PositionedStack result;

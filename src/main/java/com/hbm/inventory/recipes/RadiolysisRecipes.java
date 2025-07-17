@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 import com.hbm.inventory.FluidStack;
 import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
-import com.hbm.inventory.recipes.CrackingRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFluidIcon;
 import com.hbm.util.Tuple.Pair;
@@ -26,7 +25,7 @@ public class RadiolysisRecipes {
 		Iterator itr = radiolysis.entrySet().iterator();
 		
 		while(itr.hasNext()) {
-			Map.Entry entry = (Entry) itr.next();
+			Entry entry = (Entry) itr.next();
 			Pair<FluidStack, FluidStack> pair = (Pair<FluidStack, FluidStack>) entry.getValue();
 			ItemStack[] outputs = new ItemStack[2];
 			if(pair.getKey().type == Fluids.NONE) {

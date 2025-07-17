@@ -40,16 +40,17 @@ public abstract class EntityMinecartContainerBase extends EntityMinecartNTM impl
 			if(this.slots[slot].stackSize <= amount) {
 				itemstack = this.slots[slot];
 				this.slots[slot] = null;
-            } else {
+				return itemstack;
+			} else {
 				itemstack = this.slots[slot].splitStack(amount);
 
 				if(this.slots[slot].stackSize == 0) {
 					this.slots[slot] = null;
 				}
 
-            }
-            return itemstack;
-        } else {
+				return itemstack;
+			}
+		} else {
 			return null;
 		}
 	}
@@ -89,7 +90,7 @@ public abstract class EntityMinecartContainerBase extends EntityMinecartNTM impl
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return !this.isDead && player.getDistanceSqToEntity(this) <= 64.0D;
+		return this.isDead ? false : player.getDistanceSqToEntity(this) <= 64.0D;
 	}
 
 	@Override

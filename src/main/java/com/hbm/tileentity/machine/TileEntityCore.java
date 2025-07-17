@@ -26,6 +26,7 @@ import com.hbm.util.CompatEnergyControl;
 import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -137,15 +138,8 @@ public class TileEntityCore extends TileEntityMachineBase implements IGUIProvide
 			
 			if(heat > 0)
 				radiation();
-			
-			NBTTagCompound data = new NBTTagCompound();
-			tanks[0].writeToNBT(data, "t0");
-			tanks[1].writeToNBT(data, "t1");
-			data.setInteger("field", field);
-			data.setInteger("heat", heat);
-			data.setInteger("color", color);
-			data.setBoolean("melt", meltdownTick);
-			networkPack(data, 250);
+
+			networkPackNT(250);
 			
 			heat = 0;
 			
@@ -161,15 +155,28 @@ public class TileEntityCore extends TileEntityMachineBase implements IGUIProvide
 		
 	}
 
-	public void networkUnpack(NBTTagCompound data) {
-		super.networkUnpack(data);
+	@Override
+	public void serialize(ByteBuf buf) {
+		super.serialize(buf);
 
-		tanks[0].readFromNBT(data, "t0");
-		tanks[1].readFromNBT(data, "t1");
-		field = data.getInteger("field");
-		heat = data.getInteger("heat");
-		color = data.getInteger("color");
-		meltdownTick = data.getBoolean("melt");
+		tanks[0].serialize(buf);
+		tanks[1].serialize(buf);
+		buf.writeInt(field);
+		buf.writeInt(heat);
+		buf.writeInt(color);
+		buf.writeBoolean(meltdownTick);
+	}
+
+	@Override
+	public void deserialize(ByteBuf buf) {
+		super.deserialize(buf);
+
+		tanks[0].deserialize(buf);
+		tanks[1].deserialize(buf);
+		this.field = buf.readInt();
+		this.heat = buf.readInt();
+		this.color = buf.readInt();
+		this.meltdownTick = buf.readBoolean();
 	}
 	
 	private void radiation() {
@@ -293,15 +300,15 @@ public class TileEntityCore extends TileEntityMachineBase implements IGUIProvide
 
 		int r1 = ((h1 & 0xFF0000) >> 16);
 		int g1 = ((h1 & 0x00FF00) >> 8);
-		int b1 = ((h1 & 0x0000FF));
+		int b1 = ((h1 & 0x0000FF) >> 0);
 		
 		int r2 = ((h2 & 0xFF0000) >> 16);
 		int g2 = ((h2 & 0x00FF00) >> 8);
-		int b2 = ((h2 & 0x0000FF));
+		int b2 = ((h2 & 0x0000FF) >> 0);
 
 		int r = (((r1 + r2) / 2) << 16);
 		int g = (((g1 + g2) / 2) << 8);
-		int b = (((b1 + b2) / 2));
+		int b = (((b1 + b2) / 2) << 0);
 		
 		return r | g | b;
 	}

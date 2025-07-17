@@ -29,7 +29,7 @@ public class HFRWavefrontObject implements IModelCustomNamed {
 	private static Pattern face_V_VT_Pattern = Pattern.compile("(f( \\d+/\\d+){3,4} *\\n)|(f( \\d+/\\d+){3,4} *$)");
 	private static Pattern face_V_VN_Pattern = Pattern.compile("(f( \\d+//\\d+){3,4} *\\n)|(f( \\d+//\\d+){3,4} *$)");
 	private static Pattern face_V_Pattern = Pattern.compile("(f( \\d+){3,4} *\\n)|(f( \\d+){3,4} *$)");
-	private static Pattern groupObjectPattern = Pattern.compile("([go]( [\\w\\.]+) *\\n)|([go]( [\\w\\.]+) *$)");
+	private static Pattern groupObjectPattern = Pattern.compile("([go]( [\\w\\d\\.]+) *\\n)|([go]( [\\w\\d\\.]+) *$)");
 
 	private static Matcher vertexMatcher, vertexNormalMatcher, textureCoordinateMatcher;
 	private static Matcher face_V_VT_VN_Matcher, face_V_VT_Matcher, face_V_VN_Matcher, face_V_Matcher;
@@ -252,7 +252,7 @@ public class HFRWavefrontObject implements IModelCustomNamed {
 			throw new ModelFormatException("Error parsing entry ('" + line + "'" + ", line " + lineCount + ") in file '" + fileName + "' - Incorrect format");
 		}
 
-		return null;
+		return vertex;
 	}
 
 	private Vertex parseVertexNormal(String line, int lineCount) throws ModelFormatException {
@@ -272,7 +272,7 @@ public class HFRWavefrontObject implements IModelCustomNamed {
 			throw new ModelFormatException("Error parsing entry ('" + line + "'" + ", line " + lineCount + ") in file '" + fileName + "' - Incorrect format");
 		}
 
-		return null;
+		return vertexNormal;
 	}
 
 	private TextureCoordinate parseTextureCoordinate(String line, int lineCount) throws ModelFormatException {
@@ -294,7 +294,7 @@ public class HFRWavefrontObject implements IModelCustomNamed {
 			throw new ModelFormatException("Error parsing entry ('" + line + "'" + ", line " + lineCount + ") in file '" + fileName + "' - Incorrect format");
 		}
 
-		return null;
+		return textureCoordinate;
 	}
 
 	private S_Face parseFace(String line, int lineCount) throws ModelFormatException {

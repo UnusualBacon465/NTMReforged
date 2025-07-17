@@ -46,6 +46,6 @@ public class ContainerCoreReceiver extends Container {
 			return null;
 		}
 		
-		return null;
+		return var3;
     }
 }

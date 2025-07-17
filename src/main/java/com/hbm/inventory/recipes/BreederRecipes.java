@@ -2,7 +2,6 @@ package com.hbm.inventory.recipes;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonElement;
@@ -19,7 +18,7 @@ import net.minecraft.item.ItemStack;
 
 public class BreederRecipes extends SerializableRecipe {
 
-	private static HashMap<ComparableStack, BreederRecipe> recipes = new HashMap();
+	public static HashMap<ComparableStack, BreederRecipe> recipes = new HashMap();
 
 	@Override
 	public void registerDefaults() {
@@ -49,7 +48,7 @@ public class BreederRecipes extends SerializableRecipe {
 		
 		HashMap<ItemStack, BreederRecipe> map = new HashMap();
 		
-		for(Map.Entry<ComparableStack, BreederRecipe> recipe : recipes.entrySet()) {
+		for(Entry<ComparableStack, BreederRecipe> recipe : recipes.entrySet()) {
 			map.put(recipe.getKey().toStack(), recipe.getValue());
 		}
 		

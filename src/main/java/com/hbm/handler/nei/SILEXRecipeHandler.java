@@ -14,8 +14,8 @@ import com.hbm.inventory.recipes.SILEXRecipes;
 import com.hbm.inventory.recipes.SILEXRecipes.SILEXRecipe;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
 import com.hbm.lib.RefStrings;
-import com.hbm.util.I18nUtil;
 import com.hbm.util.WeightedRandomObject;
+import com.hbm.util.i18n.I18nUtil;
 
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
@@ -42,7 +42,7 @@ public class SILEXRecipeHandler extends TemplateRecipeHandler implements ICompat
 	public LinkedList<Class<? extends GuiContainer>> guiRec = new LinkedList<Class<? extends GuiContainer>>();
 	public LinkedList<Class<? extends GuiContainer>> guiGui = new LinkedList<Class<? extends GuiContainer>>();
 
-	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
 
 		PositionedStack input;
 		List<PositionedStack> outputs;

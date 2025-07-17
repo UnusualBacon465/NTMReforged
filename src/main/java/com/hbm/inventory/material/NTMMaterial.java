@@ -4,11 +4,10 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import com.hbm.inventory.OreDictManager;
 import com.hbm.inventory.OreDictManager.DictFrame;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 /**
  * Encapsulates most materials that are currently listed as DictFrames, even vanilla ones.
@@ -17,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class NTMMaterial {
 
-	public int id;
+	public final int id;
 	public String[] names;
 	public Set<MaterialShapes> autogen = new HashSet();
 	public Set<MatTraits> traits = new HashSet();
@@ -29,9 +28,7 @@ public class NTMMaterial {
 	public NTMMaterial smeltsInto;
 	public int convIn;
 	public int convOut;
-	private int smeltOutputRatio;
-	private NTMMaterial smeltedMaterial;
-
+	
 	public NTMMaterial(int id, DictFrame dict) {
 		
 		this.names = dict.mats;
@@ -48,11 +45,7 @@ public class NTMMaterial {
 		Mats.orderedList.add(this);
 		Mats.matById.put(id, this);
 	}
-
-	public NTMMaterial(int id, String name) {
-
-	}
-
+	
 	public String getUnlocalizedName() {
 		return "hbmmat." + this.names[0].toLowerCase(Locale.US);
 	}
@@ -97,38 +90,20 @@ public class NTMMaterial {
 	}
 	
 	public ItemStack make(Item item, int amount) {
-		return new ItemStack(item);
+		return new ItemStack(item, amount, this.id);
 	}
 	
 	public ItemStack make(Item item) {
 		return make(item, 1);
 	}
-
-	public int getSmeltOutputRatio() {
-		return smeltOutputRatio;
-	}
-
-	public void setSmeltOutputRatio(int smeltOutputRatio) {
-		this.smeltOutputRatio = smeltOutputRatio;
-	}
-
-	public NTMMaterial getSmeltedMaterial() {
-		return smeltedMaterial;
-	}
-
-	public void setSmeltedMaterial(NTMMaterial smeltedMaterial) {
-		this.smeltedMaterial = smeltedMaterial;
-	}
-
+	
 	public static enum SmeltingBehavior {
-	    NOT_SMELTABLE,	//anything that can't be smelted or otherwise doesn't belong in a smelter, like diamond. may also include things that are smeltable but turn into a different type
+		NOT_SMELTABLE,	//anything that can't be smelted or otherwise doesn't belong in a smelter, like diamond. may also include things that are smeltable but turn into a different type
 		VAPORIZES,		//can't be smelted because the material would skadoodle
 		BREAKS,			//can't be smelted because the material doesn't survive the temperatures
 		SMELTABLE,		//mostly metal
 		ADDITIVE		//stuff like coal which isn't smeltable but can be put in a crucible anyway
-        ;
-
-    }
+	}
 	
 	public static enum MatTraits {
 		METAL,		//metal(like), smeltable by arc furnaces

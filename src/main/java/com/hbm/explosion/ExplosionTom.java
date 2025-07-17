@@ -2,10 +2,10 @@ package com.hbm.explosion;
 
 import com.hbm.blocks.ModBlocks;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.MathHelper;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 
 public class ExplosionTom {
@@ -23,42 +23,42 @@ public class ExplosionTom {
 	private int leg;
 	private int element;
 
-	public void saveToNbt(NBTTagCompound nbt, String name) {
-		nbt.setInteger(name + "posX", posX);
-		nbt.setInteger(name + "posY", posY);
-		nbt.setInteger(name + "posZ", posZ);
-		nbt.setInteger(name + "lastposX", lastposX);
-		nbt.setInteger(name + "lastposZ", lastposZ);
-		nbt.setInteger(name + "radius", radius);
-		nbt.setInteger(name + "radius2", radius2);
-		nbt.setInteger(name + "n", n);
-		nbt.setInteger(name + "nlimit", nlimit);
-		nbt.setInteger(name + "shell", shell);
-		nbt.setInteger(name + "leg", leg);
-		nbt.setInteger(name + "element", element);
+	public void saveToNbt(CompoundTag nbt, String name) {
+		nbt.putInt(name + "posX", posX);
+		nbt.putInt(name + "posY", posY);
+		nbt.putInt(name + "posZ", posZ);
+		nbt.putInt(name + "lastposX", lastposX);
+		nbt.putInt(name + "lastposZ", lastposZ);
+		nbt.putInt(name + "radius", radius);
+		nbt.putInt(name + "radius2", radius2);
+		nbt.putInt(name + "n", n);
+		nbt.putInt(name + "nlimit", nlimit);
+		nbt.putInt(name + "shell", shell);
+		nbt.putInt(name + "leg", leg);
+		nbt.putInt(name + "element", element);
 	}
 
-	public void readFromNbt(NBTTagCompound nbt, String name) {
-		posX = nbt.getInteger(name + "posX");
-		posY = nbt.getInteger(name + "posY");
-		posZ = nbt.getInteger(name + "posZ");
-		lastposX = nbt.getInteger(name + "lastposX");
-		lastposZ = nbt.getInteger(name + "lastposZ");
-		radius = nbt.getInteger(name + "radius");
-		radius2 = nbt.getInteger(name + "radius2");
-		n = nbt.getInteger(name + "n");
-		nlimit = nbt.getInteger(name + "nlimit");
-		shell = nbt.getInteger(name + "shell");
-		leg = nbt.getInteger(name + "leg");
-		element = nbt.getInteger(name + "element");
+	public void readFromNbt(CompoundTag nbt, String name) {
+		posX = nbt.getInt(name + "posX");
+		posY = nbt.getInt(name + "posY");
+		posZ = nbt.getInt(name + "posZ");
+		lastposX = nbt.getInt(name + "lastposX");
+		lastposZ = nbt.getInt(name + "lastposZ");
+		radius = nbt.getInt(name + "radius");
+		radius2 = nbt.getInt(name + "radius2");
+		n = nbt.getInt(name + "n");
+		nlimit = nbt.getInt(name + "nlimit");
+		shell = nbt.getInt(name + "shell");
+		leg = nbt.getInt(name + "leg");
+		element = nbt.getInt(name + "element");
 	}
 
-	public ExplosionTom(int x, int y, int z, Level world, int rad) {
+	public ExplosionTom(int x, int y, int z, Level level, int rad) {
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
 
-		this.worldObj = world;
+		this.worldObj = level;
 
 		this.radius = rad;
 		this.radius2 = this.radius * this.radius;
@@ -86,7 +86,7 @@ public class ExplosionTom {
 			int pZ = posZ + z;
 			double X = Math.pow((this.posX - pX), 2);
 			double Z = Math.pow((this.posZ - pZ), 2);
-			double distance = MathHelper.sqrt_double(X + Z); // Distance calculations used for crater rim stuff
+			double distance = Mth.invSqrt(X + Z); // Distance calculations used for crater rim stuff
 
 			int y = 256;
 			int terrain = 63;
@@ -110,7 +110,7 @@ public class ExplosionTom {
 				
 				if(y <= craterFloor) {
 
-					if(worldObj.rand.nextInt(499) < 1) {
+					if(worldObj.getRandom().nextInt(499) < 1) {
 						worldObj.setBlock(pX, y, pZ, ModBlocks.ore_tektite_osmiridium, 0, 2);
 					} else {
 						worldObj.setBlock(pX, y, pZ, ModBlocks.tektite, 0, 2);
@@ -137,13 +137,13 @@ public class ExplosionTom {
 							for(int j = -2; j < 3; j++) {
 								for(int k = -2; k < 3; k++) {
 									if(worldObj.getBlock(pX + i, y + j, pZ + k).getMaterial() == Material.water || worldObj.getBlock(pX + i, y + j, pZ + k).getMaterial() == Material.ice || worldObj.getBlock(pX + i, y, pZ + k) == Blocks.air) {
-										worldObj.setBlock(pX + i, y, pZ + k, Blocks.lava, 0, 2);
-										worldObj.setBlock(pX, y, pZ, Blocks.lava, 0, 2);
+										worldObj.setBlock(pX + i, y, pZ + k, Blocks.LAVA, 0, 2);
+										worldObj.setBlock(pX, y, pZ, Blocks.LAVA, 0, 2);
 									}
 								}
 							}
 						}
-						worldObj.setBlock(pX, y, pZ, Blocks.lava, 0, 2);
+						worldObj.setBlock(pX, y, pZ, Blocks.LAVA, 0, 2);
 					}
 
 				}

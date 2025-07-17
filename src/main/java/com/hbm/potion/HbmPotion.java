@@ -3,9 +3,8 @@ package com.hbm.potion;
 import java.lang.reflect.Field;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.bomb.BlockTaint;
-import com.hbm.config.GeneralConfig;
 import com.hbm.config.PotionConfig;
+import com.hbm.config.ServerConfig;
 import com.hbm.entity.mob.EntityTaintCrab;
 import com.hbm.entity.mob.EntityCreeperTainted;
 import com.hbm.explosion.ExplosionLarge;
@@ -19,6 +18,7 @@ import com.hbm.util.ContaminationUtil.HazardType;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityCow;
@@ -107,22 +107,20 @@ public class HbmPotion extends Potion {
 			if(!(entity instanceof EntityCreeperTainted) && !(entity instanceof EntityTaintCrab) && entity.worldObj.rand.nextInt(40) == 0)
 				entity.attackEntityFrom(ModDamageSource.taint, (level + 1));
 			
-			if(GeneralConfig.enableHardcoreTaint && !entity.worldObj.isRemote) {
+			if(ServerConfig.TAINT_TRAILS.get() && !entity.worldObj.isRemote) {
 				
-				int x = (int)(entity.posX - 1);
-				int y = (int)entity.posY;
-				int z = (int)(entity.posZ);
+				int x = (int) Math.floor(entity.posX);
+				int y = (int) Math.floor(entity.posY);
+				int z = (int) Math.floor(entity.posZ);
 				
-				if(entity.worldObj.getBlock(x, y, z)
-						.isReplaceable(entity.worldObj, x, y, z) && 
-						BlockTaint.hasPosNeightbour(entity.worldObj, x, y, z)) {
-					
-					entity.worldObj.setBlock(x, y, z, ModBlocks.taint, 14, 2);
+				Block b = entity.worldObj.getBlock(x, y - 1, z);
+				if(y > 1 && b.isNormalCube() && !b.isAir(entity.worldObj, x, y - 1, z)) {
+					entity.worldObj.setBlock(x, y - 1, z, ModBlocks.taint, 14, 2);
 				}
 			}
 		}
 		if(this == radiation) {
-			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, (level + 1F) * 0.05F);
+			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, (float)(level + 1F) * 0.05F);
 		}
 		if(this == radaway) {
 			HbmLivingProps.incrementRadiation(entity, -(level + 1));
@@ -139,8 +137,9 @@ public class HbmPotion extends Potion {
 			entity.worldObj.playSoundEffect(entity.posX, entity.posY, entity.posZ, "hbm:weapon.laserBang", 100.0F, 1.0F);
 			ExplosionLarge.spawnParticles(entity.worldObj, entity.posX, entity.posY, entity.posZ, 10);
 			
-			if(entity instanceof EntityCow cow) {
-                int toDrop = cow.isChild() ? 10 : 3;
+			if(entity instanceof EntityCow) {
+				EntityCow cow = (EntityCow) entity;
+				int toDrop = cow.isChild() ? 10 : 3;
 				cow.entityDropItem(new ItemStack(ModItems.cheese, toDrop), 1.0F);
 			}
 		}
@@ -168,7 +167,7 @@ public class HbmPotion extends Potion {
 		
 		if(this == lead) {
 			int k = 60;
-			return k <= 0 || par1 % k == 0;
+			return k > 0 ? par1 % k == 0 : true;
 		}
 		
 		return false;

@@ -498,14 +498,14 @@ public class EntityBullet extends Entity implements IProjectile {
 											if (!worldObj.isRemote)
 												worldObj.spawnEntityInWorld(creep);
 										entitylivingbase.setDead();
-									} else if (null instanceof EntityVillager) {
+									} else if (entitylivingbase instanceof EntityVillager) {
 										EntityZombie creep = new EntityZombie(this.worldObj);
 										creep.setLocationAndAngles(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ,
 												entitylivingbase.rotationYaw, entitylivingbase.rotationPitch);
 										entitylivingbase.setDead();
 										if (!this.worldObj.isRemote)
 											this.worldObj.spawnEntityInWorld(creep);
-									} else if (null instanceof EntityLivingBase
+									} else if (entitylivingbase instanceof EntityLivingBase
 											&& !(entitylivingbase instanceof EntityCreeperNuclear)
 											&& !(entitylivingbase instanceof EntityMooshroom)
 											&& !(entitylivingbase instanceof EntityZombie)) {

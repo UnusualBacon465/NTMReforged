@@ -11,6 +11,7 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.core.Direction;
 import org.apache.logging.log4j.Level;
 
 import com.hbm.config.GeneralConfig;
@@ -271,7 +272,7 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 	@Override public FluidTank[] getAllTanks() { return this.tanks; }
 	@Override public FluidTank[] getReceivingTanks() { return this.tanks; }
 	
-	@Override public boolean canConnect(ForgeDirection dir) {
+	@Override public boolean canConnect(Direction dir) {
 		return dir != ForgeDirection.UP && dir != ForgeDirection.DOWN;
 	}
 
@@ -378,17 +379,19 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 		
 		boolean needsDesignator = needsDesignator(slots[0].getItem());
 
-		int targetX = 0;
-		int targetZ = 0;
+		int targetX = xCoord;
+		int targetZ = zCoord;
 		
 		if(slots[1] != null && slots[1].getItem() instanceof IDesignatorItem) {
 			IDesignatorItem designator = (IDesignatorItem) slots[1].getItem();
 			
-			if(!designator.isReady(worldObj, slots[1], xCoord, yCoord, zCoord) && needsDesignator) return BombReturnCode.ERROR_MISSING_COMPONENT;
-			
-			Vec3 coords = designator.getCoords(worldObj, slots[1], xCoord, yCoord, zCoord);
-			targetX = (int) Math.floor(coords.xCoord);
-			targetZ = (int) Math.floor(coords.zCoord);
+			if(needsDesignator) {
+				if(!designator.isReady(worldObj, slots[1], xCoord, yCoord, zCoord)) return BombReturnCode.ERROR_MISSING_COMPONENT;
+				
+				Vec3 coords = designator.getCoords(worldObj, slots[1], xCoord, yCoord, zCoord);
+				targetX = (int) Math.floor(coords.xCoord);
+				targetZ = (int) Math.floor(coords.zCoord);
+			}
 			
 		} else {
 			if(needsDesignator) return BombReturnCode.ERROR_MISSING_COMPONENT;
@@ -526,6 +529,12 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 		return new Object[] {false};
 	}
 
+	@Callback(direct = true)
+	@Optional.Method(modid = "OpenComputers")
+	public Object[] getPos(Context context, Arguments args) {
+		return new Object[] {xCoord, yCoord, zCoord};
+	}
+
 	@Override
 	@Optional.Method(modid = "OpenComputers")
 	public String[] methods() {
@@ -534,7 +543,8 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 				"getFluid",
 				"canLaunch",
 				"getTier",
-				"launch"
+				"launch",
+				"getPos"
 		};
 	}
 
@@ -552,6 +562,8 @@ public abstract class TileEntityLaunchPadBase extends TileEntityMachineBase impl
 				return getTier(context, args);
 			case ("launch"):
 				return launch(context, args);
+			case ("getPos"):
+				return getPos(context, args);
 		}
 	throw new NoSuchMethodException();
 	}

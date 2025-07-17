@@ -1,35 +1,39 @@
 package com.hbm.util.fauxpointtwelve;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 
-public class DirPos {
-	private int x = 0;
-    private int y = 0;
-    private int z = 0;
-	private Direction dir = null;  // Direction that the connection points to
+public class DirPos extends BlockPos {
+	
+	protected ForgeDirection dir;
 
-	// Constructor that takes x, y, z coordinates and a Direction
-	public DirPos(int x, int y, int z, Direction dir) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public DirPos(int x, int y, int z, ForgeDirection dir) {
+		super(x, y, z);
 		this.dir = dir;
 	}
 
-
-	// Method to return a BlockPos based on the stored coordinates
-	public BlockPos getBlockPos() {
-		return new BlockPos(x, y, z);
+	public DirPos(TileEntity te, ForgeDirection dir) {
+		super(te);
+		this.dir = dir;
 	}
 
-	// Method to get the Direction for this connection
-	public Direction getDir() {
-		return dir;
+	public DirPos(double x, double y, double z, ForgeDirection dir) {
+		super(x, y, z);
+		this.dir = dir;
 	}
-
-	// Getter methods for the individual coordinates
-	public int getX() { return x; }
-	public int getY() { return y; }
-	public int getZ() { return z; }
+	
+	@Override
+	public DirPos rotate(Rotation rotationIn) {
+		switch(rotationIn) {
+		case NONE:
+		default: return this;
+		case CLOCKWISE_90: return new DirPos(-this.getZ(), this.getY(), this.getX(), this.getDir().getRotation(ForgeDirection.UP));
+		case CLOCKWISE_180: return new DirPos(-this.getX(), this.getY(), -this.getZ(), this.getDir().getOpposite());
+		case COUNTERCLOCKWISE_90: return new DirPos(this.getZ(), this.getY(), -this.getX(), this.getDir().getRotation(ForgeDirection.DOWN));
+		}
+	}
+	
+	public ForgeDirection getDir() {
+		return this.dir;
+	}
 }

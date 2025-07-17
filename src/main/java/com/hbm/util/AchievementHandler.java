@@ -1,27 +1,26 @@
 package com.hbm.util;
 
-import java.util.HashMap;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 
+import java.util.HashMap;
+
 public class AchievementHandler {
 
 	public static HashMap<ComparableStack, Achievement> craftingAchievements = new HashMap();
-	
+
 	public static void register() {
 		craftingAchievements.put(new ComparableStack(ModItems.piston_selenium), MainRegistry.achSelenium);
 		craftingAchievements.put(new ComparableStack(ModItems.gun_b92), MainRegistry.achSelenium);
 		craftingAchievements.put(new ComparableStack(ModItems.battery_potatos), MainRegistry.achPotato);
 		craftingAchievements.put(new ComparableStack(ModBlocks.machine_press), MainRegistry.achBurnerPress);
 		craftingAchievements.put(new ComparableStack(ModItems.rbmk_fuel_empty), MainRegistry.achRBMK);
-		craftingAchievements.put(new ComparableStack(ModBlocks.machine_chemplant), MainRegistry.achChemplant);
+		craftingAchievements.put(new ComparableStack(ModBlocks.machine_chemical_plant), MainRegistry.achChemplant);
 		craftingAchievements.put(new ComparableStack(ModBlocks.concrete_smooth), MainRegistry.achConcrete);
 		craftingAchievements.put(new ComparableStack(ModBlocks.concrete_asbestos), MainRegistry.achConcrete);
 		craftingAchievements.put(new ComparableStack(ModItems.ingot_polymer), MainRegistry.achPolymer);
@@ -51,7 +50,7 @@ public class AchievementHandler {
 		craftingAchievements.put(new ComparableStack(ModBlocks.machine_assembler), MainRegistry.achAssembly);
 		craftingAchievements.put(new ComparableStack(ModItems.billet_pu_mix), MainRegistry.achChicagoPile);
 	}
-	
+
 	public static void fire(EntityPlayer player, ItemStack stack) {
 		if(player.worldObj.isRemote) return;
 		ComparableStack comp = new ComparableStack(stack).makeSingular();

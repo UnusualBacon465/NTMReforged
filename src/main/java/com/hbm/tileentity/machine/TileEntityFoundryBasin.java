@@ -1,6 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.inventory.material.Mats.MaterialStack;
 import com.hbm.inventory.material.NTMMaterial;
 
 import net.minecraft.world.World;

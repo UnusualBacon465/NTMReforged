@@ -16,6 +16,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.core.Direction;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -214,7 +215,7 @@ public class BlockICF extends BlockContainer implements IBlockCT {
 		}
 		
 		@Override
-		public boolean canConnect(ForgeDirection dir) {
+		public boolean canConnect(Direction dir) {
 			if(this.getBlockMetadata() != 1) return false;
 			return dir != ForgeDirection.UNKNOWN;
 		}

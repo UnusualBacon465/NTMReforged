@@ -1,34 +1,33 @@
 package com.hbm.calc;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class Location {
 
 	public int x;
 	public int y;
 	public int z;
-	public Level level;
+	public World world;
 	
-	public Location(Level level, int x, int y, int z) {
-		this.level = level;
+	public Location(World world, int x, int y, int z) {
+		this.world = world;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
 	public Location add(int xa, int ya, int za) {		
-		return new Location(level, x + xa, y + ya, z + za);
+		return new Location(world, x + xa, y + ya, z + za);	
 	}
 	
-	public Location add(Direction dir) {
-		return add(dir.getStepX(), dir.getStepY(), dir.getStepZ());
+	public Location add(ForgeDirection dir) {		
+		return add(dir.offsetX, dir.offsetY, dir.offsetZ);	
 	}
 	
-	public BlockEntity getBlockEntity() {
-		return level.getBlockEntity(new BlockPos(x, y, z));
+	public TileEntity getTileEntity() {
+		return world.getTileEntity(x, y, z);
 	}
 	
 }

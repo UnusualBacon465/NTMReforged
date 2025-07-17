@@ -11,7 +11,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockGasAsbestos extends BlockGasBase {
@@ -56,7 +55,7 @@ public class BlockGasAsbestos extends BlockGasBase {
 	}
 
 	@Override
-	public void updateTick(Level world, int x, int y, int z, Random rand) {
+	public void updateTick(World world, int x, int y, int z, Random rand) {
 
 		if(!world.isRemote && rand.nextInt(50) == 0) {
 			world.setBlockToAir(x, y, z);

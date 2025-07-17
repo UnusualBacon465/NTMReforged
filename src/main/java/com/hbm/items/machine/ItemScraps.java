@@ -2,7 +2,6 @@ package com.hbm.items.machine;
 
 import java.util.List;
 
-import net.minecraft.world.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 
 import com.hbm.inventory.material.MaterialShapes;
@@ -11,7 +10,7 @@ import com.hbm.inventory.material.Mats.MaterialStack;
 import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemAutogen;
 import com.hbm.lib.RefStrings;
-import com.hbm.util.I18nUtil;
+import com.hbm.util.i18n.I18nUtil;
 import com.hbm.inventory.material.NTMMaterial;
 import com.hbm.inventory.material.NTMMaterial.SmeltingBehavior;
 
@@ -34,10 +33,6 @@ public class ItemScraps extends ItemAutogen {
 
 	public ItemScraps() {
 		super(null);
-	}
-
-	public static MaterialStack getMats(ItemStack stack) {
-		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

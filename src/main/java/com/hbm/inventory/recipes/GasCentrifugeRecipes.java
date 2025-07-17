@@ -11,7 +11,7 @@ import com.hbm.inventory.fluid.FluidType;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFluidIcon;
-import com.hbm.util.I18nUtil;
+import com.hbm.util.i18n.I18nUtil;
 
 import net.minecraft.item.ItemStack;
 
@@ -69,7 +69,7 @@ public class GasCentrifugeRecipes {
 		Iterator itr = gasCent.entrySet().iterator();
 		
 		while(itr.hasNext()) {
-			Map.Entry<Object, Object[]> entry = (Entry) itr.next();
+			Entry<Object, Object[]> entry = (Entry) itr.next();
 			FluidStack input = (FluidStack) entry.getKey();
 			ItemStack[] out = new ItemStack[4];
 			ItemStack[] outputs = (ItemStack[]) entry.getValue()[0];

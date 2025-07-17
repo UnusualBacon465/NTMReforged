@@ -1,24 +1,24 @@
 package com.hbm.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hbm.config.GeneralConfig;
 import com.hbm.handler.HazmatRegistry;
+import com.hbm.hazard.HazardRegistry;
 import com.hbm.inventory.FluidContainer;
 import com.hbm.inventory.FluidContainerRegistry;
 import com.hbm.inventory.fluid.Fluids;
 import com.hbm.main.MainRegistry;
-
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.IEventListener;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.CompoundTag;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.eventhandler.EventBus;
+import cpw.mods.fml.common.eventhandler.IEventListener;
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -27,13 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.hbm.config.GeneralConfig;
-import com.hbm.handler.HazmatRegistry;
-import com.hbm.hazard.HazardRegistry;
-import com.hbm.inventory.FluidContainer;
-import com.hbm.inventory.FluidContainerRegistry;
-import com.hbm.inventory.fluid.Fluids;
-import com.hbm.main.MainRegistry;
 public class Compat {
 
 	public static final String MOD_GT6 = "gregtech";
@@ -58,16 +51,34 @@ public class Compat {
 	private static String getReg(String domain, String name) {
 		return domain + ":" + name;
 	}
-
+	
+	public static ItemStack getPreferredOreOutput(List<ItemStack> oreList) {
+		int lowestPref = -1;
+		ItemStack preferredStack = null;
+		
+		for(ItemStack item : oreList) {
+			String modid = ItemStackUtil.getModIdFromItemStack(item);
+			for(int i = 0; i < GeneralConfig.preferredOutputMod.length; i++) {
+				if (modid.equals(GeneralConfig.preferredOutputMod[i])){
+					if (lowestPref<0 || i <lowestPref) {
+						preferredStack = item;
+						lowestPref = i;
+					}
+					break;
+				}
+			}
+		}
+		if (preferredStack != null) {
+			return preferredStack.copy();
+		}
+		return oreList.get(0).copy();
+	}
+	
 	public static boolean isModLoaded(String modid) {
 		return Loader.isModLoaded(modid);
 	}
 
-	public static BlockEntity getTileStandard(Level level, int x, int y, int z) {
-		return null;
-	}
-
-    public static enum ReikaIsotope {
+	public static enum ReikaIsotope {
 		C14(HazardRegistry.gen_10K),
 		U235(HazardRegistry.u235),
 		U238(HazardRegistry.u238),
@@ -209,7 +220,7 @@ public class Compat {
 			MainRegistry.logger.info("| Successfully removed Railcraft nonsense.");
 
 		} catch(Exception x) {
-            MainRegistry.logger.error("| Tried to remove Railcraft block but failed due to {}", x.getMessage());
+			MainRegistry.logger.error("| Tried to remove Railcraft block but failed due to " + x.getMessage());
 		}
 		MainRegistry.logger.info("#######################################################");
 	}
@@ -245,8 +256,10 @@ public class Compat {
 		return null;
 	}
 
-	/** A standard implementation of safely grabbing a tile entity without loading chunks, might have more fluff added to it later on. */
-	public static TileEntity getTileStandard(World world, int x, int y, int z) {
+	/**
+	 * A standard implementation of safely grabbing a tile entity without loading chunks, might have more fluff added to it later on.
+	 */
+	public static BlockEntity getTileStandard(Level world, int x, int y, int z) {
 		if(!world.getChunkProvider().chunkExists(x >> 4, z >> 4)) return null;
 		return world.getTileEntity(x, y, z);
 	}

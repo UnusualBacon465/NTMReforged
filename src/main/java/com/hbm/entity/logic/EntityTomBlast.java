@@ -8,8 +8,7 @@ import com.hbm.explosion.ExplosionTom;
 import com.hbm.main.MainRegistry;
 import com.hbm.saveddata.TomSaveData;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
 
 public class EntityTomBlast extends EntityExplosionChunkloading {
 
@@ -20,10 +19,10 @@ public class EntityTomBlast extends EntityExplosionChunkloading {
 	public boolean did = false;
 
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		age = nbt.getInteger("age");
-		destructionRange = nbt.getInteger("destructionRange");
-		speed = nbt.getInteger("speed");
+	protected void readEntityFromNBT(CompoundTag nbt) {
+		age = nbt.getInt("age");
+		destructionRange = nbt.getInt("destructionRange");
+		speed = nbt.getInt("speed");
 		did = nbt.getBoolean("did");
 
 		exp = new ExplosionTom((int) this.posX, (int) this.posY, (int) this.posZ, this.worldObj, this.destructionRange);
@@ -34,18 +33,18 @@ public class EntityTomBlast extends EntityExplosionChunkloading {
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("age", age);
-		nbt.setInteger("destructionRange", destructionRange);
-		nbt.setInteger("speed", speed);
-		nbt.setBoolean("did", did);
+	protected void writeEntityToNBT(CompoundTag nbt) {
+		nbt.putInt("age", age);
+		nbt.putInt("destructionRange", destructionRange);
+		nbt.putInt("speed", speed);
+		nbt.putBoolean("did", did);
 
 		if(exp != null)
 			exp.saveToNbt(nbt, "exp_");
 
 	}
 
-	public EntityTomBlast(World p_i1582_1_) {
+	public EntityTomBlast(Level p_i1582_1_) {
 		super(p_i1582_1_);
 	}
 

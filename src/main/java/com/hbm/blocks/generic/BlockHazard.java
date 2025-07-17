@@ -158,7 +158,14 @@ public class BlockHazard extends Block implements ITooltipProvider {
 
 	@Override
 	public EnumRarity getRarity(ItemStack stack) {
-
-        return EnumRarity.common;
+		
+		if(this == ModBlocks.block_schraranium
+				|| this == ModBlocks.block_schraranium
+				|| this == ModBlocks.block_schrabidate
+				|| this == ModBlocks.block_solinium
+				|| this == ModBlocks.block_schrabidium_fuel)
+			return EnumRarity.rare;
+		
+		return EnumRarity.common;
 	}
 }

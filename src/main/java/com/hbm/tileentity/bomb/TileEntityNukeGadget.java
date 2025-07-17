@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class TileEntityNukeGadget extends TileEntity implements ISidedInventory, IGUIProvider {
 
-	private ItemStack[] slots;
+	private ItemStack slots[];
 	private String customName;
 	
 	public TileEntityNukeGadget() {
@@ -92,6 +92,7 @@ public class TileEntityNukeGadget extends TileEntity implements ISidedInventory,
 	
 	public void setCustomName(String name) {
 		this.customName = name;
+		markDirty();
 	}
 
 	@Override
@@ -154,6 +155,8 @@ public class TileEntityNukeGadget extends TileEntity implements ISidedInventory,
 				slots[b0] = ItemStack.loadItemStackFromNBT(nbt1);
 			}
 		}
+
+		customName = nbt.getString("name");
 	}
 	
 	@Override
@@ -172,6 +175,10 @@ public class TileEntityNukeGadget extends TileEntity implements ISidedInventory,
 			}
 		}
 		nbt.setTag("items", list);
+		
+		if (customName != null) {
+			nbt.setString("name", customName);
+		}
 	}
 	
 	/*public int getNukeTier() {
@@ -201,25 +208,48 @@ public class TileEntityNukeGadget extends TileEntity implements ISidedInventory,
 	}*/
 	
 	public boolean exp1() {
-        return this.slots[1] != null && this.slots[1].getItem() == ModItems.early_explosive_lenses;
-    }
+		if(this.slots[1] != null && this.slots[1].getItem() == ModItems.early_explosive_lenses)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public boolean exp2() {
-        return this.slots[2] != null && this.slots[2].getItem() == ModItems.early_explosive_lenses;
-    }
+		if(this.slots[2] != null && this.slots[2].getItem() == ModItems.early_explosive_lenses)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public boolean exp3() {
-        return this.slots[3] != null && this.slots[3].getItem() == ModItems.early_explosive_lenses;
-    }
+		if(this.slots[3] != null && this.slots[3].getItem() == ModItems.early_explosive_lenses)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public boolean exp4() {
-        return this.slots[4] != null && this.slots[4].getItem() == ModItems.early_explosive_lenses;
-    }
+		if(this.slots[4] != null && this.slots[4].getItem() == ModItems.early_explosive_lenses)
+		{
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public boolean isReady() {
-		if(this.exp1() && this.exp2() && this.exp3() && this.exp4())
+		if(this.exp1() == true && this.exp2() == true && this.exp3() == true && this.exp4() == true)
 		{
-            return this.slots[0] != null && this.slots[5] != null && this.slots[0].getItem() == ModItems.gadget_wireing && slots[5].getItem() == ModItems.gadget_core;
+			if(this.slots[0] != null && this.slots[5] != null && this.slots[0].getItem() == ModItems.gadget_wireing && slots[5].getItem() == ModItems.gadget_core)
+			{
+				return true;
+			}
 		}
 		
 		return false;

@@ -10,14 +10,18 @@ import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.CompatEnergyControl;
 
 import api.hbm.energymk2.IEnergyReceiverMK2;
+import api.hbm.redstoneoverradio.IRORInteractive;
+import api.hbm.redstoneoverradio.IRORValueProvider;
 import api.hbm.tile.IInfoProviderEC;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.core.Direction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,7 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityCoreStabilizer extends TileEntityMachineBase implements IEnergyReceiverMK2, SimpleComponent, IGUIProvider, IInfoProviderEC, CompatHandler.OCComponent {
+public class TileEntityCoreStabilizer extends TileEntityMachineBase implements IEnergyReceiverMK2, SimpleComponent, IGUIProvider, IInfoProviderEC, CompatHandler.OCComponent, IRORValueProvider, IRORInteractive {
 
 	public long power;
 	public static final long maxPower = 2500000000L;
@@ -92,11 +96,7 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 				}
 			}
 
-			NBTTagCompound data = new NBTTagCompound();
-			data.setLong("power", power);
-			data.setInteger("watts", watts);
-			data.setInteger("beam", beam);
-			this.networkPack(data, 250);
+			this.networkPackNT(250);
 		}
 	}
 	
@@ -105,13 +105,23 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 		for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
 			this.trySubscribe(worldObj, xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ, dir);
 	}
-	
-	public void networkUnpack(NBTTagCompound data) {
-		super.networkUnpack(data);
 
-		power = data.getLong("power");
-		watts = data.getInteger("watts");
-		beam = data.getInteger("beam");
+	@Override
+	public void serialize(ByteBuf buf) {
+		super.serialize(buf);
+
+		buf.writeLong(power);
+		buf.writeInt(watts);
+		buf.writeInt(beam);
+	}
+
+	@Override
+	public void deserialize(ByteBuf buf) {
+		super.deserialize(buf);
+
+		this.power = buf.readLong();
+		this.watts = buf.readInt();
+		this.beam = buf.readInt();
 	}
 	
 	public long getPowerScaled(long i) {
@@ -138,7 +148,7 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 	}
 
 	@Override
-	public boolean canConnect(ForgeDirection dir) {
+	public boolean canConnect(Direction dir) {
 		return dir != ForgeDirection.UNKNOWN;
 	}
 	
@@ -232,10 +242,39 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 	public void provideExtraInfo(NBTTagCompound data) {
 		int demand = (int) Math.pow(watts, 4);
 		long damage = ItemLens.getLensDamage(slots[0]);
-		ItemLens lens = (ItemLens) com.hbm.items.ModItems.ams_lens;
-		if(getPower() >= demand && slots[0] != null && slots[0].getItem() == null && damage < 432000000L)
+		ItemLens lens = (ItemLens) ModItems.ams_lens;
+		if(getPower() >= demand && slots[0] != null && slots[0].getItem() == lens && damage < 432000000L)
 			data.setDouble(CompatEnergyControl.D_CONSUMPTION_HE, demand);
 		else
 			data.setDouble(CompatEnergyControl.D_CONSUMPTION_HE, 0);
+	}
+
+	@Override
+	public String[] getFunctionInfo() {
+		return new String[] {
+				PREFIX_VALUE + "durability",
+				PREFIX_VALUE + "durabilitypercent",
+				PREFIX_FUNCTION + "setpower" + NAME_SEPARATOR + "percent",
+		};
+	}
+
+	@Override
+	public String provideRORValue(String name) {
+		if((PREFIX_VALUE + "durability").equals(name))			return (slots[0] != null && slots[0].getItem() == ModItems.ams_lens) ? "" + (((ItemLens) slots[0].getItem()).maxDamage - ItemLens.getLensDamage(slots[0])) : "0";
+		if((PREFIX_VALUE + "durabilitypercent").equals(name))	return (slots[0] != null && slots[0].getItem() == ModItems.ams_lens) ? "" + ((((ItemLens) slots[0].getItem()).maxDamage - ItemLens.getLensDamage(slots[0])) * 100 / ((ItemLens) slots[0].getItem()).maxDamage) : "0";
+		return null;
+	}
+
+	@Override
+	public String runRORFunction(String name, String[] params) {
+		
+		if((PREFIX_FUNCTION + "setpower").equals(name) && params.length > 0) {
+			int watts = IRORInteractive.parseInt(params[0], 0, 100);
+			this.watts = watts;
+			this.markChanged();
+			return null;
+		}
+		
+		return null;
 	}
 }

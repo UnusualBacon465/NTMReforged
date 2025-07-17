@@ -1,6 +1,7 @@
 package com.hbm.tileentity;
 
 import api.hbm.energymk2.IEnergyReceiverMK2;
+import net.minecraft.core.Direction;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -56,7 +57,7 @@ public class TileEntityProxyEnergy extends TileEntityProxyBase implements IEnerg
 	}
 
 	@Override
-	public boolean canConnect(ForgeDirection dir) {
+	public boolean canConnect(Direction dir) {
 		
 		TileEntity te = getTE();
 		if(te instanceof IEnergyReceiverMK2) {

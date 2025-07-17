@@ -1,30 +1,22 @@
 package com.hbm.packet;
 
 import com.hbm.lib.RefStrings;
+import com.hbm.main.NetworkHandler;
 import com.hbm.packet.toclient.*;
 import com.hbm.packet.toserver.*;
 
-import cpw.mods.fml.common.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import cpw.mods.fml.relauncher.Side;
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
 
 public class PacketDispatcher {
 
-	//Mark 1 Packet Sending Device
-	public static final SimpleNetworkWrapper wrapper = NetworkRegistry.INSTANCE.newSimpleChannel(RefStrings.MODID);
+	//Mark 1.5 Packet Sending Device
+	public static final NetworkHandler wrapper = new NetworkHandler(RefStrings.MODID);
 
-	public static final void registerPackets() {
+	public static void registerPackets() {
 		int i = 0;
-		
-		//Sound packet that keeps client and server separated
-		wrapper.registerMessage(LoopedSoundPacket.Handler.class, LoopedSoundPacket.class, i++, Side.CLIENT);
+
 		//Signals server to consume items and create template
 		wrapper.registerMessage(ItemFolderPacket.Handler.class, ItemFolderPacket.class, i++, Side.SERVER);
-		//Electricity gauge for GUI rendering
-		wrapper.registerMessage(AuxElectricityPacket.Handler.class, AuxElectricityPacket.class, i++, Side.CLIENT);
 		//Siren packet for looped sounds
 		wrapper.registerMessage(TESirenPacket.Handler.class, TESirenPacket.class, i++, Side.CLIENT);
 		//Signals server to change ItemStacks
@@ -43,10 +35,6 @@ public class PacketDispatcher {
 		wrapper.registerMessage(ExtPropPacket.Handler.class, ExtPropPacket.class, i++, Side.CLIENT);
 		//Packet for force fields
 		wrapper.registerMessage(TEFFPacket.Handler.class, TEFFPacket.class, i++, Side.CLIENT);
-		//Sends button information for ItemGunBase
-		wrapper.registerMessage(GunButtonPacket.Handler.class, GunButtonPacket.class, i++, Side.SERVER);
-		//Packet to send block break particles
-		wrapper.registerMessage(AuxParticlePacket.Handler.class, AuxParticlePacket.class, i++, Side.CLIENT);
 		//Signals server to buy offer from bobmazon
 		wrapper.registerMessage(ItemBobmazonPacket.Handler.class, ItemBobmazonPacket.class, i++, Side.SERVER);
 		//Packet to send missile multipart information to TEs
@@ -65,8 +53,6 @@ public class PacketDispatcher {
 		wrapper.registerMessage(NBTControlPacket.Handler.class, NBTControlPacket.class, i++, Side.SERVER);
 		//Packet to send for anvil recipes to be crafted
 		wrapper.registerMessage(AnvilCraftPacket.Handler.class, AnvilCraftPacket.class, i++, Side.SERVER);
-		//Sends a funi text to display like a music disc announcement
-		wrapper.registerMessage(TEDoorAnimationPacket.Handler.class, TEDoorAnimationPacket.class, i++, Side.CLIENT);
 		//Does ExVNT standard player knockback
 		wrapper.registerMessage(ExplosionKnockbackPacket.Handler.class, ExplosionKnockbackPacket.class, i++, Side.CLIENT);
 		//just go fuck yourself already
@@ -77,14 +63,10 @@ public class PacketDispatcher {
 		wrapper.registerMessage(PermaSyncPacket.Handler.class, PermaSyncPacket.class, i++, Side.CLIENT);
 		//Syncs biome information for single positions or entire chunks
 		wrapper.registerMessage(BiomeSyncPacket.Handler.class, BiomeSyncPacket.class, i++, Side.CLIENT);
-
-		//Tile sync
-		wrapper.registerMessage(AuxGaugePacket.Handler.class, AuxGaugePacket.class, i++, Side.CLIENT);	//The horrid one
-		wrapper.registerMessage(NBTPacket.Handler.class, NBTPacket.class, i++, Side.CLIENT);			//The convenient but laggy one
-		wrapper.registerMessage(BufPacket.Handler.class, BufPacket.class, i++, Side.CLIENT);			//The not-so-convenient but not laggy one
+		//The not-so-convenient but not laggy one
+		wrapper.registerMessage(BufPacket.Handler.class, BufPacket.class, i++, Side.CLIENT);
+		//Syncs server recipe configs to the client
+		wrapper.registerMessage(SerializableRecipePacket.Handler.class, SerializableRecipePacket.class, i++, Side.CLIENT);
 	}
 
-	public static void sendToAllAround(AuxParticlePacketNT auxParticlePacketNT, ResourceKey<Level> dimension, BlockPos pos, int i) {
-
-	}
 }

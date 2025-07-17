@@ -4,17 +4,16 @@ import java.util.Random;
 
 import com.hbm.inventory.RecipesCommon.MetaBlock;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.synth.SimplexNoise;
+import net.neoforged.neoforge.common.NeoForge;
 
 public class OreLayer {
 
-	private NoiseGeneratorPerlin noise;
+	private SimplexNoise noise;
 	private MetaBlock ore;
 	private Block target;
 	private float density;
@@ -29,14 +28,14 @@ public class OreLayer {
 	int dim = 0;
 	
 	public OreLayer(Block ore, float density) {
-		this(ore, 0, Blocks.stone, density);
+		this(ore, 0, Blocks.STONE, density);
 	}
 	
 	public OreLayer(Block ore, int meta, Block target, float density) {
 		this.ore = new MetaBlock(ore, meta);
 		this.target = target;
 		this.density = density;
-		MinecraftForge.EVENT_BUS.register(this);
+		NeoForge.EVENT_BUS.register(this);
 	}
 	
 	public OreLayer setThreshold(int threshold) {
@@ -67,12 +66,12 @@ public class OreLayer {
 	@SubscribeEvent
 	public void onDecorate(DecorateBiomeEvent.Pre event) {
 		
-		World world = event.world;
+		Level level = event.level;
 		
-		if(world.provider == null || world.provider.dimensionId != this.dim) return;
+		if(level.provider == null || level.provider.dimensionId != this.dim) return;
 		
 		if(this.noise == null) {
-			this.noise = new NoiseGeneratorPerlin(new Random(event.world.getSeed() + (ore.getID() * 31) + yLevel), 4);
+			this.noise = new SimplexNoise(new Random(event.level.getSeed() + (ore.getID() * 31) + yLevel), 4);
 		}
 		
 		int cX = event.chunkX;
@@ -97,10 +96,10 @@ public class OreLayer {
 					for(int y = yLevel - range; y <= yLevel + range; y++) {
 						
 						if(event.rand.nextFloat() < density) {
-							Block genTarget = world.getBlock(x, y, z);
+							Block genTarget = level.getBlock(x, y, z);
 							
-							if(genTarget.isReplaceableOreGen(world, x, y, z, target) && genTarget.isReplaceableOreGen(world, x, y, z, Blocks.stone)) {
-								world.setBlock(x, y, z, ore.block, ore.meta, 2);
+							if(genTarget.isReplaceableOreGen(level, x, y, z, target) && genTarget.isReplaceableOreGen(level, x, y, z, Blocks.stone)) {
+								level.setBlock(x, y, z, ore.block, ore.meta, 2);
 							}
 						}
 					}

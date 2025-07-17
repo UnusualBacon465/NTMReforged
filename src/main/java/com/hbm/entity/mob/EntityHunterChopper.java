@@ -2,10 +2,10 @@ package com.hbm.entity.mob;
 
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.entity.projectile.EntityChopperMine;
+import com.hbm.handler.threading.PacketThreading;
 import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
-import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.toclient.AuxParticlePacketNT;
 
 import api.hbm.entity.IRadiationImmune;
@@ -86,7 +86,7 @@ public class EntityHunterChopper extends EntityFlying implements IMob, IBossDisp
 					worldObj.spawnParticle("fireworksSpark", this.posX, this.posY, this.posZ, d0 * i * 0.25, d1 * i * 0.25, d2 * i * 0.25);
 		}
 
-		return super.attackEntityFrom(null, amount);
+		return super.attackEntityFrom(source, amount);
 	}
 
 	@Override
@@ -254,7 +254,7 @@ public class EntityHunterChopper extends EntityFlying implements IMob, IBossDisp
 				data.setString("mode", "meteor");
 				data.setInteger("count", 10);
 				data.setDouble("width", 1);
-				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, posX, posY, posZ),  new TargetPoint(dimension, posX, posY, posZ, 100));
+				PacketThreading.createAllAroundThreadedPacket(new AuxParticlePacketNT(data, posX, posY, posZ),  new TargetPoint(dimension, posX, posY, posZ, 100));
 			}
 
 			rotationYaw += 20;

@@ -40,7 +40,7 @@ public class AssemblerRecipeHandler extends TemplateRecipeHandler implements ICo
 		return "assembly";
 	}
 
-    public static class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
+    public class SmeltingSet extends TemplateRecipeHandler.CachedRecipe {
     	
 		List<PositionedStack> input;
         PositionedStack result;

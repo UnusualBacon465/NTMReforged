@@ -6,6 +6,7 @@ import com.hbm.util.fauxpointtwelve.DirPos;
 
 import api.hbm.energymk2.Nodespace.PowerNode;
 import net.minecraft.block.Block;
+import net.minecraft.core.Direction;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -36,8 +37,8 @@ public class TileEntityPylonMedium extends TileEntityPylonBase {
 	}
 
 	@Override
-	public boolean canConnect(ForgeDirection dir) {
-		return this.hasTransformer() && ForgeDirection.getOrientation(this.getBlockMetadata() - 10).getOpposite() == dir;
+	public boolean canConnect(Direction dir) {
+		return this.hasTransformer() ? ForgeDirection.getOrientation(this.getBlockMetadata() - 10).getOpposite() == dir : false;
 	}
 
 	@Override

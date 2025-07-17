@@ -22,7 +22,6 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.config.VersatileConfig;
 import com.hbm.entity.grenade.EntityGrenadeASchrab;
 import com.hbm.entity.grenade.EntityGrenadeNuclear;
-import com.hbm.entity.missile.EntityMIRV;
 import com.hbm.entity.projectile.EntityBulletBaseNT;
 import com.hbm.entity.projectile.EntityExplosiveBeam;
 import com.hbm.interfaces.Spaghetti;
@@ -103,17 +102,16 @@ public class ExplosionNukeGeneric {
 	private static boolean isExplosionExempt(Entity e) {
 		
 		if (e instanceof EntityOcelot ||
-				null instanceof EntityMIRV ||
-				null instanceof EntityGrenadeASchrab ||
-				null instanceof EntityGrenadeNuclear ||
-				null instanceof EntityExplosiveBeam ||
-				null instanceof EntityBulletBaseNT ||
-				null instanceof EntityPlayer &&
+				e instanceof EntityGrenadeASchrab ||
+				e instanceof EntityGrenadeNuclear ||
+				e instanceof EntityExplosiveBeam ||
+				e instanceof EntityBulletBaseNT ||
+				e instanceof EntityPlayer &&
 				ArmorUtil.checkArmor((EntityPlayer) e, ModItems.euphemium_helmet, ModItems.euphemium_plate, ModItems.euphemium_legs, ModItems.euphemium_boots)) {
 			return true;
 		}
 		
-		if (null instanceof EntityPlayerMP && ((EntityPlayerMP)e).theItemInWorldManager.getGameType() == GameType.CREATIVE) {
+		if (e instanceof EntityPlayerMP && ((EntityPlayerMP)e).theItemInWorldManager.getGameType() == GameType.CREATIVE) {
 			return true;
 		}
 		

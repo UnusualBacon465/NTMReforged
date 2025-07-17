@@ -8,14 +8,11 @@ import com.hbm.config.GeneralConfig;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
 
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
-
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipesCommon {
 	
@@ -107,12 +104,12 @@ public class RecipesCommon {
 			return list.get((int)(System.currentTimeMillis() % (cycle * list.size()) / cycle));
 		}
 	}
-
+	
 	public static class ComparableStack extends AStack {
 
 		public Item item;
 		public int meta;
-
+		
 		public ComparableStack(ItemStack stack) {
 			if(stack == null) {
 				this.item = ModItems.nothing;
@@ -122,8 +119,8 @@ public class RecipesCommon {
 			try {
 				this.item = stack.getItem();
 				if(this.item == null) this.item = ModItems.nothing; //i'm going to bash some fuckard's head in
-				this.stacksize = stack.getCount();
-				this.meta = stack.getDamageValue();
+				this.stacksize = stack.stackSize;
+				this.meta = stack.getItemDamage();
 			} catch(Exception ex) {
 				this.item = ModItems.nothing;
 				if(!GeneralConfig.enableSilentCompStackErrors) {
@@ -131,13 +128,8 @@ public class RecipesCommon {
 				}
 			}
 		}
-
-        public ComparableStack(ItemStack stack) {
-            super();
-        }
-
-
-        public ComparableStack makeSingular() {
+		
+		public ComparableStack makeSingular() {
 			stacksize = 1;
 			return this;
 		}
@@ -150,19 +142,19 @@ public class RecipesCommon {
 		}
 		
 		public ComparableStack(Block item) {
-			this.item = Item.BY_BLOCK.get(item);
+			this.item = Item.getItemFromBlock(item);
 			this.stacksize = 1;
 			this.meta = 0;
 		}
 		
 		public ComparableStack(Block item, int stacksize) {
-			this.item = Item.BY_BLOCK.get(item);
+			this.item = Item.getItemFromBlock(item);
 			this.stacksize = stacksize;
 			this.meta = 0;
 		}
 		
 		public ComparableStack(Block item, int stacksize, int meta) {
-			this.item = Item.BY_BLOCK.get(item);
+			this.item = Item.getItemFromBlock(item);
 			this.stacksize = stacksize;
 			this.meta = meta;
 		}
@@ -185,22 +177,23 @@ public class RecipesCommon {
 		public ItemStack toStack() {
 			return new ItemStack(item == null ? ModItems.nothing : item, stacksize, meta);
 		}
-
+		
 		public String[] getDictKeys() {
-			ItemStack stack = toStack(); // Convert this object to an ItemStack
-			if (stack.isEmpty()) {
+			
+			int[] ids = OreDictionary.getOreIDs(toStack());
+			
+			if(ids == null || ids.length == 0)
 				return new String[0];
+			
+			String[] entries = new String[ids.length];
+			
+			for(int i = 0; i < ids.length; i++) {
+				entries[i] = OreDictionary.getOreName(ids[i]);
 			}
-
-			// Get all tags associated with the stack
-			List<String> tagKeys = stack.getTags()
-					.map(tag -> tag.toString()) // Convert ResourceLocation to String
-					.toList();
-
-			return tagKeys.toArray(new String[0]); // Convert list to array
+			
+			return entries;
 		}
-
-
+		
 		@Override
 		public int hashCode() {
 			
@@ -212,7 +205,7 @@ public class RecipesCommon {
 				item = ModItems.nothing;
 			}
 			
-			String name = ForgeRegistries.ITEMS.getKey(item).toString();
+			String name = Item.itemRegistry.getNameForObject(item);
 			
 			if(name == null) {
 				if(!GeneralConfig.enableSilentCompStackErrors) {
@@ -224,7 +217,7 @@ public class RecipesCommon {
 			
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + name.hashCode(); //using the int ID will cause fucky-wuckys if IDs are scrambled
+			result = prime * result + Item.itemRegistry.getNameForObject(item).hashCode(); //using the int ID will cause fucky-wuckys if IDs are scrambled
 			result = prime * result + meta;
 			result = prime * result + stacksize;
 			return result;

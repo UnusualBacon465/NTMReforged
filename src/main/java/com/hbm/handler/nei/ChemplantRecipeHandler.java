@@ -40,7 +40,7 @@ public class ChemplantRecipeHandler extends TemplateRecipeHandler implements ICo
 	public String getRecipeID() {
 		return "chemistry";
 	}
-	public static class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
+	public class RecipeSet extends TemplateRecipeHandler.CachedRecipe {
 
 		PositionedStack[] itemIn = new PositionedStack[4];
 		PositionedStack[] fluidIn = new PositionedStack[2];

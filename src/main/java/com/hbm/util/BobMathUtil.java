@@ -1,5 +1,11 @@
 package com.hbm.util;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import javax.annotation.Nonnegative;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -7,18 +13,53 @@ import java.text.NumberFormat;
 import java.util.*;
 import java.util.function.ToIntFunction;
 
-import javax.annotation.Nonnegative;
-
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-
-import static net.minecraft.world.phys.Vec3.atCenterOf;
-
 public class BobMathUtil {
 
+	//finally!
+	public static int min(int... nums) {
+		int smallest = Integer.MAX_VALUE;
+		for(int num : nums) if(num < smallest) smallest = num;
+		return smallest;
+	}
+	public static int max(int... nums) {
+		int largest = Integer.MIN_VALUE;
+		for(int num : nums) if(num > largest) largest = num;
+		return largest;
+	}
+	public static long min(long... nums) {
+		long smallest = Long.MAX_VALUE;
+		for(long num : nums) if(num < smallest) smallest = num;
+		return smallest;
+	}
+	public static long max(long... nums) {
+		long largest = Long.MIN_VALUE;
+		for(long num : nums) if(num > largest) largest = num;
+		return largest;
+	}
+	public static float min(float... nums) {
+		float smallest = Float.MAX_VALUE;
+		for(float num : nums) if(num < smallest) smallest = num;
+		return smallest;
+	}
+	public static float max(float... nums) {
+		float largest = Float.MIN_VALUE;
+		for(float num : nums) if(num > largest) largest = num;
+		return largest;
+	}
+	public static double min(double... nums) {
+		double smallest = Double.MAX_VALUE;
+		for(double num : nums) if(num < smallest) smallest = num;
+		return smallest;
+	}
+	public static double max(double... nums) {
+		double largest = Double.MIN_VALUE;
+		for(double num : nums) if(num > largest) largest = num;
+		return largest;
+	}
+
 	public static double safeClamp(double val, double min, double max) {
-		val = Mth.clampedLerp(val, min, max);
+
+		val = MathHelper.clamp_double(val, min, max);
 
 		if(val == Double.NaN) {
 			val = (min + max) / 2D;
@@ -28,22 +69,18 @@ public class BobMathUtil {
 	}
 
 	public static Vec3 interpVec(Vec3 vec1, Vec3 vec2, float interp) {
-		return atCenterOf(
-				interp(vec1.x,  vec2.x, interp),
-				interp(vec1.y,  vec2.y, interp),
-				interp(vec1.z,  vec2.z, interp)
-		);
+		return Vec3.createVectorHelper(
+				interp(vec1.xCoord,  vec2.xCoord, interp),
+				interp(vec1.yCoord,  vec2.yCoord, interp),
+				interp(vec1.zCoord,  vec2.zCoord, interp)
+				);
 	}
 
-	private static Vec3 atCenterOf(double interp, double interp1, double interp2) {
-		return null;
-	}
-
-	public static double interp(double x, double y, float interp) {
-		return x + (y - x) * interp;
-	}
+	public static double interp(double x, double y, float interp) { return x + (y - x) * interp; }
+	public static double interp(double x, double y, double interp) { return x + (y - x) * interp; }
 
 	public static double getAngleFrom2DVecs(double x1, double z1, double x2, double z2) {
+
 		double upper = x1 * x2 + z1 * z2;
 		double lower = Math.sqrt(x1 * x1 + z1 * z1) * Math.sqrt(x2 * x2 + z2 * z2);
 
@@ -56,11 +93,12 @@ public class BobMathUtil {
 	}
 
 	public static double getCrossAngle(Vec3 vel, Vec3 rel) {
+
 		vel.normalize();
 		rel.normalize();
 
-		double vecProd = rel.x * vel.x + rel.y * vel.y + rel.z * vel.z;
-		double bot = rel.length() * vel.length();
+		double vecProd = rel.xCoord * vel.xCoord + rel.yCoord * vel.yCoord + rel.zCoord * vel.zCoord;
+		double bot = rel.lengthVector() * vel.lengthVector();
 		double angle = Math.acos(vecProd / bot) * 180 / Math.PI;
 
 		if(angle >= 180)
@@ -78,15 +116,20 @@ public class BobMathUtil {
 	}
 
 	public static float remap01_clamp(float num, float min1, float max1){
-		return Mth.clampedLerp((num - min1) / (max1 - min1), 0, 1);
+		return MathHelper.clamp_float((num - min1) / (max1 - min1), 0, 1);
 	}
 
-	public static Direction[] getShuffledDirs() {
-		Direction[] dirs = Direction.values();  // Get all six directions
-		List<Direction> dirList = Arrays.asList(dirs);  // Convert array to list
-		Collections.shuffle(dirList);  // Shuffle the list
+	public static ForgeDirection[] getShuffledDirs() {
 
-		return dirList.toArray(new Direction[0]);  // Return the shuffled directions as an array
+		ForgeDirection[] dirs = new ForgeDirection[6];
+		List<Integer> indices = new ArrayList() {{ add(0); add(1); add(2); add(3); add(4); add(5); }};
+		Collections.shuffle(indices);
+
+		for(int i = 0; i < 6; i++) {
+			dirs[i] = ForgeDirection.getOrientation(indices.get(i));
+		}
+
+		return dirs;
 	}
 
 	public static String toPercentage(float amount, float total) {
@@ -94,6 +137,7 @@ public class BobMathUtil {
 	}
 
 	public static String[] ticksToDate(long ticks) {
+
 		int tickDay = 48000;
 		int tickYear = tickDay * 100;
 
@@ -108,17 +152,40 @@ public class BobMathUtil {
 		return dateOut;
 	}
 
+	/**
+	 * Rescale a number from one range to another
+	 * @param toScale - The integer to scale
+	 * @param oldMin - The current minimum value
+	 * @param oldMax - The current maximum value
+	 * @param newMin - The desired minimum value
+	 * @param newMax - The desired maximum value
+	 * @return The scaled number
+	 */
 	public static double convertScale(double toScale, double oldMin, double oldMax, double newMin, double newMax) {
 		double prevRange = oldMax - oldMin;
 		double newRange = newMax - newMin;
 		return (((toScale - oldMin) * newRange) / prevRange) + newMin;
 	}
 
+	/**
+	 * Rounds a number to so many significant digits
+	 * @param num The number to round
+	 * @param digits Amount of digits
+	 * @return The rounded double
+	 */
 	public static double roundDecimal(double num, @Nonnegative int digits) {
 		if(digits < 0)
 			throw new IllegalArgumentException("Attempted negative number in non-negative field! Attempted value: " + digits);
 
 		return new BigDecimal(num).setScale(digits, RoundingMode.HALF_UP).doubleValue();
+	}
+	
+	/**
+	 * @param amount
+	 * @return the number as a string with thousand group commas
+	 */
+	public static String format(int amount) {
+		return String.format(Locale.US, "%,d", amount);
 	}
 
 	public static boolean getBlink() {
@@ -126,6 +193,7 @@ public class BobMathUtil {
 	}
 
 	public static String getShortNumber(long l) {
+
 		if(l >= Math.pow(10, 18)) {
 			double res = l / Math.pow(10, 18);
 			res = Math.round(res * 100.0) / 100.0;
@@ -160,18 +228,25 @@ public class BobMathUtil {
 		return Long.toString(l);
 	}
 
+	/**
+	 * Adjusted sqrt, approaches standard sqrt but sqrt(x) is never bigger than x
+	 *
+	 *      ____________
+	 *     /       1    |     1
+	 * _  / x + ――――――――  - ―――――
+	 *  \/      (x + 2)²    x + 2
+	 *
+	 * @param x
+	 * @return
+	 */
 	public static double squirt(double x) {
 		return Math.sqrt(x + 1D / ((x + 2D) * (x + 2D))) - 1D / (x + 2D);
 	}
 
+	/** A convenient way to re-define the value of pi, should the laws of nature change. */
 	public static void setPi(double pi) {
-		try {
-			Field field = Math.class.getDeclaredField("PI");
-			field.setAccessible(true);
-			field.set(null, pi);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Field field = ReflectionHelper.findField(Math.class, "PI");
+		try { field.setDouble(null, pi); } catch(Exception e) { }
 	}
 
 	public static double angularDifference(double alpha, double beta) {
@@ -179,6 +254,9 @@ public class BobMathUtil {
 		return delta < -180 ? delta + 360 : delta;
 	}
 
+	// I am sick of trying to remember the ridiculous quirks of Java 8
+	// so I wrote this thing that can shit any int-ish list-ish into a regular fucking int[]
+	// made by mellow, thrown here by 70k
 	public static int[] intCollectionToArray(Collection<Integer> in) {
 		return intCollectionToArray(in, i -> (int)i);
 	}
@@ -190,11 +268,32 @@ public class BobMathUtil {
 	public static int[] collectionToIntArray(Collection<? extends Object> in, ToIntFunction<? super Object> mapper) {
 		return Arrays.stream(in.toArray()).mapToInt(mapper).toArray();
 	}
+	
+	public static void shuffleIntArray(int[] array) {
+		Random rand = new Random();
+		for(int i = array.length - 1; i > 0; i--) {
+			int r = rand.nextInt(i + 1);
+			int temp = array[r];
+			array[r] = array[i];
+			array[i] = temp;
+		}
+	}
+	
+	public static void reverseIntArray(int[] array) {
+		int len = array.length;
+		for(int i = 0; i < len / 2; i++) {
+			int temp = array[i];
+			array[i] = array[len - 1 - i];
+			array[len - 1 - i] = temp;
+		}
+	}
 
+	/** Soft peak sine */
 	public static double sps(double x) {
 		return Math.sin(Math.PI / 2D * Math.cos(x));
 	}
 
+	/** Square wave sine, make sure squarination is [0;1] */
 	public static double sws(double x, double squarination) {
 		double s = Math.sin(x);
 		return Math.pow(Math.abs(s), 2 - squarination) / s;
