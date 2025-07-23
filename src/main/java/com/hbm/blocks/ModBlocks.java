@@ -216,6 +216,72 @@ public class ModBlocks {
 			CreativeModeTabs.NATURAL_BLOCKS
 	);
 
+	public static final Supplier<Block> ore_gneiss_gas = REGISTRAR.register(
+			"ore_gneiss_gas",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_basalt = REGISTRAR.register(
+			"ore_basalt",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_oil = REGISTRAR.register(
+			"ore_oil",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_oil_empty = REGISTRAR.register(
+			"ore_oil_empty",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_oil_sand = REGISTRAR.register(
+			"ore_oil_sand",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_bedrock_oil = REGISTRAR.register(
+			"ore_bedrock_oil",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_lignite = REGISTRAR.register(
+			"ore_lignite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_asbestos = REGISTRAR.register(
+			"ore_asbestos",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_coal_oil = REGISTRAR.register(
+			"ore_coal_oil",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_coal_oil_burning = REGISTRAR.register(
+			"ore_coal_oil_burning",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> ore_tikite = REGISTRAR.register(
+			"ore_tikite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
 	//nether ores
 
 	public static final Supplier<Block> ore_nether_coal = REGISTRAR.register(
@@ -278,121 +344,281 @@ public class ModBlocks {
 			CreativeModeTabs.NATURAL_BLOCKS
 	);
 
-	/*public static void mainRegistry() {
-		initializeBlock();
-		registerBlock();
-	}*/
+	public static final Supplier<Block> ore_depth_nether_neodymium = REGISTRAR.register(
+			"ore_depth_nether_neodymium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	/*
-	public static Block event_tester;
-	public static Block obj_tester;
-	public static Block test_core;
-	public static Block test_charge;
-	public static Block structure_anchor;
 
-	public static Block ore_uranium;
-	public static Block ore_uranium_scorched;
-	public static Block ore_titanium;
-	public static Block ore_sulfur;
-	public static Block ore_thorium;
-	public static Block ore_niter;
-	public static Block ore_copper;
-	public static Block ore_tungsten;
-	public static Block ore_aluminium;
-	public static Block ore_fluorite;
-	public static Block ore_lead;
-	public static Block ore_schrabidium;
-	public static Block ore_beryllium;
-	public static Block ore_australium;
-	public static Block ore_rare;
-	public static Block ore_cobalt;
-	public static Block ore_cinnebar;
-	public static Block ore_coltan;
-	public static Block ore_alexandrite;
+	//gneiss ore
 
-	public static Block ore_bedrock;
-	public static Block ore_volcano;
+	public static final Supplier<Block> ore_gneiss_iron = REGISTRAR.register(
+			"ore_gneiss_iron",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block ore_nether_coal;
-	public static Block ore_nether_smoldering;
-	public static Block ore_nether_uranium;
-	public static Block ore_nether_uranium_scorched;
-	public static Block ore_nether_plutonium;
-	public static Block ore_nether_tungsten;
-	public static Block ore_nether_sulfur;
-	public static Block ore_nether_fire;
-	public static Block ore_nether_cobalt;
-	public static Block ore_nether_schrabidium;
+	public static final Supplier<Block> ore_gneiss_gold = REGISTRAR.register(
+			"ore_gneiss_gold",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block ore_meteor;
-	*/
+	public static final Supplier<Block> ore_gneiss_uranium = REGISTRAR.register(
+			"ore_gneiss_uranium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block stone_gneiss;
-	public static Block ore_gneiss_iron;
-	public static Block ore_gneiss_gold;
-	public static Block ore_gneiss_uranium;
-	public static Block ore_gneiss_uranium_scorched;
-	public static Block ore_gneiss_copper;
-	public static Block ore_gneiss_asbestos;
-	public static Block ore_gneiss_lithium;
-	public static Block ore_gneiss_schrabidium;
-	public static Block ore_gneiss_rare;
-	public static Block ore_gneiss_gas;
+	public static final Supplier<Block> ore_gneiss_uranium_scorched = REGISTRAR.register(
+			"ore_gneiss_uranium_schorched",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block gneiss_brick;
-	public static Block gneiss_tile;
-	public static Block gneiss_chiseled;
+	public static final Supplier<Block> ore_gneiss_copper = REGISTRAR.register(
+			"ore_gneiss_copper",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block stone_depth;
-	public static Block ore_depth_cinnebar;
-	public static Block ore_depth_zirconium;
-	public static Block ore_depth_borax;
-	public static Block cluster_depth_iron;
-	public static Block cluster_depth_titanium;
-	public static Block cluster_depth_tungsten;
+	public static final Supplier<Block> ore_gneiss_asbestos = REGISTRAR.register(
+			"ore_gneiss_asbestos",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block stone_keyhole;
-	public static Block stone_keyhole_meta;
+	public static final Supplier<Block> ore_gneiss_lithium = REGISTRAR.register(
+			"ore_gneiss_lithium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block stone_depth_nether;
-	public static Block ore_depth_nether_neodymium;
+	public static final Supplier<Block> ore_gneiss_schrabidium = REGISTRAR.register(
+			"ore_gneiss_schrabidium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block stone_porous;
-	public static Block stone_resource;
-	public static Block stalagmite;
-	public static Block stalactite;
-	public static Block stone_biome;
+	public static final Supplier<Block> ore_gneiss_rare = REGISTRAR.register(
+			"ore_gneiss_rare",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block depth_brick;
-	public static Block depth_tiles;
-	public static Block depth_nether_brick;
-	public static Block depth_nether_tiles;
-	public static Block depth_dnt;
+	//depth ores
 
-	public static Block basalt;
-	public static Block ore_basalt;
-	public static Block basalt_smooth;
-	public static Block basalt_brick;
-	public static Block basalt_polished;
-	public static Block basalt_tiles;
+	public static final Supplier<Block> ore_depth_cinnebar = REGISTRAR.register(
+			"ore_depth_cinnebar",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block cluster_iron;
-	public static Block cluster_titanium;
-	public static Block cluster_aluminium;
-	public static Block cluster_copper;
+	public static final Supplier<Block> ore_depth_zirconium = REGISTRAR.register(
+			"ore_depth_zirconium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block ore_oil;
-	public static Block ore_oil_empty;
-	public static Block ore_oil_sand;
-	public static Block ore_bedrock_oil;
-	public static Block ore_lignite;
-	public static Block ore_asbestos;
-	@Deprecated
-	public static Block ore_coal_oil;
-	@Deprecated
-	public static Block ore_coal_oil_burning;
+	public static final Supplier<Block> ore_depth_borax = REGISTRAR.register(
+			"ore_depth_borax",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
 
-	public static Block ore_tikite;
+	//cluster ores
+
+	public static final Supplier<Block> cluster_depth_iron = REGISTRAR.register(
+			"cluster_depth_iron",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_depth_titanium = REGISTRAR.register(
+			"cluster_depth_titanium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_depth_tungsten = REGISTRAR.register(
+			"cluster_depth_tungsten",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_iron = REGISTRAR.register(
+			"cluster_iron",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_titanium = REGISTRAR.register(
+			"cluster_titanium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_aluminium = REGISTRAR.register(
+			"cluster_aluminium",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> cluster_copper = REGISTRAR.register(
+			"cluster_copper",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//stones
+
+	public static final Supplier<Block> stone_gneiss = REGISTRAR.register(
+			"stone_gneiss",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_depth = REGISTRAR.register(
+			"stone_depth",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_porous = REGISTRAR.register(
+			"stone_porous",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_resource = REGISTRAR.register(
+			"stone_resource",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_biome = REGISTRAR.register(
+			"stone_biome",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stalagmite = REGISTRAR.register(
+			"stalagmite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stalactite = REGISTRAR.register(
+			"stalactite",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> basalt = REGISTRAR.register(
+			"basalt",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_depth_nether = REGISTRAR.register(
+			"stone_depth_nether",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//stone products
+
+	public static final Supplier<Block> gneiss_brick = REGISTRAR.register(
+			"gneiss_brick",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> gneiss_tile = REGISTRAR.register(
+			"gneiss_tile",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> gneiss_chiseled = REGISTRAR.register(
+			"gneiss_chiseled",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> depth_brick = REGISTRAR.register(
+			"depth_brick",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> depth_tiles = REGISTRAR.register(
+			"depth_tiles",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> depth_nether_brick = REGISTRAR.register(
+			"depth_nether_brick",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> depth_nether_tiles = REGISTRAR.register(
+			"depth_nether_tiles",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> depth_dnt = REGISTRAR.register(
+			"depth_dnt",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> basalt_smooth = REGISTRAR.register(
+			"basalt_smooth",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> basalt_brick = REGISTRAR.register(
+			"basalt_brick",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> basalt_polished = REGISTRAR.register(
+			"basalt_polished",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> basalt_tiles = REGISTRAR.register(
+			"basalt_tiles",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//misc stones
+
+	public static final Supplier<Block> stone_keyhole = REGISTRAR.register(
+			"stone_keyhole",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	public static final Supplier<Block> stone_keyhole_meta = REGISTRAR.register(
+			"stone_keyhole_meta",
+			() -> new Block(BlockBehaviour.Properties.of().strength(4.0F)),
+			CreativeModeTabs.NATURAL_BLOCKS
+	);
+
+	//storage blocks
+
+
+
 
 	public static Block block_thorium;
 	public static Block block_thorium_fuel;
@@ -493,6 +719,10 @@ public class ModBlocks {
 	public static Block block_daffergon;
 	public static Block block_verticium;
 
+
+
+	//decos
+
 	public static Block block_cap;
 
 	public static Block deco_titanium;
@@ -517,6 +747,8 @@ public class ModBlocks {
 	public static Block plushie;
 	public static Block dungeon_spawner;
 
+
+	//other
 	public static Block gravel_obsidian;
 	public static Block gravel_diamond;
 	public static Block asphalt;
@@ -526,6 +758,8 @@ public class ModBlocks {
 	public static Block wood_barrier;
 	public static Block wood_structure;
 
+
+	//reinforced blocks
 	public static Block reinforced_brick;
 	public static Block reinforced_ducrete;
 	public static Block reinforced_glass;
@@ -537,6 +771,8 @@ public class ModBlocks {
 	public static Block reinforced_laminate;
 	public static Block reinforced_laminate_pane;
 
+
+	//lamp
 	public static Block lamp_tritium_green_off;
 	public static Block lamp_tritium_green_on;
 	public static Block lamp_tritium_blue_off;
@@ -544,6 +780,7 @@ public class ModBlocks {
 
 	public static Block lamp_demon;
 
+	//lights
 	public static Block lantern;
 	public static Block lantern_behemoth;
 
@@ -557,6 +794,8 @@ public class ModBlocks {
 	public static Block floodlight;
 	public static Block floodlight_beam;
 
+
+	//concrete
 	public static Block reinforced_stone;
 	public static Block concrete_smooth;
 	public static Block concrete_colored;
@@ -621,6 +860,8 @@ public class ModBlocks {
 	public static Block tile_lab_cracked;
 	public static Block tile_lab_broken;
 
+
+	//meteors
 	public static Block block_meteor;
 	public static Block block_meteor_cobble;
 	public static Block block_meteor_broken;
@@ -635,8 +876,12 @@ public class ModBlocks {
 	public static Block meteor_spawner;
 	public static Block meteor_battery;
 
+
+	//moon
 	public static Block moon_turf;
 
+
+	//brick
 	public static Block brick_jungle;
 	public static Block brick_jungle_cracked;
 	public static Block brick_jungle_fragile;
@@ -649,6 +894,8 @@ public class ModBlocks {
 
 	public static Block brick_red;
 
+
+	//more deco
 	public static Block deco_computer;
 	public static Block deco_crt;
 	public static Block deco_toaster;
@@ -692,6 +939,8 @@ public class ModBlocks {
 	public static Block deco_pipe_quad_red;
 	public static Block deco_pipe_quad_marked;
 
+
+	//more shite wtf hbm
 	public static Block broadcaster_pc;
 	public static Block geiger;
 	public static Block hev_battery;

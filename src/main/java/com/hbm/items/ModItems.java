@@ -60,6 +60,8 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+//todo please help me i dont want to do this file...
+
 public class ModItems {
 
 	public static void mainRegistry() {

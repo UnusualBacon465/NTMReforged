@@ -42,7 +42,7 @@ public class BlockRegistrar {
         return blocks.register(name, () -> new LiquidBlock(fluidSupplier.get(), BlockBehaviour.Properties.of().noCollission().strength(100.0F)));
     }
 
-    public <T extends Block> Supplier<Block> register(String exampleBlock, Supplier<T> tSupplier, ResourceKey<CreativeModeTab> buildingBlocks) {
+    public <T extends Block> Supplier<Block> register(String Block, Supplier<T> tSupplier, ResourceKey<CreativeModeTab> buildingBlocks) {
         return null;
     }
 }

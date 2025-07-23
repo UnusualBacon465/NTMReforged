@@ -2,6 +2,7 @@ package api.hbm.energymk2;
 
 import api.hbm.energymk2.Nodespace.PowerNode;
 import com.hbm.handler.threading.PacketThreading;
+import com.hbm.main.NetworkHandler;
 import com.hbm.packet.toclient.AuxParticlePacketNT;
 import com.hbm.util.Compat;
 import net.minecraft.world.level.biome.Climate;
@@ -10,6 +11,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.core.Direction;
+import net.neoforged.neoforge.network.registration.NetworkChannel;
+import net.neoforged.neoforge.network.registration.NetworkRegistry;
 
 /** If it sends energy, use this */
 public interface IEnergyProviderMK2 extends IEnergyHandlerMK2 {
@@ -62,7 +65,7 @@ public interface IEnergyProviderMK2 extends IEnergyHandlerMK2 {
 			tag.putDouble("mX", dir.getStepX() * (red ? 0.025 : 0.1));
 			tag.putDouble("mY", dir.getStepY() * (red ? 0.025 : 0.1));
 			tag.putDouble("mZ", dir.getStepZ() * (red ? 0.025 : 0.1));
-			MyNetwork.CHANNEL.send
+			//todo fix auxparticlent and other packets
 		}
 	}
 }
